@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Home from './views/HomePage';
 import Register from './views/Register';
@@ -14,7 +14,7 @@ import OrderConfirmation from './views/OrderConfirmation';
 const App = () => {
   return (
     <Router>
-      <Switch>
+      <Routes>
         <Route exact path="/" component={Home} />
         {/*
         <Route path="/register" component={Register} />
@@ -26,7 +26,7 @@ const App = () => {
         <Route path="/checkout" component={Checkout} />
         <Route path="/orderConfirmation" component={OrderConfirmation} />
         */}
-      </Switch>
+      </Routes>
     </Router>
   );
 };
