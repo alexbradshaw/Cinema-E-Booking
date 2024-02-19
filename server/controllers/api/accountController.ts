@@ -8,7 +8,12 @@ export const getAuthedUser = async (req: Request, res: Response) => {
         return;
     } else {
         try {
-            const user = await User.findOne({ where: { id: req.session.userId }});
+            const user = await User.findOne(
+                { 
+                    where: { id: req.session.userId },
+                    attributes: { exclude: ['password'] }
+                }
+            );
 
             res.json(user);
         } catch (e) {
@@ -20,7 +25,12 @@ export const getAuthedUser = async (req: Request, res: Response) => {
 
 export const getUserByName = async (req: Request, res: Response) => {
     try {
-        const user = await User.findOne({ where: { username: req.params.username }});
+        const user = await User.findOne(
+            { 
+                where: { username: req.params.username },
+                attributes: { exclude: ['password'] }
+            }
+        );
 
         res.json(user);
     } catch (e) {
