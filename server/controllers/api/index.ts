@@ -1,4 +1,4 @@
 import { authCheck, login, logout, signup } from "./authController";
-import { addMovie, search } from "./movieController";
+import { addMovie, findMovies, search } from "./movieController";
 
-export { addMovie, authCheck, login, logout, search, signup } 
+export { addMovie, authCheck, findMovies, login, logout, search, signup } 
