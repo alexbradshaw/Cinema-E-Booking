@@ -3,9 +3,6 @@ import 'dotenv/config';
 
 let sequelize: Sequelize;
 
-console.log(process.env.DB_PASSWORD);
-
-
 if (process.env.JAWSDB_URL) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
