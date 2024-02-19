@@ -1,2 +1,0 @@
-DROP DATABASE IF EXISTS CinemaEBooking;
-CREATE DATABASE CinemaEBooking;

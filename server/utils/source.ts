@@ -1,19 +1,15 @@
-import 'dotenv/config';
-import fs from 'fs';
+import { promises } from 'fs';
 import { exec } from 'child_process';
 import { input } from '@inquirer/prompts';
 
 const sourceSQL = async () => {
 
-  const password = await input({ message: 'What is your mySQL password for your system?' })
+  const password = await input({ message: 'What is your mySQL password for your system?' });
 
-  await fs.promises.writeFile(`../.env`, `DB_PASSWORD=${password}`);
-  
-  const cnf = `[client]\nuser=root\npassword=${password}\n`;
+  await promises.writeFile(`../.env`, `DB_PASSWORD="${password}"\nSECRET="supersecret"`);
+  await promises.writeFile(`./utils/env.ts`, `export default "${password}";`);
 
-  await fs.promises.writeFile(`./config/.mysql.cnf`, cnf);
-
-  const command = `mysql --defaults-file=./config/.mysql.cnf < ./db/schema.sql`;
+  const command = `mysql -u root ${password ? "--password=" + password : ""} -e "DROP DATABASE IF EXISTS CinemaEBooking; CREATE DATABASE CinemaEBooking;"`
 
   exec(command, (error, stdout, stderr) => {
     if (error) {
