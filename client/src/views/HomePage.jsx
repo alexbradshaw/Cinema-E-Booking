@@ -1,8 +1,13 @@
 import React from 'react';
 
 const Home = () => {
+  const containerStyle = {
+    backgroundColor: 'blue',
+    // Add other styles as needed
+  };
+
   return (
-    <div>
+    <div style={containerStyle}>
       <h1>Currently Running Movies</h1>
       {/* Display currently running movies here */}
 
@@ -18,11 +23,6 @@ const Home = () => {
 
       <h2>Login</h2>
       <a href="/login">Login</a>
-
-      <script>
-        {/* Embed movie trailers using external media (e.g., YouTube) */}
-        {/* Implement logic to play trailers */}
-      </script>
     </div>
   );
 };
