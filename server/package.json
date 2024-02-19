@@ -8,7 +8,8 @@
     "dev": "ts-node server.ts",
     "build": "tsc -p ..",
     "source": "ts-node ./utils/source.ts",
-    "seed": "ts-node seeds/seed.ts"
+    "seed": "ts-node seeds/seed.ts",
+    "watch": "nodemon --exec \"npm run dev\""
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.1",
+    "nodemon": "^3.0.3",
     "sequelize": "^6.37.1"
   },
   "devDependencies": {
