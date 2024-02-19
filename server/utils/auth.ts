@@ -13,7 +13,7 @@ export const verifyToken = (req: Request) => {
     const token = req.session.jwt || '';
     const userProvidedToken = req.headers.authorization;
 
-    if (token != userProvidedToken) {
+    if (userProvidedToken == '' || token != userProvidedToken) {
         return false;
     }
 
