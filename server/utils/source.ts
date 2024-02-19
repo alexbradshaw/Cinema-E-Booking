@@ -4,12 +4,12 @@ import { input } from '@inquirer/prompts';
 
 const sourceSQL = async () => {
 
-  const password = await input({ message: 'What is your mySQL password for your system?' });
+  const password = await input({ message: 'What is the mySQL password for your system?' });
 
-  await promises.writeFile(`../.env`, `DB_PASSWORD="${password}"\nSECRET="supersecret"`);
+  await promises.writeFile(`../.env`, `DB_PASSWORD="${password}"\nSECRET="${password}"`);
   await promises.writeFile(`./utils/env.ts`, `export default "${password}";`);
 
-  const command = `mysql -u root ${password ? "--password=" + password : ""} -e "DROP DATABASE IF EXISTS CinemaEBooking; CREATE DATABASE CinemaEBooking;"`
+  const command = `mysql -u root ${password ? `--password=${password}` : ""} -e "DROP DATABASE IF EXISTS CinemaEBooking; CREATE DATABASE CinemaEBooking;"`
 
   exec(command, (error, stdout, stderr) => {
     if (error) {
