@@ -3,7 +3,6 @@ import sequelize from "../config/connection";
 
 class Movie extends Model {
     declare id: number;
-
 }
 
 Movie.init(
