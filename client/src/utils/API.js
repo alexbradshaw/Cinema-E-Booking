@@ -16,6 +16,14 @@ const retrieveAuthToken = () => {
 
 /* Account Routes */
 
+    /*
+        {
+            isAdmin: bool,
+            username: string,
+            email: string,
+            profile_pic: string
+        }
+    */
     export const getLoggedInUser = async () => {
         const response = await fetch("/api/account", {
             headers: {
@@ -29,7 +37,16 @@ const retrieveAuthToken = () => {
 
         return user;
     }
+    
 
+    /*
+        {
+            isAdmin: bool,
+            username: string,
+            email: string,
+            profile_pic: string
+        }
+    */
     export const getUserByUsername = async (username) => {
         if (!username) {
             return;
@@ -44,6 +61,10 @@ const retrieveAuthToken = () => {
         return user;
     }
 
+
+    /*
+        Returns bool for if user is authed
+    */
     export const authCheck = async () => {
         const response = await fetch("/api/account/auth", {
             method: "POST", 
@@ -59,6 +80,10 @@ const retrieveAuthToken = () => {
         return status;
     }
 
+
+    /*
+        Returns bool for if user is an admin
+    */
     export const signup = async({ isAdmin, username, email, password }) => {
         const response = await fetch("/api/account/signup", {
             method: "POST", 
@@ -82,6 +107,10 @@ const retrieveAuthToken = () => {
         return isAdmin;
     }
 
+
+    /*
+        Returns bool for if user is an admin
+    */
     export const login = async({ userOrEmail, password }) => {
         const response = await fetch("/api/account/login", {
             method: "POST", 
@@ -104,6 +133,10 @@ const retrieveAuthToken = () => {
         return isAdmin;
     }
 
+
+    /*
+        Returns a success message or throws an error (if something went wrong or user isn't authed)
+    */
     export const logout = async() => {
         const response = await fetch("/api/account/logout", {
             method: "POST", 
@@ -120,6 +153,16 @@ const retrieveAuthToken = () => {
 
 /* Movie Routes */
 
+    /*
+        {
+            title: string,
+            length: int, // length of movie in minutes
+            rating: string,
+            poster_url: string,
+            trailer_url: string,
+            coming_soon: bool
+        }
+    */
     export const createNewMovie = async (formData) => {
         const response = await fetch("/api/movie", {
             method: "POST", 
@@ -137,6 +180,28 @@ const retrieveAuthToken = () => {
         return movie;
     }
 
+    
+    /*
+        Returns an array of every movie in db
+        [   
+            {
+                title: string,
+                length: int, // length of movie in minutes
+                rating: string,
+                poster_url: string,
+                trailer_url: string,
+                coming_soon: bool
+            },
+            {
+                title: string,
+                length: int, 
+                rating: string,
+                poster_url: string,
+                trailer_url: string,
+                coming_soon: bool
+            }
+        ]
+    */
     export const getAllMovies = async () => {
         const response = await fetch("/api/movies");
         
@@ -147,6 +212,28 @@ const retrieveAuthToken = () => {
         return movies; 
     }
 
+
+    /*
+        Returns an array of movie objects matching query
+        [   
+            {
+                title: string,
+                length: int, // length of movie in minutes
+                rating: string,
+                poster_url: string,
+                trailer_url: string,
+                coming_soon: bool
+            },
+            {
+                title: string,
+                length: int, 
+                rating: string,
+                poster_url: string,
+                trailer_url: string,
+                coming_soon: bool
+            }
+        ]
+    */
     export const search = async (movie) => {
         const response = await fetch(`/api/movies/${movie}`); 
 
