@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Home from './views/home';
+import Home from './views/HomePage';
 import Register from './views/Register';
 import RegisterConfirmation from './views/RegisterConfirmation';
 import Login from './views/Login';
@@ -16,6 +16,7 @@ const App = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
+        {/*
         <Route path="/register" component={Register} />
         <Route path="/registerConfirmation" component={RegisterConfirmation} />
         <Route path="/login" component={Login} />
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/orderSummary" component={OrderSummary} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/orderConfirmation" component={OrderConfirmation} />
+        */}
       </Switch>
     </Router>
   );
