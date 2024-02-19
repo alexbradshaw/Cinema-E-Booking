@@ -18,6 +18,7 @@ const retrieveAuthToken = () => {
 
     /*
         {
+            id: int,
             isAdmin: bool,
             username: string,
             email: string,
@@ -41,6 +42,7 @@ const retrieveAuthToken = () => {
 
     /*
         {
+            id: int,
             isAdmin: bool,
             username: string,
             email: string,
@@ -155,6 +157,7 @@ const retrieveAuthToken = () => {
 
     /*
         {
+            id: int,
             title: string,
             length: int, // length of movie in minutes
             rating: string,
@@ -185,6 +188,7 @@ const retrieveAuthToken = () => {
         Returns an array of every movie in db
         [   
             {
+                id: int,
                 title: string,
                 length: int, // length of movie in minutes
                 rating: string,
@@ -193,6 +197,7 @@ const retrieveAuthToken = () => {
                 coming_soon: bool
             },
             {
+                id: int,
                 title: string,
                 length: int, 
                 rating: string,
@@ -217,6 +222,7 @@ const retrieveAuthToken = () => {
         Returns an array of movie objects matching query
         [   
             {
+                id: int,
                 title: string,
                 length: int, // length of movie in minutes
                 rating: string,
@@ -225,6 +231,7 @@ const retrieveAuthToken = () => {
                 coming_soon: bool
             },
             {
+                id: int,
                 title: string,
                 length: int, 
                 rating: string,
