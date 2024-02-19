@@ -1,3 +1,3 @@
-import { addMovie, authCheck, login, logout, search, signup } from "./api";
+import { addMovie, authCheck, findMovies, login, logout, search, signup } from "./api";
 
-export { addMovie, authCheck, login, logout, search, signup  } 
+export { addMovie, authCheck, findMovies, login, logout, search, signup  } 

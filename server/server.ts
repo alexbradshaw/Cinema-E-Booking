@@ -40,15 +40,15 @@ app.use(session({
     saveUninitialized: false
 }));
   
-app.use(express.json()); // Middleware to parse incoming body as JSON, sets up req.body
-app.use(express.urlencoded({ extended: true })); // Good for parsing HTML forms for POST requests
-app.use(router); // Tell server to use our routes
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
+app.use(router); 
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist'))); // Setting up public folder
+  app.use(express.static(path.join(__dirname, '../client/dist'))); 
 
-  app.get('*', (req, res) => { // Route grabs any requests that aren't handled by API and sends html file
-    res.sendFile(path.join(__dirname, '../client/dist/index.html')); // Sending over final built html file, which should embody our entire webpage
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 }
 
