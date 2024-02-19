@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { Movie } from '../../models'
 import { Request, Response } from 'express';
 
@@ -14,7 +15,9 @@ import { Request, Response } from 'express';
     export const search = async (req: Request, res: Response) => {
         const movies = await Movie.findAll({
             where: {
-                title: req.params.title
+                title: {
+                  [Op.substring]: req.params.title
+                }
             }
         });
   
