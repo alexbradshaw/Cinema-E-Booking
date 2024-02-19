@@ -1,0 +1,30 @@
+[
+    {
+      "isAdmin": true,
+      "username": "alex",
+      "email": "alex@gmail.com",
+      "password": "abradshaw",
+      "profile_pic": "/seeds/alex.jpg"
+    },
+    {
+      "isAdmin": true,
+      "username": "josh",
+      "email": "josh@gmail.com",
+      "password": "jpyon",
+      "profile_pic": "/seeds/josh.jpg"
+    },
+    {
+      "isAdmin": true,
+      "username": "tony",
+      "email": "tony@gmail.com",
+      "password": "tnyugen",
+      "profile_pic": "/seeds/tony.jpg"
+    },
+    {
+      "isAdmin": true,
+      "username": "will",
+      "email": "will@gmail.com",
+      "password": "wcepress",
+      "profile_pic": "/seeds/will.jpg"
+    }
+]

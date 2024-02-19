@@ -1,0 +1,34 @@
+[
+    {
+      "title": "test1",
+      "length": 120,
+      "rating": "R",
+      "poster_url": "google.com",
+      "trailer_url": "youtube.com",
+      "coming_soon": false
+    },
+    {
+      "title": "test2",
+      "length": 120,
+      "rating": "R",
+      "poster_url": "google.com",
+      "trailer_url": "youtube.com",
+      "coming_soon": false
+    },
+    {
+      "title": "test3",
+      "length": 120,
+      "rating": "R",
+      "poster_url": "google.com",
+      "trailer_url": "youtube.com",
+      "coming_soon": false
+    },
+    {
+      "title": "test4",
+      "length": 120,
+      "rating": "R",
+      "poster_url": "google.com",
+      "trailer_url": "youtube.com",
+      "coming_soon": false
+    }
+]
