@@ -1,15 +1,19 @@
 import 'dotenv/config';
 import fs from 'fs';
 import { exec } from 'child_process';
-
-const password = process.env.DB_PASSWORD || '';
+import { input } from '@inquirer/prompts';
 
 const sourceSQL = async () => {
+
+  const password = await input({ message: 'What is your mySQL password for your system?' })
+
+  await fs.promises.writeFile(`../.env`, `DB_PASSWORD=${password}`);
+  
   const cnf = `[client]\nuser=root\npassword=${password}\n`;
 
-  await fs.promises.writeFile(`./config/.my.cnf`, cnf);
+  await fs.promises.writeFile(`./config/.mysql.cnf`, cnf);
 
-  const command = `mysql --defaults-file=./config/.my.cnf < ./db/schema.sql`;
+  const command = `mysql --defaults-file=./config/.mysql.cnf < ./db/schema.sql`;
 
   exec(command, (error, stdout, stderr) => {
     if (error) {
