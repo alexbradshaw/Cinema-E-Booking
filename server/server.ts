@@ -4,6 +4,16 @@ import express, { Express } from 'express';
 const app: Express = express();
 
 import session, { Store } from 'express-session';
+
+declare module 'express-session' {
+  interface SessionData {
+      jwt: string;
+      userId: number;
+      username: string;
+      isAdmin: boolean;
+  }
+}
+
 import sequelizeSession from 'connect-session-sequelize';
 const SequelizeStore = sequelizeSession(Store);
 
@@ -13,12 +23,7 @@ const PORT: string | number = process.env.PORT || 3001;
 import path from 'path';
 
 const store = new SequelizeStore({
-    db: sequelize,
-    extendDefaultFields: () => {
-      return { 
-        jwt: ''
-      }
-    }
+    db: sequelize
 });
 
 store.on('error', function(error: Error) {
