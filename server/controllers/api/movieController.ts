@@ -15,11 +15,28 @@ import { Request, Response } from 'express';
     export const search = async (req: Request, res: Response) => {
         const movies = await Movie.findAll({
             where: {
+              title: req.params.title
+            }
+        });
+
+        const similarTitles = await Movie.findAll({
+            where: {
                 title: {
-                  [Op.substring]: req.params.title
+                    [Op.substring]: req.params.title
                 }
             }
         });
+
+        const arr = [];
+        for (let i = 0; i < movies.length; i++) {
+          arr.push(movies[i].id);
+        }
+
+        for (let i = 0; i < similarTitles.length; i++) {
+          if (!arr.includes(similarTitles[i].id)) {
+            movies.push(similarTitles[i]);
+          }
+        }
   
         if (!movies) {
           return res.status(404).json({ message: "Movie not found" });
