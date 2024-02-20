@@ -1,0 +1,23 @@
+/* Home.css */
+
+/* Styles for the container */
+.container {
+    background-color: white;
+    /* Add other styles as needed */
+  }
+  
+/* Styles for the carousel */
+.carousel-container {
+    max-width: 500px;
+    max-height: 500px;
+    margin: auto;
+    /* Add other styles as needed */
+}
+
+carousel { 
+    max-width: 500px;
+    max-height: 500px;
+    margin: auto;
+}
+
+  

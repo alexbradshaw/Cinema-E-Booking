@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import "./CSS/HomePage.css";
+import { getAllMovies } from '../utils/API';
+import Navbar from './components/Navbar';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const Home = () => {
   const containerStyle = {
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     // Add other styles as needed
   };
 
+  const carouselStyle = {
+    maxWidth: '800px', // Adjust the maximum width as needed
+    margin: 'auto',    // Center the carousel
+  };
+
+    const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const moviesData = await getAllMovies();
+        setMovies(moviesData);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
+
   return (
-    <div style={containerStyle}>
-      <h1>Currently Running Movies</h1>
-      {/* Display currently running movies here */}
+    <div>
+    <h1>Movie Gallery</h1>
 
-      <h1>Coming Soon Movies</h1>
-      {/* Display coming soon movies here */}
-
-      <h2>Search for a Movie</h2>
-      <form action="/search" method="get">
-        <label htmlFor="title">Title:</label>
-        <input type="text" name="title" id="title" required />
-        <button type="submit">Search</button>
-      </form>
-
-      <h2>Login</h2>
-      <a href="/login">Login</a>
-    </div>
+    <Navbar />
+    {movies.length > 0 ? (
+      <Carousel axis="horizontal">
+        {movies.map((movie) => (
+          <div key={movie.id}>
+            <h2>{movie.title}</h2>
+            <img src={movie.poster_url} alt={movie.title} />
+            {/* Add other movie details as needed */}
+          </div>
+        ))}
+      </Carousel>
+      ) : (
+      <p>Loading...</p>
+    )}
+  </div>
   );
 };
 
