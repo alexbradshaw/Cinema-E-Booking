@@ -1,26 +1,27 @@
-nav {
-    display: inline-block;
-}
+/* Navbar.css */
 
 nav {
     width: 100%;
-    margin: 0;
-    padding: 0;
+    background-color: #E2DECC; /* Change the background color as needed */
+    border-bottom: 4px solid #333; /* Add a border to the bottom with a white color */
+    text-align: center;
 }
   
-nav ul {
+ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
   
-nav li {
-    display: inline;
+li {
+    display: inline-block;
     margin-right: 20px; /* Adjust the spacing between navigation items as needed */
 }
   
-nav a {
+a {
     text-decoration: none;
-    font-size: 25px;
+    color: #333; /* Set the text color to white */
+    font-weight: bold;
+    font-size: 25px; /* Adjust the font size as needed */
 }
   

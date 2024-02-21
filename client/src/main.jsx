@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 import Home from './views/HomePage';
+import AfterLogin from './views/AfterLogin.jsx';
 // import Register from './views/Register';
 // import RegisterConfirmation from './views/RegisterConfirmation';
 // import Login from './views/Login';
@@ -25,6 +26,7 @@ const routes = [
   // { path: 'login', element: <Login /> },
   // { path: 'editProfile', element: <EditProfile /> },
    { path: 'booking', element: <Booking /> },
+   { path: 'loggedin', element: <AfterLogin /> },
   // { path: 'orderSummary', element: <OrderSummary /> },
   // { path: 'checkout', element: <Checkout /> },
   // { path: 'orderConfirmation', element: <OrderConfirmation /> },
