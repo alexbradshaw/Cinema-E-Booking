@@ -1,13 +1,13 @@
 // Navbar.jsx
 import React from 'react';
+import "../CSS/Navbar.css";
 
 const Navbar = () => {
   return (
     <nav>
       <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/movies">Movies</a></li>
-        <li><a href="/movies">Login</a></li>
+        <li><a href="/login">Login</a></li>
         {/* Add more navigation links as needed */}
       </ul>
     </nav>
