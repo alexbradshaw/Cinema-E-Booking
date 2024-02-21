@@ -13,7 +13,7 @@ import Home from './views/HomePage';
 // import RegisterConfirmation from './views/RegisterConfirmation';
 // import Login from './views/Login';
 // import EditProfile from './views/EditProfile';
-// import Booking from './views/Booking';
+ import Booking from './views/Booking';
 // import OrderSummary from './views/OrderSummary';
 // import Checkout from './views/Checkout';
 // import OrderConfirmation from './views/OrderConfirmation';
@@ -24,7 +24,7 @@ const routes = [
   // { path: 'registerConfirmation', element: <RegisterConfirmation /> },
   // { path: 'login', element: <Login /> },
   // { path: 'editProfile', element: <EditProfile /> },
-  // { path: 'booking', element: <Booking /> },
+   { path: 'booking', element: <Booking /> },
   // { path: 'orderSummary', element: <OrderSummary /> },
   // { path: 'checkout', element: <Checkout /> },
   // { path: 'orderConfirmation', element: <OrderConfirmation /> },
