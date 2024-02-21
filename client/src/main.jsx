@@ -15,6 +15,7 @@ import AfterLogin from './views/AfterLogin.jsx';
 // import Login from './views/Login';
 // import EditProfile from './views/EditProfile';
  import Booking from './views/Booking';
+ import MoviePage from './views/MoviesPage.jsx';
 // import OrderSummary from './views/OrderSummary';
 // import Checkout from './views/Checkout';
 // import OrderConfirmation from './views/OrderConfirmation';
@@ -27,6 +28,7 @@ const routes = [
   // { path: 'editProfile', element: <EditProfile /> },
    { path: 'booking', element: <Booking /> },
    { path: 'loggedin', element: <AfterLogin /> },
+   { path: 'movie', element: <MoviePage /> },
   // { path: 'orderSummary', element: <OrderSummary /> },
   // { path: 'checkout', element: <Checkout /> },
   // { path: 'orderConfirmation', element: <OrderConfirmation /> },
