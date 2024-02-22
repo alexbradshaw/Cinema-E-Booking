@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
+//import { Carousel } from 'react-elastic-carousel';
 import "./CSS/HomePage.css";
 import { getAllMovies } from '../utils/API';
 import Navbar from './components/Navbar';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import MovieRow from './components/MovieRow';
+import { v4 as uuidv4 } from 'uuid';
 
 const Home = () => {
   const containerStyle = {
@@ -62,6 +65,14 @@ const Home = () => {
         ) : (
         <p>Loading...</p>
       )}
+      
+      {/*
+      <MovieRow
+        key={uuidv4()}
+        title="Now in Theaters"
+        movies={movies}
+      />
+      */}
     </div>
   );
 };
