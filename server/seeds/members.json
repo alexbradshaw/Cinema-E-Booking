@@ -1,0 +1,20 @@
+[
+    { "movie_id": 1, "member_id": 3 },
+    { "movie_id": 1, "member_id": 4 },
+    { "movie_id": 1, "member_id": 5 },
+    { "movie_id": 1, "member_id": 6 },
+    { "movie_id": 1, "member_id": 7 },
+    { "movie_id": 1, "member_id": 8 },
+    { "movie_id": 1, "member_id": 9 },
+    { "movie_id": 1, "member_id": 10 },
+    { "movie_id": 2, "member_id": 13 },
+    { "movie_id": 2, "member_id": 14 },
+    { "movie_id": 2, "member_id": 15 },
+    { "movie_id": 2, "member_id": 16 },
+    { "movie_id": 3, "member_id": 19 },
+    { "movie_id": 3, "member_id": 20 },
+    { "movie_id": 4, "member_id": 23 },
+    { "movie_id": 4, "member_id": 24 },
+    { "movie_id": 4, "member_id": 25 },
+    { "movie_id": 4, "member_id": 26 }
+]

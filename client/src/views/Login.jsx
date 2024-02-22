@@ -34,6 +34,67 @@ const Login = () => {
   };
 
   return (
+    <div id="login-container">
+        <h1> Login </h1>
+        <form className="form" onSubmit={handleSubmit}>
+            <p className="fieldset">
+                <label className="image-replace email" htmlFor="signin-email">E-mail or Username</label>
+                <input 
+                    className="full-width has-padding has-border" 
+                    id="userOrEmail" 
+                    type="text"
+                    value={userOrEmail}
+                    onChange={(e) => setUserOrEmail(e.target.value)}
+                    required
+                    placeholder="E-mail or Username">
+                </input>
+               
+            </p>
+
+            <p className="fieldset">
+                <label className="image-replace password" htmlFor="signin-password">Password</label>
+                <input
+                    className="full-width has-padding has-border"
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    placeholder="Password">
+                </input>
+                <a href="#0" className="hide-password">Show</a>
+                
+            </p>
+
+            {/*
+            <p class="fieldset">
+                <input 
+                    type="checkbox" 
+                    id="remember-me" 
+                    checked> </input>
+                <label for="remember-me">Remember me</label>
+            </p>
+            */}   
+            
+            
+            <p className="fieldset">
+                <input 
+                    className="full-width" 
+                    type="submit" 
+                    value="Login"> 
+                </input>
+            </p>
+        </form>
+
+        <p className="form-bottom-message"><a href="/register">Forgot your password?</a></p>
+    </div>
+
+  );
+};
+
+export default Login;
+
+    {/*
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
@@ -59,9 +120,6 @@ const Login = () => {
       </form>
 
       {/* Link to the registration page */}
+      /*
       <p>Don't have an account? <Link to="/register">Register here</Link></p>
-    </div>
-  );
-};
-
-export default Login;
+</div>*/

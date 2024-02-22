@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { search } from '../../utils/API'; // Adjust the path based on your file structure
+import { searchMovies } from '../../utils/API'; // Adjust the path based on your file structure
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,7 +11,7 @@ const Navbar = () => {
 
     try {
       // Call the search function with the current search term
-      const searchResults = await search(searchTerm);
+      const searchResults = await searchMovies(searchTerm);
 
       // Redirect to the search results page with the search term and results
       /*
