@@ -56,6 +56,7 @@ const Register = () => {
         />
 
         {/* You may have a checkbox for admin registration */}
+        {/*
         <label>
           <input
             type="checkbox"
@@ -64,6 +65,7 @@ const Register = () => {
           />
           Admin
         </label>
+        */}
 
         <button type="submit">Register</button>
       </form>
