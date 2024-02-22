@@ -13,7 +13,7 @@ import AfterLogin from './views/AfterLogin.jsx';
  import Register from './views/Register';
 // import RegisterConfirmation from './views/RegisterConfirmation';
  import Login from './views/Login';
-// import EditProfile from './views/EditProfile';
+import EditProfile from './views/EditProfile';
  import Booking from './views/Booking';
  import MoviePage from './views/MoviesPage.jsx';
 // import OrderSummary from './views/OrderSummary';
@@ -25,7 +25,7 @@ const routes = [
   { path: 'register', element: <Register /> },
   // { path: 'registerConfirmation', element: <RegisterConfirmation /> },
    { path: 'login', element: <Login /> },
-  // { path: 'editProfile', element: <EditProfile /> },
+  { path: 'editProfile', element: <EditProfile /> },
    { path: 'booking', element: <Booking /> },
    { path: 'loggedin', element: <AfterLogin /> },
    { path: 'movie', element: <MoviePage /> },

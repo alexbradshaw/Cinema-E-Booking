@@ -35,7 +35,7 @@ const Navbar = () => {
     <nav>
       <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/profile">Profile</a></li>
+        <li><a href="/editProfile">Profile</a></li>
         <li>
           <form onSubmit={handleSearch}>
             <input
