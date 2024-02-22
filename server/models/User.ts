@@ -1,6 +1,7 @@
-import { Model, DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
 import sequelize from "../config/connection";
+
+import { Model, DataTypes } from 'sequelize';
 
 class User extends Model {
     declare id: number;
@@ -18,6 +19,7 @@ User.init(
     isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false
     },
     username: {
       type: DataTypes.STRING,
@@ -42,6 +44,26 @@ User.init(
     profile_pic: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    create_promotion: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    permission2: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    permission3: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    permission4: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     },
   },
   {
