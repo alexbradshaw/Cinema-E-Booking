@@ -1,0 +1,48 @@
+/* Home.css */
+
+/* Styles for the container */
+.container {
+    background-color: white;
+    /* Add other styles as needed */
+  }
+  
+/* Styles for the carousel */
+.carousel-container {
+    max-width: 500px;
+    max-height: 500px;
+    margin: auto;
+    /* Add other styles as needed */
+}
+
+.carouselStyle { 
+    max-width: 500px;
+    max-height: 500px;
+    margin: auto;
+    /* Add other styles as needed */
+}
+
+/* Custom styling for carousel buttons */
+.carousel-root .control-dots {
+    position: absolute;
+    bottom: 20px; /* Adjust the distance from the bottom as needed */
+    width: 100%;
+    text-align: center;
+  }
+  
+.carousel-root .control-dots .dot {
+    background-color: #fff; /* Set the background color */
+    border: 5px solid #000; /* Set the border color */
+    margin: 5px 5px; /* Adjust the spacing between dots */
+}
+  
+.carousel-root .control-dots .dot.selected {
+    background-color: #000; /* Set the background color for the selected dot */
+}
+
+body { 
+    background: #E2DECC;
+}
+
+h1 { 
+    text-align: center;
+}

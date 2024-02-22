@@ -1,0 +1,35 @@
+.movie-row-wrapper {
+    color: white;
+    margin: 4vh 2vw 0;
+  }
+  
+  .movie-row {
+    object-fit: contain;
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    max-width: 100%;
+    padding: 15px;
+  }
+  
+  .movie-row::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .rec.rec-arrow {
+    border-radius: 30%;
+    color: whitesmoke;
+    background-color: black;
+  }
+  
+  .rec.rec-arrow:hover {
+    border-radius: 50%;
+  }
+  
+  .rec.rec-arrow:disabled {
+    visibility: hidden;
+  }
+  
+  button.rec-dot {
+    display: none;
+  }

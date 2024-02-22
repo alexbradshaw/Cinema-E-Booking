@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-//import { Carousel } from 'react-elastic-carousel';
-import "./CSS/HomePage.css";
+import "./CSS/AfterLogin.css";
 import { getAllMovies } from '../utils/API';
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBarLogged';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import MovieRow from './components/MovieRow';
-import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom'; // Import useHistory
 
-const Home = () => {
+const AfterLogin = () => {
   const containerStyle = {
     backgroundColor: 'blue',
     // Add other styles as needed
@@ -34,6 +32,12 @@ const Home = () => {
     fetchMovies();
   }, []);
 
+  const navigate = useNavigate();
+  const handleBooking = (movieId) => {
+    // Redirect to the booking page
+    navigate('/booking');
+  };
+
   return (
     <div className="screenBody">
         <h1>Cinema E-Booking</h1>
@@ -58,6 +62,9 @@ const Home = () => {
                       Watch Trailer
                     </a>
                   </div>
+                  <button className="bookingButton" onClick={() => handleBooking(movie.id) }>
+                    Book Now
+                  </button>
                 </div>
               </div>
             ))}
@@ -65,16 +72,8 @@ const Home = () => {
         ) : (
         <p>Loading...</p>
       )}
-      
-      {/*
-      <MovieRow
-        key={uuidv4()}
-        title="Now in Theaters"
-        movies={movies}
-      />
-      */}
     </div>
   );
 };
 
-export default Home;
+export default AfterLogin;
