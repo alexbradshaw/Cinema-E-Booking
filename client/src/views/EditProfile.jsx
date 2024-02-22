@@ -5,7 +5,6 @@ import { getLoggedInUser } from '../utils/API'; // Adjust the path based on your
 const EditProfile  = () => { 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
@@ -15,7 +14,6 @@ const EditProfile  = () => {
                 const user = await getLoggedInUser();
                 setUsername(user.username);
                 setEmail(user.email);
-                setPassword(user.password);
                 setIsAdmin(user.isAdmin);
             } catch (error) {
                 console.error('Error getting logged in user:', error);
@@ -55,15 +53,6 @@ const EditProfile  = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-                />
-
-                <label htmlFor="password">Password:</label>
-                <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 required
                 />
 
