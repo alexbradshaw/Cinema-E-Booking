@@ -1,5 +1,6 @@
 [
     {
+      "create_promotion": true,
       "isAdmin": true,
       "username": "alex",
       "email": "alex@gmail.com",
@@ -7,6 +8,7 @@
       "profile_pic": "/seeds/alex.jpg"
     },
     {
+      "permission2": true,
       "isAdmin": true,
       "username": "josh",
       "email": "josh@gmail.com",
@@ -14,6 +16,8 @@
       "profile_pic": "/seeds/josh.jpg"
     },
     {
+      "create_promotion": true,
+      "permission3": true,
       "isAdmin": true,
       "username": "tony",
       "email": "tony@gmail.com",
@@ -21,10 +25,39 @@
       "profile_pic": "/seeds/tony.jpg"
     },
     {
+      "permission4": true,
       "isAdmin": true,
       "username": "will",
       "email": "will@gmail.com",
       "password": "wcepress",
       "profile_pic": "/seeds/will.jpg"
+    },
+    {
+      "isAdmin": false,
+      "username": "lucas",
+      "email": "lucas@gmail.com",
+      "password": "lmendes",
+      "profile_pic": "/seeds/lucas.jpg"
+    },
+    {
+      "isAdmin": false,
+      "username": "alvaro",
+      "email": "alvaro@gmail.com",
+      "password": "aolivella",
+      "profile_pic": "/seeds/alvaro.jpg"
+    },
+    {
+      "isAdmin": false,
+      "username": "isaac",
+      "email": "isaac@gmail.com",
+      "password": "iwest",
+      "profile_pic": "/seeds/isaac.jpg"
+    },
+    {
+      "isAdmin": false,
+      "username": "noodles",
+      "email": "noodles@gmail.com",
+      "password": "alin",
+      "profile_pic": "/seeds/noodles.jpg"
     }
 ]

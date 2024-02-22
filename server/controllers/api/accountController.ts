@@ -1,4 +1,4 @@
-import { User } from '../../models'
+import { Movie, Promotion, Ticket, Transaction, User } from '../../models'
 import { verifyToken } from '../../utils/auth'
 import { Request, Response } from 'express';
 
@@ -11,7 +11,30 @@ export const getAuthedUser = async (req: Request, res: Response) => {
             const user = await User.findOne(
                 { 
                     where: { id: req.session.userId },
-                    attributes: { exclude: ['password'] }
+                    attributes: { exclude: ['password'] },
+                    include: [
+                        {
+                            model: Promotion,
+                            attributes: ['id', 'title', 'discount_value']
+                        },
+                        {
+                            model: Transaction,
+                            include: [
+                                {
+                                    order: ['id', 'ASC'],
+                                    model: Ticket,
+                                    attributes: ['seat_number', 'type'],
+                                    include: [
+                                        {
+                                            model: Movie,
+                                            attributes: ['title']
+                                        }
+                                    ]
+                                }
+                            ],
+                            attributes: ['id', 'date', 'total']
+                        }
+                    ]
                 }
             );
 
@@ -28,7 +51,30 @@ export const getUserByName = async (req: Request, res: Response) => {
         const user = await User.findOne(
             { 
                 where: { username: req.params.username },
-                attributes: { exclude: ['password'] }
+                attributes: { exclude: ['email', 'password'] },
+                include: [
+                    {
+                        model: Promotion,
+                        attributes: ['id', 'title', 'discount_value']
+                    },
+                    {
+                        model: Transaction,
+                        include: [
+                            {
+                                order: ['id', 'ASC'],
+                                model: Ticket,
+                                attributes: ['seat_number', 'type'],
+                                include: [
+                                    {
+                                        model: Movie,
+                                        attributes: ['title']
+                                    }
+                                ]
+                            }
+                        ],
+                        attributes: ['id', 'date', 'total']
+                    }
+                ]
             }
         );
 

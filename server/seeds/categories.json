@@ -1,0 +1,18 @@
+[
+    {
+      "name": "Action",
+      "movie_id": [1, 3, 4]
+    },
+    {
+      "name": "Drama",
+      "movie_id": [3]
+    },
+    {
+      "name": "Comedy",
+      "movie_id": [1, 4]
+    },
+    {
+      "name": "Kids",
+      "movie_id": [2]
+    }
+  ]
