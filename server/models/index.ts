@@ -85,15 +85,16 @@ import User from './User';
 
 
 /* Setting up Model Relation to link a User to a Transaction */
-    /* Promotion Association (so we know who made the promotion)*/
+    /* Transaction Association (so we know who made the Transaction)*/
     User.hasMany(Transaction, {
         foreignKey: 'user_id'
     });
 
-    /* User Association (if we query promotions, we can see who made it) */
+    /* User Association (if we query transactions, we can see the associated user) */
     Transaction.belongsTo(User, {
         foreignKey: 'user_id',
         as: "Transaction"
     });
+
 
 export { Category, CastMember, Movie, MovieCategory, Person, Promotion, Ticket, Transaction, User };
