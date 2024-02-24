@@ -16,7 +16,7 @@ const Login = () => {
       // Optionally, you can handle the result here
       if (isAdmin) {
         console.log('Login successful for admin');
-        navigate('/loggedin');
+        navigate('/adminHome');
         // Redirect the user to the admin dashboard or another page
       } else {
         console.log('Login successful for regular user');
