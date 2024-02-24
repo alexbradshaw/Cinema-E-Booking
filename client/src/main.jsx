@@ -16,9 +16,9 @@ import AfterLogin from './views/AfterLogin.jsx';
 import EditProfile from './views/EditProfile';
  import Booking from './views/Booking';
  import MoviePage from './views/MoviesPage.jsx';
-// import OrderSummary from './views/OrderSummary';
-// import Checkout from './views/Checkout';
-// import OrderConfirmation from './views/OrderConfirmation';
+import OrderSummary from './views/OrderSummary';
+import Checkout from './views/Checkout';
+import OrderConfirmation from './views/OrderConfirmation';
 
 const routes = [
   { index: true, element: <Home /> },
@@ -29,9 +29,9 @@ const routes = [
    { path: 'booking', element: <Booking /> },
    { path: 'loggedin', element: <AfterLogin /> },
    { path: 'movie', element: <MoviePage /> },
-  // { path: 'orderSummary', element: <OrderSummary /> },
-  // { path: 'checkout', element: <Checkout /> },
-  // { path: 'orderConfirmation', element: <OrderConfirmation /> },
+  { path: 'orderSummary', element: <OrderSummary /> },
+  { path: 'checkout', element: <Checkout /> },
+  { path: 'orderConfirmation', element: <OrderConfirmation /> },
 ]
 
 const router = createBrowserRouter([
