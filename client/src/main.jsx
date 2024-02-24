@@ -19,13 +19,15 @@ import OrderSummary from './views/OrderSummary';
 import Checkout from './views/Checkout';
 import OrderConfirmation from './views/OrderConfirmation';
 import Admin from './views/Admin.jsx';
+import ManagePromotions from './views/ManagePromotions.jsx';
+import ManageMovies from './views/ManageMovies.jsx'
 
 const routes = [
   { index: true, element: <Home /> },
   { path: 'register', element: <Register /> },
   { path: 'admin', element: <Admin /> },
-  { path: 'admin/promotions', element: <Admin /> },
-  { path: 'admin/movies', element: <Admin /> },
+  { path: 'admin/promotions', element: <ManagePromotions /> },
+  { path: 'admin/movies', element: <ManageMovies /> },
   // { path: 'registerConfirmation', element: <RegisterConfirmation /> },
   { path: 'login', element: <Login /> },
   { path: 'editProfile', element: <EditProfile /> },
