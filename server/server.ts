@@ -11,6 +11,13 @@ declare module 'express-session' {
       userId: number;
       username: string;
       isAdmin: boolean;
+
+      permissions : {
+        promotions: boolean
+        perm2: boolean
+        perm3: boolean
+        perm4: boolean
+      }
   }
 }
 
