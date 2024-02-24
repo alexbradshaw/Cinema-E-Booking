@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllMovies } from '../utils/API';
-import Navbar from './components/NavBarAdmin';
+// import Navbar from './components/Navbar';
 // import './CSS/ManageMovies.css'; // Import scoped CSS for ManageMovies view
 
 const ManageMovies = () => {
@@ -22,9 +22,8 @@ const ManageMovies = () => {
 
   return (
     <div className="manage-movies-container">
-      <Navbar />
 
-      <Link to="/addMovie">
+      <Link to="/admin/movies/addMovie">
         <button className="add-movie-button">Add Movie</button>
       </Link>
 

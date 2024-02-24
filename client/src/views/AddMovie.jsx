@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { createNewMovie } from '../utils/API';
-// import './CSS/AddMovie.css'; // Import CSS file for styling
 
 const AddMovie = () => {
   const [formData, setFormData] = useState({
