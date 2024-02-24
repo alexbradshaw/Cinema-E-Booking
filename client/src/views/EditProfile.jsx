@@ -1,66 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link for navigation
-import { getLoggedInUser } from '../utils/API'; // Adjust the path based on your file structure
+import { Link, useNavigate } from 'react-router-dom';
+import { getLoggedInUser } from '../utils/API';
 import './CSS/EditProfile.css';
 
-const EditProfile  = () => { 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const navigate = useNavigate();
+const EditProfile = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const user = await getLoggedInUser();
-                setUsername(user.username);
-                setEmail(user.email);
-            } catch (error) {
-                console.error('Error getting logged in user:', error);
-                // Handle error
-            }
-        };
-        fetchUserData();
-    }, []);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            navigate('/')
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            // display an error message to the user
-        }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const user = await getLoggedInUser();
+        setUsername(user.username);
+        setEmail(user.email);
+      } catch (error) {
+        console.error('Error getting logged in user:', error);
+      }
     };
+    fetchUserData();
+  }, []);
 
-    return (
-        <div>
-            {/* title of page */}
-            <h1>Manage Profile</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
-                <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                />
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      navigate('/');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
 
-                <label htmlFor="email">Email:</label>
-                <input
-                type="email"
-                id="email"
-                value={email}
-                disabled
-                required
-                />
+  return (
+    <div className="editProfileContainer">
+      <h2>Manage Profile</h2>
+      <form onSubmit={handleSubmit} className="editProfileForm">
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="inputField"
+          required
+        />
 
-                <button type="submit" className='save-changes'>Save Changes</button>
-            </form>
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          disabled
+          className="inputField"
+          required
+        />
 
-            <p><Link to="/">Back</Link></p>
-        </div>
-    );
+        <button type="submit" className='save-changes'>Save Changes</button>
+      </form>
+
+      <p><Link to="/" className="back-link">Back</Link></p>
+    </div>
+  );
 };
 
 export default EditProfile;

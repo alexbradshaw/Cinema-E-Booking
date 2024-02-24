@@ -67,7 +67,10 @@ const AddMovie = () => {
         <label htmlFor="seats">Seats:</label>
         <input class="changes" type="text" id="seats" name="seats" value={formData.seats} onChange={handleChange} required />
 
-        <button type="submit" className='addMovieBtn' disabled>Add Movie</button>
+        <div className="buttonContainer">
+          <a href="/admin/movies" className="cancelBtn">Cancel</a>
+          <button type="submit" className='addMovieBtn' disabled>Add Movie</button>
+        </div>
       </form>
     </div>
   );
