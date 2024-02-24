@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addCategory, addMovie, authCheck, findCategories, findCategoriesList, findMovies, getAuthedUser, getUserByName, login, logout, searchCategories, searchMovies, signup }  from '../../controllers';
+import { addCategory, addMovie, adminCheck, authCheck, findCategories, findCategoriesList, findMovies, getAuthedUser, getUserByName, login, logout, searchCategories, searchMovies, signup }  from '../../controllers';
 
 const router = Router();
 
@@ -7,6 +7,7 @@ const router = Router();
 //! Means that it is an auth protected route 
 
     /* Admin Routes */
+        router.get('/admin', adminCheck); //! GET route to check if user is admin and their permissions
         router.post('/admin/category', addCategory); //! POST route to add a new category
         router.post('/admin/movie', addMovie); //! POST route to add a new movie
 
