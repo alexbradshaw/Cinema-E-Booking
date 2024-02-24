@@ -36,9 +36,6 @@ const Home = () => {
 
   return (
     <div className="screenBody">
-        <h1>Cinema E-Booking</h1>
-
-        <Navbar />
         
         {movies.length > 0 ? (
           <Carousel className="carouselStyle" axis="horizontal" showArrows={false} showIndicators={false}>
