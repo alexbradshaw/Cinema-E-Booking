@@ -14,6 +14,21 @@ const retrieveAuthToken = () => {
     return localStorage.getItem('auth');
 }
 
+/* Admin Routes */
+    export const adminCheck = async () => {
+        const response = await fetch("/api/admin", {
+            headers: {
+                'Authorization' : retrieveAuthToken(),
+            }
+        });
+        
+        await errorCheck(response);
+        
+        const admin = await response.json();
+
+        return admin;
+    }
+
 /* Account Routes */
 
     /*
