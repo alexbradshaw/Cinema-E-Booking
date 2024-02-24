@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link for navigation
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import Link for navigation
 import { login } from '../utils/API'; // Adjust the path based on your file structure
+import { AuthContext } from '../App';
 
 const Login = () => {
   const [userOrEmail, setUserOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const isAdmin = await login({ userOrEmail, password });
+      await login({ userOrEmail, password });
+      dispatch({ type: 'SET_AUTH', payload: true });
 
-      // Optionally, you can handle the result here
-      if (isAdmin) {
-        console.log('Login successful for admin');
-        navigate('/adminHome');
-        // Redirect the user to the admin dashboard or another page
-      } else {
-        console.log('Login successful for regular user');
-        navigate('/loggedin');
-        // Redirect the user to the regular user dashboard or another page
-      }
+      navigate('/');
 
       // Clear the form fields after successful login
       setUserOrEmail('');

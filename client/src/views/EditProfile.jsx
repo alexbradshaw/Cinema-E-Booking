@@ -5,7 +5,6 @@ import { getLoggedInUser } from '../utils/API'; // Adjust the path based on your
 const EditProfile  = () => { 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -14,7 +13,6 @@ const EditProfile  = () => {
                 const user = await getLoggedInUser();
                 setUsername(user.username);
                 setEmail(user.email);
-                setIsAdmin(user.isAdmin);
             } catch (error) {
                 console.error('Error getting logged in user:', error);
                 // Handle error
@@ -26,7 +24,7 @@ const EditProfile  = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            navigate('/loggedin')
+            navigate('/')
         } catch (error) {
             console.error('Error updating profile:', error);
             // display an error message to the user
@@ -52,24 +50,14 @@ const EditProfile  = () => {
                 type="email"
                 id="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                disabled
                 required
                 />
-
-                {/* You may have a checkbox for admin registration */}
-                <label>
-                <input
-                    type="checkbox"
-                    checked={isAdmin}
-                    onChange={(e) => setIsAdmin(e.target.checked)}
-                />
-                Admin
-                </label>
 
                 <button type="submit">Save Changes</button>
             </form>
 
-            <p><Link to="/loggedin">Back</Link></p>
+            <p><Link to="/">Back</Link></p>
         </div>
     );
 };

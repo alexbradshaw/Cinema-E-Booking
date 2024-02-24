@@ -9,6 +9,11 @@ class User extends Model {
     declare username: string;
     declare password: string;
 
+    declare create_promotion: boolean;
+    declare permission2: boolean;
+    declare permission3: boolean;
+    declare permission4: boolean;
+
     async checkPassword(password: string) {
         return bcrypt.compareSync(password, this.password);
     }

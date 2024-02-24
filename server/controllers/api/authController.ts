@@ -12,6 +12,13 @@ export const signup = async (req: Request, res: Response) => {
       req.session.userId = user.id; 
       req.session.jwt = generateToken(user);
 
+      req.session.permissions = {
+        promotions: user.create_promotion,
+        perm2: user.permission2,
+        perm3: user.permission3,
+        perm4: user.permission4,
+      }
+
       res.json({ token: req.session.jwt });
     })
   } 
@@ -46,6 +53,13 @@ export const login = async (req: Request, res: Response) => {
         req.session.isAdmin = user.isAdmin;
         req.session.userId = user.id; 
         req.session.jwt = generateToken(user);
+
+        req.session.permissions = {
+          promotions: user.create_promotion,
+          perm2: user.permission2,
+          perm3: user.permission3,
+          perm4: user.permission4,
+        }
 
         res.json({ isAdmin: req.session.isAdmin, token: req.session.jwt }); 
       })
