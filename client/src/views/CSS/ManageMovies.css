@@ -1,1 +1,82 @@
-/* here */
+/* CSS for ManageMovies view */  
+
+.manage-movies-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movies-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .movie-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .movie-poster {
+    max-width: 150px;
+    height: auto;
+  }
+  
+  .movie-details {
+    /* Your existing styles for movie details */
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Styling for buttons */
+  .view-button,
+  .edit-button,
+  .delete-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .view-button {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .edit-button {
+    background-color: #ffc107;
+    color: #000;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+    color: #fff;
+  }
+
+  .add-movie-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  
+  .add-movie-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Hover effects for buttons */
+  .view-button:hover,
+  .edit-button:hover,
+  .delete-button:hover {
+    opacity: 0.8;
+  }
+  

@@ -34,7 +34,7 @@ const AddMovie = () => {
 
   return (
     <div className="addMovieContainer">
-      <h1>Add New Movie</h1>
+      <h1>Add Movie</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title:</label>
         <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} required />

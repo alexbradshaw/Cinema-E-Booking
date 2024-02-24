@@ -21,7 +21,6 @@ const ManageMovies = () => {
 
   return (
     <div className="manage-movies-container">
-
       <Link to="/admin/movies/addMovie">
         <button className="add-movie-button">Add Movie</button>
       </Link>
@@ -30,13 +29,16 @@ const ManageMovies = () => {
         {movies.length > 0 ? (
           movies.map((movie) => (
             <div key={movie.id} className="movie-container">
-              <h2>{movie.title}</h2>
-              <img src={movie.poster_url} alt={movie.title} />
+              <img src={movie.poster_url} alt={movie.title} className="movie-poster" />
               <div className="movie-details">
-                <span>Rating: {movie.rating}</span>
-                <span>{movie.coming_soon ? 'Coming Soon' : 'Currently Running'}</span>
-                <button className="edit-button">Edit</button>
-                <button className="delete-button">Delete</button>
+                <h4>{movie.title}</h4>
+                <p>Rating: {movie.rating}</p>
+                <p>{movie.coming_soon ? 'Coming Soon' : 'Currently Running'}</p>
+                <div className="button-container">
+                    <button className="view-button">View</button>
+                    <button className="edit-button">Edit</button>
+                    <button className="delete-button">Delete</button>
+                </div>
               </div>
             </div>
           ))
