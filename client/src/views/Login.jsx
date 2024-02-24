@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import Link for navigation
 import { login } from '../utils/API'; // Adjust the path based on your file structure
 import { AuthContext } from '../App';
@@ -6,8 +6,15 @@ import { AuthContext } from '../App';
 const Login = () => {
   const [userOrEmail, setUserOrEmail] = useState('');
   const [password, setPassword] = useState('');
+  
   const navigate = useNavigate();
-  const { dispatch } = useContext(AuthContext);
+  const { auth, dispatch } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!localStorage.getItem('auth') && auth) {
+      dispatch({ type: 'SET_AUTH', payload: false });
+    }
+  }, [])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
