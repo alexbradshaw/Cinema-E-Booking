@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllMovies } from '../utils/API';
+import { useNavigate } from 'react-router-dom';
 import "./CSS/Booking.css";
 
 const Booking = () => {
@@ -8,6 +9,8 @@ const Booking = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatAges, setSeatAges] = useState({});
   const [movies, setMovies] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -64,6 +67,9 @@ const Booking = () => {
       seats: selectedSeats,
       seatAges: seatAges,
     });
+
+    navigate('/orderSummary', { state: { movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats, seatAges: seatAges } });
+
   };
 
   return (
