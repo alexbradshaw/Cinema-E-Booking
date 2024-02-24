@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllMovies } from '../utils/API';
-// import Navbar from './components/Navbar';
-// import './CSS/ManageMovies.css'; // Import scoped CSS for ManageMovies view
+import './CSS/ManageMovies.css'; // Import CSS for ManageMovies view
 
 const ManageMovies = () => {
   const [movies, setMovies] = useState([]);
