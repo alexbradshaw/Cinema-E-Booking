@@ -19,6 +19,8 @@ import EditProfile from './views/EditProfile';
 import OrderSummary from './views/OrderSummary';
 import Checkout from './views/Checkout';
 import OrderConfirmation from './views/OrderConfirmation';
+import ManagePromotions from './views/ManagePromotions.jsx';
+import ManageMovies from './views/ManageMovies.jsx'
 
 const routes = [
   { index: true, element: <Home /> },
@@ -32,6 +34,8 @@ const routes = [
   { path: 'orderSummary', element: <OrderSummary /> },
   { path: 'checkout', element: <Checkout /> },
   { path: 'orderConfirmation', element: <OrderConfirmation /> },
+  { path: 'managePromotions', element: <ManagePromotions /> },
+  { path: 'manageMovies', element: <ManageMovies /> }
 ]
 
 const router = createBrowserRouter([
