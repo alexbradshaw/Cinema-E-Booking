@@ -4,7 +4,7 @@ import "./CSS/AfterLogin.css";
 import { getAllMovies } from '../utils/API';
 import Navbar from './components/NavBarLogged';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useNavigate } from 'react-router-dom'; // Import useHistory
+import { Link, useNavigate } from 'react-router-dom'; // Import useHistory
 
 const AfterLogin = () => {
   const containerStyle = {
