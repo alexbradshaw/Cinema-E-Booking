@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link for navigation
 import { getLoggedInUser } from '../utils/API'; // Adjust the path based on your file structure
+import './CSS/EditProfile.css';
 
 const EditProfile  = () => { 
     const [username, setUsername] = useState('');
@@ -54,7 +55,7 @@ const EditProfile  = () => {
                 required
                 />
 
-                <button type="submit">Save Changes</button>
+                <button type="submit" className='save-changes'>Save Changes</button>
             </form>
 
             <p><Link to="/">Back</Link></p>

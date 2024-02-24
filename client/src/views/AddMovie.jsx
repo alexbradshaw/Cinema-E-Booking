@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createNewMovie } from '../utils/API';
+import './CSS/AddMovie.css';
 
 const AddMovie = () => {
   const [formData, setFormData] = useState({
@@ -34,39 +35,39 @@ const AddMovie = () => {
 
   return (
     <div className="addMovieContainer">
-      <h1>Add Movie</h1>
-      <form onSubmit={handleSubmit}>
+      <h2>Add Movie</h2>
+      <form onSubmit={handleSubmit} className='addMovieForm'>
         <label htmlFor="title">Title:</label>
-        <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} required />
+        <input class="changes" type="text" id="title" name="title" value={formData.title} onChange={handleChange} required />
 
         <label htmlFor="synopsis">Synopsis:</label>
         <textarea id="synopsis" name="synopsis" value={formData.synopsis} onChange={handleChange} required />
 
         <label htmlFor="rating">Rating:</label>
-        <input type="text" id="rating" name="rating" value={formData.rating} onChange={handleChange} required />
+        <input class="changes" type="text" id="rating" name="rating" value={formData.rating} onChange={handleChange} required />
 
         <label htmlFor="poster">Poster URL:</label>
-        <input type="text" id="poster" name="poster" value={formData.poster} onChange={handleChange} required />
+        <input class="changes" type="text" id="poster" name="poster" value={formData.poster} onChange={handleChange} required />
 
         <label htmlFor="trailer_url">Trailer URL:</label>
-        <input type="text" id="trailer_url" name="trailer_url" value={formData.trailer_url} onChange={handleChange} required />
+        <input class="changes" type="text" id="trailer_url" name="trailer_url" value={formData.trailer_url} onChange={handleChange} required />
 
         <label htmlFor="category_id">Category ID:</label>
-        <input type="text" id="category_id" name="category_id" value={formData.category_id} onChange={handleChange} required />
+        <input class="changes" type="text" id="category_id" name="category_id" value={formData.category_id} onChange={handleChange} required />
 
         <label htmlFor="director_id">Director ID:</label>
-        <input type="text" id="director_id" name="director_id" value={formData.director_id} onChange={handleChange} required />
+        <input class="changes" type="text" id="director_id" name="director_id" value={formData.director_id} onChange={handleChange} required />
 
         <label htmlFor="producer_id">Producer ID:</label>
-        <input type="text" id="producer_id" name="producer_id" value={formData.producer_id} onChange={handleChange} required />
+        <input class="changes" type="text" id="producer_id" name="producer_id" value={formData.producer_id} onChange={handleChange} required />
 
         <label htmlFor="member_id">Member ID:</label>
-        <input type="text" id="member_id" name="member_id" value={formData.member_id} onChange={handleChange} required />
+        <input class="changes" type="text" id="member_id" name="member_id" value={formData.member_id} onChange={handleChange} required />
 
         <label htmlFor="seats">Seats:</label>
-        <input type="text" id="seats" name="seats" value={formData.seats} onChange={handleChange} required />
+        <input class="changes" type="text" id="seats" name="seats" value={formData.seats} onChange={handleChange} required />
 
-        <button type="submit" disabled>Add Movie</button>
+        <button type="submit" className='addMovieBtn' disabled>Add Movie</button>
       </form>
     </div>
   );
