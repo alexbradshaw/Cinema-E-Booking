@@ -5,6 +5,7 @@ import './index.css'
 
 import {
   createBrowserRouter,
+  redirect,
   RouterProvider,
 } from "react-router-dom";
 
@@ -23,21 +24,32 @@ import ManagePromotions from './views/ManagePromotions.jsx';
 import ManageMovies from './views/ManageMovies.jsx'
 import AddMovie from './views/AddMovie.jsx';
 
+const authMiddleware = () => {
+  if (!localStorage.getItem('auth')) {
+    return redirect('/login');
+  } else {
+    return null;
+  }
+}
+
 const routes = [
-  { index: true, element: <Home /> },
-  { path: 'register', element: <Register /> },
-  { path: 'admin', element: <Admin /> },
-  { path: 'admin/promotions', element: <ManagePromotions /> },
-  { path: 'admin/movies', element: <ManageMovies /> },
-  // { path: 'registerConfirmation', element: <RegisterConfirmation /> },
-  { path: 'login', element: <Login /> },
-  { path: 'editProfile', element: <EditProfile /> },
-  { path: 'booking', element: <Booking /> },
-  { path: 'movie', element: <MoviePage /> },
-  { path: 'orderSummary', element: <OrderSummary /> },
-  { path: 'checkout', element: <Checkout /> },
-  { path: 'orderConfirmation', element: <OrderConfirmation /> },
-  { path: 'admin/movies/addMovie', element: <AddMovie /> },
+  /* Public Routes */
+    { index: true, element: <Home /> },
+    { path: 'movie', element: <MoviePage /> },
+    { path: 'login', element: <Login /> },
+    { path: 'register', element: <Register /> },
+    // { path: 'registerConfirmation', element: <RegisterConfirmation /> },
+    { path: 'booking', element: <Booking /> },
+
+  /* Auth Protected Routes */
+    { path: 'admin', element: <Admin />, loader: authMiddleware },
+    { path: 'admin/promotions', element: <ManagePromotions />, loader: authMiddleware },
+    { path: 'admin/movies', element: <ManageMovies />, loader: authMiddleware },
+    { path: 'admin/movies/addMovie', element: <AddMovie />, loader: authMiddleware },
+    { path: 'editProfile', element: <EditProfile />, loader: authMiddleware },
+    { path: 'checkout', element: <Checkout />, loader: authMiddleware },
+    { path: 'orderSummary', element: <OrderSummary />, loader: authMiddleware },
+    { path: 'orderConfirmation', element: <OrderConfirmation />, loader: authMiddleware },
 ]
 
 const router = createBrowserRouter([
