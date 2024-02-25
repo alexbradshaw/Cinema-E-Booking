@@ -24,9 +24,11 @@ import ManagePromotions from './views/ManagePromotions.jsx';
 import ManageMovies from './views/ManageMovies.jsx'
 import AddMovie from './views/AddMovie.jsx';
 
-const authMiddleware = () => {
+const authMiddleware = (isAdmin) => {
   if (!localStorage.getItem('auth')) {
     return redirect('/login');
+  } else if (isAdmin && !localStorage.getItem('admin')) {
+    return redirect('/');
   } else {
     return null;
   }
@@ -42,14 +44,14 @@ const routes = [
     { path: 'booking', element: <Booking /> },
 
   /* Auth Protected Routes */
-    { path: 'admin', element: <Admin />, loader: authMiddleware },
-    { path: 'admin/promotions', element: <ManagePromotions />, loader: authMiddleware },
-    { path: 'admin/movies', element: <ManageMovies />, loader: authMiddleware },
-    { path: 'admin/movies/addMovie', element: <AddMovie />, loader: authMiddleware },
-    { path: 'editProfile', element: <EditProfile />, loader: authMiddleware },
-    { path: 'checkout', element: <Checkout />, loader: authMiddleware },
-    { path: 'orderSummary', element: <OrderSummary />, loader: authMiddleware },
-    { path: 'orderConfirmation', element: <OrderConfirmation />, loader: authMiddleware },
+    { path: 'admin', element: <Admin />, loader: () => authMiddleware(true) },
+    { path: 'admin/promotions', element: <ManagePromotions />, loader: () => authMiddleware(true) },
+    { path: 'admin/movies', element: <ManageMovies />, loader: () => authMiddleware(true) },
+    { path: 'admin/movies/addMovie', element: <AddMovie />, loader: () => authMiddleware(true) },
+    { path: 'editProfile', element: <EditProfile />, loader: () => authMiddleware(false) },
+    { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false) },
+    { path: 'orderSummary', element: <OrderSummary />, loader: () => authMiddleware(false) },
+    { path: 'orderConfirmation', element: <OrderConfirmation />, loader: () => authMiddleware(false) },
 ]
 
 const router = createBrowserRouter([
