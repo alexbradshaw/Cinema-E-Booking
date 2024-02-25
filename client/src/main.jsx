@@ -23,6 +23,7 @@ import Admin from './views/Admin.jsx';
 import ManagePromotions from './views/ManagePromotions.jsx';
 import ManageMovies from './views/ManageMovies.jsx'
 import AddMovie from './views/AddMovie.jsx';
+import ManageUsers from './views/ManageUsers';
 
 const authMiddleware = (isAdmin) => {
   if (!localStorage.getItem('auth')) {
@@ -48,6 +49,7 @@ const routes = [
     { path: 'admin/promotions', element: <ManagePromotions />, loader: () => authMiddleware(true) },
     { path: 'admin/movies', element: <ManageMovies />, loader: () => authMiddleware(true) },
     { path: 'admin/movies/addMovie', element: <AddMovie />, loader: () => authMiddleware(true) },
+    { path: 'admin/users', element: <ManageUsers />, loader: () => authMiddleware(true) },
     { path: 'editProfile', element: <EditProfile />, loader: () => authMiddleware(false) },
     { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false) },
     { path: 'orderSummary', element: <OrderSummary />, loader: () => authMiddleware(false) },
