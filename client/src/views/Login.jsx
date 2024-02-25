@@ -21,9 +21,7 @@ const Login = () => {
 
     try {
       await login({ userOrEmail, password });
-      dispatch({ type: 'SET_AUTH', payload: true });
-
-      navigate('/');
+      await dispatch({ type: 'SET_AUTH', payload: true });
 
       // Clear the form fields after successful login
       setUserOrEmail('');
@@ -31,6 +29,8 @@ const Login = () => {
     } catch (error) {
       console.error('Error during login:', error);
       // Handle error, e.g., display an error message to the user
+    } finally {
+      navigate('/');
     }
   };
 
