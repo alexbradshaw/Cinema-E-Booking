@@ -48,7 +48,7 @@ const Home = () => {
                     <span>Rating: {movie.rating}</span>
                   </div>
                   <div className="comingSoonBar">
-                    <span>{movie.coming_soon ? 'Coming Soon' : 'Currently Running'}</span>
+                    <span>{(new Date(movie.starts_showing)).getTime() > Date.now() ? 'Coming Soon' : 'Currently Running'}</span>
                   </div>
                   <div className="trailerLinkBar">
                     <iframe width="560" height="315" src={"https://www.youtube.com/embed/" + movie.trailer_url} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
