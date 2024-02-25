@@ -14,8 +14,11 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case 'RESET':
+      localStorage.removeItem("auth");
+      localStorage.removeItem("admin");
       return initialState;
     case 'SET_ADMIN':
+      localStorage.setItem('admin', action.payload.isAdmin);
       return { ...state, admin: action.payload };
     case 'SET_AUTH':
       return { ...state, auth: action.payload };

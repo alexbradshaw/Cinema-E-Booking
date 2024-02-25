@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link for navigation
-import './CSS/ManagePromotions.css'; // Import CSS for ManagePromotions view
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import Link for navigation
+import { AuthContext } from '../App';
 // import { getAllPromotions } from '../utils/API'; // Import function to fetch promotions
+import { checkAdmin } from '../utils/API';
+import './CSS/ManagePromotions.css'; // Import CSS for ManagePromotions view
+
 
 const ManagePromotions = () => {
-//   const [promotions, setPromotions] = useState([]);
+    const navigate = useNavigate();
+    const { admin: { isAdmin } } = useContext(AuthContext);
 
-//   useEffect(() => {
-//     // Fetch promotions when component mounts
-//     const fetchPromotions = async () => {
-//       try {
-//         const promotionsData = await getAllPromotions();
-//         setPromotions(promotionsData);
-//       } catch (error) {
-//         console.error("Error fetching promotions:", error);
-//       }
-//     };
+    useEffect(() => { checkAdmin(navigate) }, [isAdmin]);
 
-//     fetchPromotions();
-//   }, []);
+    //   const [promotions, setPromotions] = useState([]);
+
+    //   useEffect(() => {
+    //     // Fetch promotions when component mounts
+    //     const fetchPromotions = async () => {
+    //       try {
+    //         const promotionsData = await getAllPromotions();
+    //         setPromotions(promotionsData);
+    //       } catch (error) {
+    //         console.error("Error fetching promotions:", error);
+    //       }
+    //     };
+
+    //     fetchPromotions();
+    //   }, []);
 
     // Function to render each promotion item
     const renderPromotionItem = (promotion) => (
