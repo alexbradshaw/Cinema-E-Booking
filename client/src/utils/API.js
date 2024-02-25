@@ -1,8 +1,9 @@
 
 const errorCheck = async (res) => {
     if (!res.ok) {
-        if ([400, 401, 404].includes(res.status)) {
+        if ([400, 401].includes(res.status)) {
             localStorage.removeItem('auth');
+            localStorage.removeItem('admin');
             location.assign('/login');
         }
         const error = await res.json();
@@ -12,6 +13,12 @@ const errorCheck = async (res) => {
 
 const retrieveAuthToken = () => {
     return localStorage.getItem('auth');
+}
+
+export const checkAdmin = async (navigate) => {
+    if (!localStorage.getItem('admin') || !(await adminCheck()).isAdmin) {
+        navigate('/')
+    }
 }
 
 /* Admin Routes */
