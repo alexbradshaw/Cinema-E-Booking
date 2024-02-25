@@ -5,7 +5,7 @@ export const adminCheck = async (req: Request, res: Response) => {
     const verified = verifyToken(req);
     let status;
 
-    if (verified) {
+    if (verified && req.session.isAdmin) {
       status = 200;
     } else {
       status = 401;
