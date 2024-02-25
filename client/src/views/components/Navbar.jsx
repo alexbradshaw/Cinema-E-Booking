@@ -1,5 +1,5 @@
 // Navbar.jsx
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { adminCheck, authCheck, logout, searchMovies } from '../../utils/API'; 
 import { AuthContext } from '../../App';
@@ -51,7 +51,6 @@ const AuthenticatedNav = () => {
     try {
         await logout();
         dispatch({ type:'RESET' });
-        localStorage.removeItem("auth");
     } catch (e) {
         console.log('Something went wrong with logout!')
         console.log('Message: ', e.message);
