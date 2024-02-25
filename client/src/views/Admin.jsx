@@ -17,6 +17,7 @@ const Admin = () => {
                 <ul>
                     <li><Link to='/admin/promotions'>Manage Promotions</Link></li>
                     <li><Link to='/admin/movies'>Manage Movies</Link></li>
+                    <li><Link to='/admin/users'>Manage Users</Link></li>
                 </ul>
             </div>
         </div>
