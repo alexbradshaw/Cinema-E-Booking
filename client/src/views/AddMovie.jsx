@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { createNewMovie } from '../utils/API';
+import React, { useContext, useEffect, useState } from 'react';
+import { checkAdmin, createNewMovie } from '../utils/API';
+import { AuthContext } from '../App';
+import { useNavigate } from 'react-router-dom';
 import './CSS/AddMovie.css';
 
 const AddMovie = () => {
+  const navigate = useNavigate();
+  const { admin: { isAdmin } } = useContext(AuthContext);
+
+  useEffect(() => { checkAdmin(navigate) }, [isAdmin]);
+
   const [formData, setFormData] = useState({
     title: '',
     synopsis: '',
