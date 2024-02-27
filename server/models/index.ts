@@ -80,7 +80,7 @@ import User from './User';
     /* User Association (if we query promotions, we can see who made it) */
     Promotion.belongsTo(User, {
         foreignKey: 'user_id',
-        as: "Promotion"
+        as: "User"
     });
 
 
