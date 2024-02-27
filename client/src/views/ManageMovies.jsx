@@ -38,11 +38,16 @@ const ManageMovies = () => {
               <div className="movie-details">
                 <h4>{movie.title}</h4>
                 <p>Rating: {movie.rating}</p>
-                <p>{movie.coming_soon ? 'Coming Soon' : 'Currently Running'}</p>
+                <p>{new Date(movie.starts_showing) > Date.now() ? 'Coming Soon' : 'Currently Running'}</p>
                 <div className="button-container">
                     <button className="view-button">View</button>
                     <button className="edit-button">Edit</button>
                     <button className="delete-button">Delete</button>
+                    {/* 
+                    <button onClick={getMovie(movie.id)} className="view-button">View</button>
+                    <button onClick={editMovie(movie.id)} className="edit-button">Edit</button>
+                    <button onClick={handleDelete(movie.id)} className="delete-button">Delete</button>
+                    */}
                 </div>
               </div>
             </div>
