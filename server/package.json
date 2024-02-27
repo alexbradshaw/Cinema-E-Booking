@@ -8,8 +8,7 @@
     "dev": "ts-node server.ts",
     "build": "tsc -p ..",
     "source": "ts-node ./utils/source.ts",
-    "seed": "ts-node seeds/seed.ts",
-    "watch": "nodemon --exec \"npm run dev\""
+    "seed": "ts-node seeds/seed.ts"
   },
   "keywords": [],
   "author": "",
