@@ -29,7 +29,11 @@ Promotion.init(
     expiration: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: DataTypes.NOW
+      defaultValue: () => {
+        const date = new Date()
+        date.setMonth((date.getMonth() + 1) % 12)
+        return date
+      }
     },
     user_id: {
       type: DataTypes.INTEGER,
