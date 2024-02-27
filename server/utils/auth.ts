@@ -11,7 +11,7 @@ export const generateToken = (user: User) => {
 
 export const verifyToken = (req: Request) => {
     const token = req.session.jwt || '';
-    const userProvidedToken = req.headers.authorization;
+    const userProvidedToken = req.headers.authorization?.split(' ')[1];
 
     if (userProvidedToken == '' || token != userProvidedToken) {
         return false;
