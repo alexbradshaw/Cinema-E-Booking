@@ -1,13 +1,9 @@
 
 const errorCheck = async (res) => {
+    const status = res.status;
     if (!res.ok) {
-        if ([400, 401].includes(res.status)) {
-            localStorage.removeItem('auth');
-            localStorage.removeItem('admin');
-            location.assign('/login');
-        }
-        const error = await res.json();
-        throw new Error(error.message);
+        const response = res.json();
+        throw new Error(response.message, { cause: status });
     }
 }
 
@@ -25,7 +21,7 @@ export const checkAdmin = async (navigate) => {
     export const adminCheck = async () => {
         const response = await fetch("/api/admin", {
             headers: {
-                'Authorization' : retrieveAuthToken(),
+                'Authorization' : `Bearer ${retrieveAuthToken()}`,
             }
         });
         
@@ -37,6 +33,44 @@ export const checkAdmin = async (navigate) => {
     }
 
 /* Account Routes */
+
+    /*
+        [
+            {
+                "id": 1,
+                "isAdmin": true,
+                "username": "alex",
+                "profile_pic": "/seeds/alex.jpg",
+                "create_promotion": true,
+                "permission2": false,
+                "permission3": false,
+                "permission4": false
+            },
+            {
+                "id": 2,
+                "isAdmin": true,
+                "username": "josh",
+                "profile_pic": "/seeds/josh.jpg",
+                "create_promotion": false,
+                "permission2": true,
+                "permission3": false,
+                "permission4": false
+            },
+        ]
+    */
+        export const getAllUsers = async () => {
+            const response = await fetch("/api/admin/accounts", {
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                }
+            });
+            
+            await errorCheck(response);
+            
+            const users = await response.json();
+    
+            return users;
+        }
 
     /*
         {
@@ -105,7 +139,7 @@ export const checkAdmin = async (navigate) => {
     export const getLoggedInUser = async () => {
         const response = await fetch("/api/account", {
             headers: {
-                'Authorization' : retrieveAuthToken(),
+                'Authorization' : `Bearer ${retrieveAuthToken()}`,
             }
         });
         
@@ -202,7 +236,7 @@ export const checkAdmin = async (navigate) => {
         const response = await fetch("/api/account/auth", {
             method: "POST", 
             headers: {
-            'Authorization' : retrieveAuthToken(),
+                'Authorization' : `Bearer ${retrieveAuthToken()}`,
             },
         });
 
@@ -221,7 +255,7 @@ export const checkAdmin = async (navigate) => {
         const response = await fetch("/api/account/signup", {
             method: "POST", 
             headers: {
-            "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 isAdmin,
@@ -248,7 +282,7 @@ export const checkAdmin = async (navigate) => {
         const response = await fetch("/api/account/login", {
             method: "POST", 
             headers: {
-            "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 'username': userOrEmail, // accepts username or
@@ -274,7 +308,7 @@ export const checkAdmin = async (navigate) => {
         const response = await fetch("/api/account/logout", {
             method: "POST", 
             headers: {
-                'Authorization' : retrieveAuthToken(),
+                'Authorization' : `Bearer ${retrieveAuthToken()}`,
             }
         });
 
@@ -292,12 +326,12 @@ export const checkAdmin = async (navigate) => {
                 name: "Comedy"
             }
         */
-        export const createNewCategory = async (formData) => {
+        export const createCategory = async (formData) => {
             const response = await fetch("/api/category", {
                 method: "POST", 
                 headers: {
-                "Content-Type": "application/json",
-                'Authorization' : retrieveAuthToken(),
+                    "Content-Type": "application/json",
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
                 },
                 body: JSON.stringify(formData),
             });
@@ -506,6 +540,73 @@ export const checkAdmin = async (navigate) => {
             return movies; 
         }
 
+/* Promotion Routes */
+
+    /*
+        {
+            "title": "Promotion1",
+            "discount_value": 10,
+            "condition": "Minimum purchase of $50",
+            "expiration": "2022-12-31T00:00:00.000Z", // This will default to one month from now
+        }
+    */
+        export const createPromotion = async (formData) => {
+            const response = await fetch("/api/admin/promotion", {
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                },
+                body: JSON.stringify(formData),
+            });
+            
+            await errorCheck(response);
+    
+            const { movie } = await response.json();
+    
+            return movie;
+        }
+    
+        
+        /*
+            Returns an array of every promotion in db
+            [
+                {
+                    "id": 1,
+                    "title": "Promotion1",
+                    "discount_value": 10,
+                    "condition": "Minimum purchase of $50",
+                    "created_at": "2022-01-01T00:00:00.000Z",
+                    "expiration": "2022-12-31T00:00:00.000Z",
+                    "User": {
+                        "username": "alex",
+                        "profile_pic": "/seeds/alex.jpg"
+                    }
+                },
+                {
+                    "id": 2,
+                    "title": "Promotion2",
+                    "discount_value": 20,
+                    "condition": "Minimum purchase of $100",
+                    "created_at": "2022-01-01T00:00:00.000Z",
+                    "expiration": "2022-12-31T00:00:00.000Z",
+                    "User": {
+                        "username": "josh",
+                        "profile_pic": "/seeds/josh.jpg"
+                    }
+                },
+            ]
+        */
+        export const getAllPromotions = async () => {
+            const response = await fetch("/api/promotions");
+            
+            await errorCheck(response);
+            
+            const promotions = await response.json();
+            
+            return promotions; 
+        }
+
 
 /* Movie Routes */
 
@@ -524,12 +625,12 @@ export const checkAdmin = async (navigate) => {
             "seats": 100
         },
     */
-    export const createNewMovie = async (formData) => {
+    export const createMovie = async (formData) => {
         const response = await fetch("/api/movie", {
             method: "POST", 
             headers: {
-            "Content-Type": "application/json",
-            'Authorization' : retrieveAuthToken(),
+                "Content-Type": "application/json",
+                'Authorization' : `Bearer ${retrieveAuthToken()}`,
             },
             body: JSON.stringify(formData),
         });
@@ -664,7 +765,7 @@ export const checkAdmin = async (navigate) => {
     */
     export const getAllMovies = async () => {
         const response = await fetch("/api/movies");
-        
+
         await errorCheck(response);
         
         const movies = await response.json();
