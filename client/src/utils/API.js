@@ -251,7 +251,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Returns bool for if user is an admin
     */
-    export const signup = async({ isAdmin, username, email, password }) => {
+    export const signup = async ({ isAdmin, username, email, password }) => {
         const response = await fetch("/api/account/signup", {
             method: "POST", 
             headers: {
@@ -278,7 +278,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Returns bool for if user is an admin
     */
-    export const login = async({ userOrEmail, password }) => {
+    export const login = async ({ userOrEmail, password }) => {
         const response = await fetch("/api/account/login", {
             method: "POST", 
             headers: {
@@ -304,7 +304,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Returns a success message or throws an error (if something went wrong or user isn't authed)
     */
-    export const logout = async() => {
+    export const logout = async () => {
         const response = await fetch("/api/account/logout", {
             method: "POST", 
             headers: {
@@ -317,6 +317,23 @@ export const checkAdmin = async (navigate) => {
         return response;
     }
 
+
+    /*
+        Returns updated user object, takes an updated user object as the parameter
+    */
+        export const updateUser = async (updatedUser) => {
+            const response = await fetch("/api/account", {
+                method: "PUT", 
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                },
+                body: updatedUser
+            });
+    
+            await errorCheck(response);
+    
+            return response;
+        }
 
 
 /* Category Routes */
