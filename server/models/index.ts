@@ -1,3 +1,4 @@
+import Admin from './Admin';
 import Category from './Category';
 import CastMember from './CastMember';
 import Movie from './Movie';
@@ -96,5 +97,16 @@ import User from './User';
         as: "Transaction"
     });
 
+/* Setting up Model Relation for Users to have an admin object */
+    User.hasOne(Admin, {
+        foreignKey: 'admin_id',
+        constraints: false
+    });
 
-export { Category, CastMember, Movie, MovieCategory, Person, Promotion, Ticket, Transaction, User };
+    Admin.belongsTo(User, {
+        foreignKey: 'user_id',
+        constraints: false
+    });
+
+
+export { Admin, Category, CastMember, Movie, MovieCategory, Person, Promotion, Ticket, Transaction, User };

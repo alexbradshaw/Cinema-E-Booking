@@ -1,63 +1,62 @@
 [
     {
-      "create_promotion": true,
-      "isAdmin": true,
       "username": "alex",
       "email": "alex@gmail.com",
       "password": "abradshaw",
-      "profile_pic": "/seeds/alex.jpg"
+      "profile_pic": "/seeds/alex.jpg",
+      "promotions": false,
+      "admin_id": 1
     },
     {
-      "permission2": true,
-      "isAdmin": true,
       "username": "josh",
       "email": "josh@gmail.com",
       "password": "jpyon",
-      "profile_pic": "/seeds/josh.jpg"
+      "profile_pic": "/seeds/josh.jpg",
+      "promotions": true,
+      "admin_id": 2
     },
     {
-      "create_promotion": true,
-      "permission3": true,
-      "isAdmin": true,
       "username": "tony",
       "email": "tony@gmail.com",
       "password": "tnguyen",
-      "profile_pic": "/seeds/tony.jpg"
+      "profile_pic": "/seeds/tony.jpg",
+      "promotions": false,
+      "admin_id": 3
     },
     {
-      "permission4": true,
-      "isAdmin": true,
       "username": "will",
       "email": "will@gmail.com",
       "password": "wcepress",
-      "profile_pic": "/seeds/will.jpg"
+      "profile_pic": "/seeds/will.jpg",
+      "promotions": true,
+      "admin_id": 4
     },
     {
-      "isAdmin": false,
       "username": "lucas",
       "email": "lucas@gmail.com",
       "password": "lmendes",
-      "profile_pic": "/seeds/lucas.jpg"
+      "profile_pic": "/seeds/lucas.jpg",
+      "promotions": false
     },
     {
-      "isAdmin": false,
       "username": "alvaro",
       "email": "alvaro@gmail.com",
       "password": "aolivella",
-      "profile_pic": "/seeds/alvaro.jpg"
+      "profile_pic": "/seeds/alvaro.jpg",
+      "promotions": false
     },
     {
-      "isAdmin": false,
       "username": "isaac",
       "email": "isaac@gmail.com",
       "password": "iwest",
-      "profile_pic": "/seeds/isaac.jpg"
+      "profile_pic": "/seeds/isaac.jpg",
+      "promotions": true
     },
     {
-      "isAdmin": false,
       "username": "noodles",
       "email": "noodles@gmail.com",
       "password": "alin",
-      "profile_pic": "/seeds/noodles.jpg"
+      "profile_pic": "/seeds/noodles.jpg",
+      "promotions": true
     }
 ]

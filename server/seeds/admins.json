@@ -1,0 +1,26 @@
+[
+    {
+        "admin_id":1,
+        "user_id": 1,
+        "create_promotion": true,
+        "permission4": true
+    },
+    {
+        "admin_id":2,
+        "user_id": 2,
+        "create_promotion": true,
+        "permission2": true
+    },
+    {
+        "admin_id":3,
+        "user_id": 3,
+        "create_promotion": true,
+        "permission3": true
+    },
+    {
+        "admin_id":4,
+        "user_id": 4,
+        "create_promotion": true,
+        "permission4": true
+    }
+]

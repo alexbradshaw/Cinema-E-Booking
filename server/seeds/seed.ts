@@ -1,11 +1,14 @@
 import sequelize from '../config/connection';
 
-import { Category, CastMember, MovieCategory, Movie, Person, Promotion, Ticket, Transaction, User } from '../models';
-import { categories, members, movieCategories, movies, persons, promotions, tickets, transactions, users } from './';
+import { Admin, Category, CastMember, MovieCategory, Movie, Person, Promotion, Ticket, Transaction, User } from '../models';
+import { admins, categories, members, movieCategories, movies, persons, promotions, tickets, transactions, users } from './';
 
 const seed = async () => {
     try {
         await sequelize.sync({force: true});
+
+        await Admin.bulkCreate(admins);
+        console.log("Admins Seeded");
 
         await Person.bulkCreate(persons);
         console.log("Persons Seeded");
