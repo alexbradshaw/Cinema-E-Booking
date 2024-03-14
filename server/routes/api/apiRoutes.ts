@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addCategory, addMovie, addPromotion, adminCheck, authCheck, findCategories, findCategoriesList, findMovies, findPromotions, getAuthedUser, getUserByNameOrID, getUsers, login, logout, searchCategories, searchMovies, signup }  from '../../controllers';
+import { addCategory, addMovie, addPromotion, adminCheck, authCheck, findCategories, findCategoriesList, findMovies, findPromotions, getAuthedUser, getUserByNameOrID, getUsers, login, logout, searchCategories, searchMovies, signup, updateUser }  from '../../controllers';
 
 const router = Router();
 
@@ -16,6 +16,7 @@ const router = Router();
 
     /* Account Routes */
         router.get('/account', getAuthedUser) //! GET route to get the logged in user
+        router.put('/account', updateUser); //! PUT route to update user
         router.get('/account/:usernameOrID', getUserByNameOrID) //* GET to get a user based on username or id
         router.post('/account/auth', authCheck); //! POST route to check if user is still authenticated
         router.post('/account/signup', signup); //* POST route to sign up
