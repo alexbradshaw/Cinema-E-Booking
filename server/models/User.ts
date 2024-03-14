@@ -43,7 +43,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    promotions: {
+    promotion_enrollment: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false

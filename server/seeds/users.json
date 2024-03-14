@@ -4,7 +4,7 @@
       "email": "alex@gmail.com",
       "password": "abradshaw",
       "profile_pic": "/seeds/alex.jpg",
-      "promotions": false,
+      "promotion_enrollment": false,
       "admin_id": 1
     },
     {
@@ -12,7 +12,7 @@
       "email": "josh@gmail.com",
       "password": "jpyon",
       "profile_pic": "/seeds/josh.jpg",
-      "promotions": true,
+      "promotion_enrollment": true,
       "admin_id": 2
     },
     {
@@ -20,7 +20,7 @@
       "email": "tony@gmail.com",
       "password": "tnguyen",
       "profile_pic": "/seeds/tony.jpg",
-      "promotions": false,
+      "promotion_enrollment": false,
       "admin_id": 3
     },
     {
@@ -28,7 +28,7 @@
       "email": "will@gmail.com",
       "password": "wcepress",
       "profile_pic": "/seeds/will.jpg",
-      "promotions": true,
+      "promotion_enrollment": true,
       "admin_id": 4
     },
     {
@@ -36,27 +36,27 @@
       "email": "lucas@gmail.com",
       "password": "lmendes",
       "profile_pic": "/seeds/lucas.jpg",
-      "promotions": false
+      "promotion_enrollment": false
     },
     {
       "username": "alvaro",
       "email": "alvaro@gmail.com",
       "password": "aolivella",
       "profile_pic": "/seeds/alvaro.jpg",
-      "promotions": false
+      "promotion_enrollment": false
     },
     {
       "username": "isaac",
       "email": "isaac@gmail.com",
       "password": "iwest",
       "profile_pic": "/seeds/isaac.jpg",
-      "promotions": true
+      "promotion_enrollment": true
     },
     {
       "username": "noodles",
       "email": "noodles@gmail.com",
       "password": "alin",
       "profile_pic": "/seeds/noodles.jpg",
-      "promotions": true
+      "promotion_enrollment": true
     }
 ]
