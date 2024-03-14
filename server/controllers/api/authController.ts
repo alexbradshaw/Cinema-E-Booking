@@ -1,4 +1,4 @@
-import { User } from '../../models'
+import { Admin, User } from '../../models'
 import { generateToken, verifyToken } from '../../utils/auth'
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
@@ -8,16 +8,11 @@ export const signup = async (req: Request, res: Response) => {
     const user = await User.create(req.body); 
 
     req.session.save(() => {
-      req.session.isAdmin = user.isAdmin;
+      req.session.isAdmin = user.admin_id ? true : false;
       req.session.userId = user.id; 
       req.session.jwt = generateToken(user);
 
-      req.session.permissions = {
-        promotions: user.create_promotion,
-        perm2: user.permission2,
-        perm3: user.permission3,
-        perm4: user.permission4,
-      }
+      req.session.permissions = undefined;
 
       res.json({ token: req.session.jwt });
     })
@@ -35,7 +30,15 @@ export const login = async (req: Request, res: Response) => {
                 { username: req.body.username }, 
                 { email: req.body.email }
             ] 
-        }
+        },
+        include: [
+          {
+            model: Admin,
+            attributes: {
+              exclude: ['admin_id']
+            }
+          }
+        ]
     })
 
     if (!user) {
@@ -50,16 +53,11 @@ export const login = async (req: Request, res: Response) => {
 
     try {
       req.session.save(() => {
-        req.session.isAdmin = user.isAdmin;
+        req.session.isAdmin = user.admin_id ? true : false;
         req.session.userId = user.id; 
         req.session.jwt = generateToken(user);
 
-        req.session.permissions = {
-          promotions: user.create_promotion,
-          perm2: user.permission2,
-          perm3: user.permission3,
-          perm4: user.permission4,
-        }
+        req.session.permissions = user.Admin ? user.Admin : undefined;
 
         res.json({ isAdmin: req.session.isAdmin, token: req.session.jwt }); 
       })

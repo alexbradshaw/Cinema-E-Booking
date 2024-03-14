@@ -24,7 +24,7 @@ import { Request, Response } from 'express';
   
     export const addPromotion = async (req: Request, res: Response) => {
       try {
-        if (!req.session.permissions?.promotions) {
+        if (!req.session.permissions?.create_promotion) {
           return res.status(401).json({ message: "Your account does not have permission to add a new promotion!" });
         }
         
