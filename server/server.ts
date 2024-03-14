@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { Admin } from './models';
 
 import express, { Express } from 'express';
 const app: Express = express();
@@ -12,12 +13,7 @@ declare module 'express-session' {
       username: string;
       isAdmin: boolean;
 
-      permissions : {
-        promotions: boolean
-        perm2: boolean
-        perm3: boolean
-        perm4: boolean
-      }
+      permissions : Admin
   }
 }
 
@@ -40,11 +36,12 @@ store.on('error', function(error: Error) {
 app.use(session({
     secret: process.env.SECRET || "secret",
     cookie: {
-      maxAge: 1000 * 60 * 60 * 4
+      maxAge: 1000 * 60 * 60 * 4,
+      sameSite: 'strict'  
     },
     store: store,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
   
 app.use(express.json()); 
@@ -52,10 +49,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(router); 
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist'))); 
+  app.use(express.static(path.join(__dirname, '../../client/dist'))); 
 
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
   });
 }
 
