@@ -33,7 +33,7 @@ const ManageUsers = () => {
                 users.map((user) => (
                   <div key={user.id} className="promotion-item">
                     <h3>User: {user.username}</h3>
-                    <p>Admin: {`${user.isAdmin}`}</p>
+                    <p>Admin: {`${user.admin ? true : false}`}</p>
                     <div className="promotion-actions">
                         <button className="edit-button" disabled>Edit</button>
                         <button className="delete-button" disabled>Delete</button>
