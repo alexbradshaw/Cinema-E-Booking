@@ -2,8 +2,15 @@
 const errorCheck = async (res) => {
     const status = res.status;
     if (!res.ok) {
-        const response = res.json();
-        throw new Error(response.message, { cause: status });
+        const response = await res.json();
+        console.log(response);
+        if (response.errors) {
+            for (const { message, type } of response.errors) {
+                throw new Error(type, { cause: message });
+            }
+        } else {
+            throw new Error(status, { cause: response });
+        }
     }
 }
 

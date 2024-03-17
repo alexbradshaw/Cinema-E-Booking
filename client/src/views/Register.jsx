@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../utils/API';
+import { AuthContext } from '../App';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false); // You may have a checkbox for admin registration
+  const { auth, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem('auth') && auth) {
+      dispatch({ type: 'SET_AUTH', payload: false });
+    }
+  }, [])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -15,14 +23,12 @@ const Register = () => {
     try {
       // Call the signup function with the registration details
       await signup({ isAdmin, username, email, password });
-
+      await dispatch({ type: 'SET_AUTH', payload: true });
       // Redirect to the login page or another page after successful registration
       navigate('/registerConfirmation');
     } catch (error) {
-      
       console.error('Error during registration:', error);
-
-      alert('Registration failed. Please try again.');
+      alert(error);
       // Handle error, e.g., display an error message to the user
     }
   };
