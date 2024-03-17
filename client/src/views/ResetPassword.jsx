@@ -5,7 +5,8 @@ import { signup } from '../utils/API';
 const Reset = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false); // You may have a checkbox for admin registration
   const navigate = useNavigate();
 
@@ -14,8 +15,7 @@ const Reset = () => {
 
     try {
       // Call the signup function with the registration details
-      await signup({ isAdmin, username, email, password });
-
+      await changePassword(email, oldPassword, newPassword);
       // Redirect to the login page or another page after successful registration
       navigate('/login');
     } catch (error) {
@@ -40,21 +40,21 @@ const Reset = () => {
           required
         />
 
-        <label htmlFor="password">Current Password: </label>
+        <label htmlFor="oldPassword">Old Password:</label>
         <input
           type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          id="oldPassword"
+          value={oldPassword}
+          onChange={(e) => setOldPassword(e.target.value)}
           required
         />
 
-        <label htmlFor="password">New Password: </label>
+        <label htmlFor="newPassword">New Password:</label>
         <input
           type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          id="newPassword"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
           required
         />
 
