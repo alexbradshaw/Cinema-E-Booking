@@ -19,7 +19,10 @@ const Register = () => {
       // Redirect to the login page or another page after successful registration
       navigate('/login');
     } catch (error) {
+      
       console.error('Error during registration:', error);
+
+      alert('Registration failed. Please try again.');
       // Handle error, e.g., display an error message to the user
     }
   };

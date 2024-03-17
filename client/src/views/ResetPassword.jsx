@@ -20,6 +20,8 @@ const Reset = () => {
       navigate('/login');
     } catch (error) {
       console.error('Error during registration:', error);
+
+      alert('Password change failed. Please try again.');
       // Handle error, e.g., display an error message to the user
     }
   };
