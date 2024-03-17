@@ -25,7 +25,7 @@ const Register = () => {
       await signup({ isAdmin, username, email, password });
       await dispatch({ type: 'SET_AUTH', payload: true });
       // Redirect to the login page or another page after successful registration
-      navigate('/');
+      navigate('/registerConfirmation');
     } catch (error) {
       console.error('Error during registration:', error);
       alert(error);
