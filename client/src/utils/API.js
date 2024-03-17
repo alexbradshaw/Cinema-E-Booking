@@ -285,7 +285,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Returns bool for if user is an admin
     */
-    export const login = async ({ userOrEmail, password }) => {
+    export const login = async ({ userOrEmail, password, rememerMe }) => {
         const response = await fetch("/api/account/login", {
             method: "POST", 
             headers: {
@@ -294,7 +294,8 @@ export const checkAdmin = async (navigate) => {
             body: JSON.stringify({
                 'username': userOrEmail, // accepts username or
                 'email': userOrEmail, // email
-                password
+                password,
+                rememerMe, //rememberme flag
             }), 
         });
 

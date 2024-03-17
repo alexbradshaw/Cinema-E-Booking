@@ -24,7 +24,9 @@ export const signup = async (req: Request, res: Response) => {
 }
 
 export const login = async (req: Request, res: Response) => { 
-    const user = await User.findOne({
+  const { username, email, password, rememberMe } = req.body; // Destructure rememberMe from the request
+  
+  const user = await User.findOne({
         where: {
             [Op.or]:[
                 { username: req.body.username }, 
@@ -45,6 +47,8 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid user" });
     }
 
+    const tokenExpiration = rememberMe ? '7d' : '1h'; // Set token expiration based on rememberMe
+
     const passCorrect = await user.checkPassword(req.body.password); 
 
     if (!passCorrect) {
@@ -55,7 +59,7 @@ export const login = async (req: Request, res: Response) => {
       req.session.save(() => {
         req.session.isAdmin = user.admin_id ? true : false;
         req.session.userId = user.id; 
-        req.session.jwt = generateToken(user);
+        req.session.jwt = generateToken(user, { expiresIn: tokenExpiration });
 
         req.session.permissions = user.Admin ? user.Admin : undefined;
 

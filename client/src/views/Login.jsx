@@ -9,6 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // Added for "Show Password" feature
   const [showErrorPopup, setShowErrorPopup] = useState(false); // Added for showing the error popup
+  const [rememberMe, setRememberMe] = useState(false); // State for "Remember Me"
   const navigate = useNavigate();
   const { auth, dispatch } = useContext(AuthContext);
 
@@ -22,7 +23,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      await login({ userOrEmail, password });
+      await login({ userOrEmail, password, rememberMe });
       await dispatch({ type: 'SET_AUTH', payload: true });
 
       // Clear the form fields after successful login
@@ -87,15 +88,19 @@ const Login = () => {
                 <button type="button" onClick={togglePasswordVisibility}>{showPassword ? "Hide" : "Show"}</button>   
             </p>
 
-            {/*
-            <p class="fieldset">
-                <input 
-                    type="checkbox" 
-                    id="remember-me" 
-                    checked> </input>
-                <label for="remember-me">Remember me</label>
+            
+            <p className="fieldset">
+              <label>
+                Remember Me
+                <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                />
+              </label>
+              
             </p>
-            */}   
+               
             
             
             <p className="fieldset">

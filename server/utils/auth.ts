@@ -5,8 +5,8 @@ import { Request } from 'express';
 const secret = process.env.SECRET || "Secret";
 const expiration = 1000 * 60 * 60 * 4;
 
-export const generateToken = (user: User) => {
-    return jwt.sign({ data: user }, secret, { expiresIn: expiration  });
+export const generateToken = (user: User, options: { expiresIn: string | number } = {expiresIn: '4h'}) => { // Updated to accept options for token generation
+    return jwt.sign({ data: user }, secret, options);
 }
 
 export const verifyToken = (req: Request) => {
