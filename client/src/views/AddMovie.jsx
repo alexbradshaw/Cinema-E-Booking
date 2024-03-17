@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { checkAdmin, createNewMovie } from '../utils/API';
+import { checkAdmin, createMovie } from '../utils/API';
 import { AuthContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import './CSS/AddMovie.css';
@@ -31,7 +31,7 @@ const AddMovie = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createNewMovie(formData);
+      await createMovie(formData);
       // Redirect to ManageMovies page after successful creation
       window.location.href = '/manage-movies';
     } catch (error) {

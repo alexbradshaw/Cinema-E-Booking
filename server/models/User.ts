@@ -2,17 +2,15 @@ import bcrypt from 'bcrypt';
 import sequelize from "../config/connection";
 
 import { Model, DataTypes } from 'sequelize';
+import Admin from './Admin';
 
 class User extends Model {
     declare id: number;
-    declare isAdmin: boolean;
+    declare admin_id: number;
     declare username: string;
     declare password: string;
 
-    declare create_promotion: boolean;
-    declare permission2: boolean;
-    declare permission3: boolean;
-    declare permission4: boolean;
+    declare Admin?: Admin;
 
     async checkPassword(password: string) {
         return bcrypt.compareSync(password, this.password);
@@ -21,11 +19,6 @@ class User extends Model {
 
 User.init(
   {
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -50,26 +43,19 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    create_promotion: {
+    promotion_enrollment: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
     },
-    permission2: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    permission3: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    permission4: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
+    admin_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: User,
+        key: 'id'
+      }
+    }
   },
   {
   hooks: {

@@ -3,8 +3,6 @@
         "title": "Promotion1",
         "discount_value": 10,
         "condition": "Minimum purchase of $50",
-        "created_at": "2022-01-01T00:00:00Z",
-        "expiration": "2022-12-31T00:00:00Z",
         "transaction_id": 1,
         "user_id": 1
     },
@@ -12,8 +10,6 @@
         "title": "Promotion2",
         "discount_value": 20,
         "condition": "Minimum purchase of $100",
-        "created_at": "2022-01-01T00:00:00Z",
-        "expiration": "2022-12-31T00:00:00Z",
         "transaction_id": 2,
         "user_id": 2
     },
@@ -21,8 +17,6 @@
         "title": "Promotion3",
         "discount_value": 30,
         "condition": "Minimum purchase of $150",
-        "created_at": "2022-01-01T00:00:00Z",
-        "expiration": "2022-12-31T00:00:00Z",
         "transaction_id": 3,
         "user_id": 3
     },
@@ -30,8 +24,6 @@
         "title": "Promotion4",
         "discount_value": 40,
         "condition": "Minimum purchase of $200",
-        "created_at": "2022-01-01T00:00:00Z",
-        "expiration": "2022-12-31T00:00:00Z",
         "transaction_id": 4,
         "user_id": 4
     }

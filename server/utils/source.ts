@@ -1,10 +1,11 @@
 import { promises } from 'fs';
 import { exec } from 'child_process';
 import { input } from '@inquirer/prompts';
+import envPass from '../utils/env';
 
 const sourceSQL = async () => {
-
-  const password = await input({ message: 'What is the mySQL password for your system?' });
+  let pass = envPass.length == 0 ? "" : envPass
+  const password = pass.length <= 0 ? pass : await input({ message: 'What is the mySQL password for your system?' });
 
   await promises.writeFile(`../.env`, `DB_PASSWORD="${password}"\nSECRET="${password}"`);
   await promises.writeFile(`./utils/env.ts`, `export default "${password}";`);

@@ -47,11 +47,15 @@ const routes = [
     { path: 'booking', element: <Booking /> },
 
   /* Auth Protected Routes */
+    // { path: 'registerConfirmation', element: <RegisterConfirmation /> },
+    
+    /* Auth Protected Routes */
     { path: 'admin', element: <Admin />, loader: () => authMiddleware(true) },
     { path: 'admin/promotions', element: <ManagePromotions />, loader: () => authMiddleware(true) },
     { path: 'admin/movies', element: <ManageMovies />, loader: () => authMiddleware(true) },
     { path: 'admin/movies/addMovie', element: <AddMovie />, loader: () => authMiddleware(true) },
     { path: 'admin/users', element: <ManageUsers />, loader: () => authMiddleware(true) },
+    { path: 'booking', element: <Booking />, loader: () => authMiddleware(false) },
     { path: 'editProfile', element: <EditProfile />, loader: () => authMiddleware(false) },
     { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false) },
     { path: 'orderSummary', element: <OrderSummary />, loader: () => authMiddleware(false) },
