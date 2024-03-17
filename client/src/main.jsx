@@ -24,6 +24,7 @@ import ManagePromotions from './views/ManagePromotions.jsx';
 import ManageMovies from './views/ManageMovies.jsx'
 import AddMovie from './views/AddMovie.jsx';
 import ManageUsers from './views/ManageUsers';
+import Reset from './views/ResetPassword.jsx';
 
 const authMiddleware = (isAdmin) => {
   if (!localStorage.getItem('auth')) {
@@ -41,7 +42,8 @@ const routes = [
     { path: 'movie', element: <MoviePage /> },
     { path: 'login', element: <Login /> },
     { path: 'register', element: <Register /> },
-    // { path: 'registerConfirmation', element: <RegisterConfirmation /> },
+    { path: 'resetPassword', element: <Reset />},
+    //{ path: 'registerConfirmation', element: <RegisterConfirmation /> },
     { path: 'booking', element: <Booking /> },
 
   /* Auth Protected Routes */

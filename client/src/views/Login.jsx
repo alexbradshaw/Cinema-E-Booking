@@ -87,7 +87,9 @@ const Login = () => {
             </p>
         </form>
 
-        <p className="form-bottom-message"><a href="/register">Forgot your password?</a></p>
+        <p className="form-bottom-message"><a href="/register">Create an Account</a></p>
+
+        <p className="form-bottom-message"><a href="/resetPassword">Forgot Your Password?</a></p>
     </div>
 
   );
