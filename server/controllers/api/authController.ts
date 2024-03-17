@@ -23,7 +23,7 @@ export const signup = async (req: Request, res: Response) => {
   }
 }
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => { 
     const user = await User.findOne({
         where: {
             [Op.or]:[

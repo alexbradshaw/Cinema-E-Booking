@@ -2,3 +2,40 @@
     border: 1px solid #ddd; /* Add border styling as needed */
     padding: 20px; /* Add padding for spacing inside the container */
 }
+
+.error-popup {
+    position: fixed; /* Or absolute, depending on your layout */
+    top: 20%; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Or fixed width */
+    max-width: 400px; /* Ensures it doesn't get too wide on larger screens */
+    background-color: #f8d7da; /* Light red; for the error background */
+    color: #721c24; /* Dark red; for the text */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    z-index: 1000; /* Ensure it's above other content */
+  }
+  
+  .error-popup p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+  }
+  
+  .error-popup button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #dc3545; /* Bootstrap danger color for consistency */
+    color: white;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .error-popup button:hover {
+    background-color: #c82333; /* Darker shade for hover effect */
+  }
