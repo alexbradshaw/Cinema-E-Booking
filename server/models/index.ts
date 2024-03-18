@@ -1,6 +1,7 @@
 import Admin from './Admin';
-import Category from './Category';
+import Card from './Card';
 import CastMember from './CastMember';
+import Category from './Category';
 import Movie from './Movie';
 import MovieCategory from './MovieCategory';
 import Person from './Person';
@@ -108,5 +109,16 @@ import User from './User';
         constraints: false
     });
 
+/* Setting up Model Relation for Users to have a Credit Card */
+    User.hasOne(Card, {
+        foreignKey: 'card_id',
+        constraints: false
+    });
 
-export { Admin, Category, CastMember, Movie, MovieCategory, Person, Promotion, Ticket, Transaction, User };
+    Card.belongsTo(User, {
+        foreignKey: 'user_id',
+        constraints: false
+    });
+
+
+export { Admin, Card, CastMember, Category, Movie, MovieCategory, Person, Promotion, Ticket, Transaction, User };
