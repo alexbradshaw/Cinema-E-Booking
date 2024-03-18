@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getLoggedInUser } from '../utils/API';
+import { getLoggedInUser, updateUser } from '../utils/API';
 import './CSS/EditProfile.css';
 
 const EditProfile = () => {
@@ -30,6 +30,10 @@ const EditProfile = () => {
     }
   };
 
+  const handleBack = () => {
+    navigate('/');
+  };
+
   return (
     <div className="editProfileContainer">
       <h2>Manage Profile</h2>
@@ -53,11 +57,10 @@ const EditProfile = () => {
           className="inputField"
           required
         />
-
+        <br />
         <button type="submit" className='save-changes'>Save Changes</button>
+        <button type="button" className='back' onClick={handleBack}>Back</button>
       </form>
-
-      <p><Link to="/" className="back-link">Back</Link></p>
     </div>
   );
 };
