@@ -372,8 +372,9 @@ export const checkAdmin = async (navigate) => {
                 method: "PUT", 
                 headers: {
                     'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                    'Content-Type': 'application/json',
                 },
-                body: updatedUser
+                body: JSON.stringify(updatedUser)
             });
     
             await errorCheck(response);
