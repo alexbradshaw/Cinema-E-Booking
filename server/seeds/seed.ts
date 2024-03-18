@@ -1,41 +1,44 @@
 import sequelize from '../config/connection';
 
-import { Admin, Category, CastMember, MovieCategory, Movie, Person, Promotion, Ticket, Transaction, User } from '../models';
-import { admins, categories, members, movieCategories, movies, persons, promotions, tickets, transactions, users } from './';
+import { Admin, Category, CastMember, MovieCategory, Movie, Person, Promotion, Ticket, Transaction, User, Card } from '../models';
+import { admins, cards, categories, members, movieCategories, movies, persons, promotions, tickets, transactions, users } from './';
 
 const seed = async () => {
     try {
-        await sequelize.sync({force: true});
+        await sequelize.sync({ force: true });
 
         await Admin.bulkCreate(admins);
-        console.log("Admins Seeded");
+        console.log('Admins Seeded');
 
         await Person.bulkCreate(persons);
-        console.log("Persons Seeded");
+        console.log('Persons Seeded');
+
+        await Card.bulkCreate(cards);
+        console.log('Cards Seeded');
 
         await Movie.bulkCreate(movies);
-        console.log("Movies Seeded");
+        console.log('Movies Seeded');
 
         await User.bulkCreate(users);
-        console.log("Users Seeded");
+        console.log('Users Seeded');
 
         await Category.bulkCreate(categories);
-        console.log("Categories Seeded");
+        console.log('Categories Seeded');
 
         await CastMember.bulkCreate(members);
-        console.log("Person Join Table Seeded");
+        console.log('Person Join Table Seeded');
 
         await MovieCategory.bulkCreate(movieCategories);
-        console.log("Category Join Table Seeded");
+        console.log('Category Join Table Seeded');
 
         await Promotion.bulkCreate(promotions);
-        console.log("Promotions Seeded");
+        console.log('Promotions Seeded');
 
         await Transaction.bulkCreate(transactions);
-        console.log("Transactions Seeded");
+        console.log('Transactions Seeded');
 
         await Ticket.bulkCreate(tickets);
-        console.log("Tickets Seeded");
+        console.log('Tickets Seeded');
 
         process.exit(0);
     } catch (e) {

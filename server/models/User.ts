@@ -2,13 +2,17 @@ import bcrypt from 'bcrypt';
 import sequelize from "../config/connection";
 
 import { Model, DataTypes } from 'sequelize';
-import Admin from './Admin';
+import { Admin, Card } from './';
 
 class User extends Model {
     declare id: number;
     declare admin_id: number;
+    declare email: string;
     declare username: string;
     declare password: string;
+    declare active: boolean;
+    declare token: string;
+    declare token_identifier: string;
 
     declare Admin?: Admin;
 
@@ -19,6 +23,11 @@ class User extends Model {
 
 User.init(
   {
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -48,6 +57,14 @@ User.init(
       allowNull: false,
       defaultValue: false
     },
+    token: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    token_identifier: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     admin_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -55,7 +72,15 @@ User.init(
         model: User,
         key: 'id'
       }
-    }
+    },
+    card_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: Card,
+        key: 'id'
+      }
+    },
   },
   {
   hooks: {

@@ -9,8 +9,12 @@ const AuthenticatedNav = () => {
   const { admin: { isAdmin }, auth, dispatch } = useContext(AuthContext);
 
   const adminStatus = async () => {
-    const adminObject = await adminCheck();
-    dispatch({ type:'SET_ADMIN', payload: adminObject });
+    try {
+      const adminObject = await adminCheck();
+      dispatch({ type:'SET_ADMIN', payload: adminObject });
+    } catch (e) {
+      dispatch({ type:'SET_ADMIN', payload: false });
+    }
   };
 
   useEffect(() => {
@@ -49,9 +53,7 @@ const Navbar = () => {
     try {
       await authCheck();
     } catch (e) {
-      localStorage.removeItem('auth');
-      localStorage.removeItem('admin');
-      dispatch({ type:'SET_AUTH', payload: false });
+      dispatch({ type:'RESET' });
     }
   };
 

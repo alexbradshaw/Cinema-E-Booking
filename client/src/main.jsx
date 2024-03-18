@@ -11,7 +11,6 @@ import {
 
 import Home from './views/HomePage';
 import Register from './views/Register';
-// import RegisterConfirmation from './views/RegisterConfirmation';
 import Login from './views/Login';
 import EditProfile from './views/EditProfile';
 import Booking from './views/Booking';
@@ -26,6 +25,7 @@ import AddMovie from './views/AddMovie.jsx';
 import ManageUsers from './views/ManageUsers';
 import Reset from './views/ResetPassword.jsx';
 import RegisterConfirmation from './views/RegisterConfirmation.jsx';
+import ChangePassword from './views/ChangePassword.jsx';
 
 const authMiddleware = (isAdmin) => {
   if (!localStorage.getItem('auth')) {
@@ -43,14 +43,12 @@ const routes = [
     { path: 'movie', element: <MoviePage /> },
     { path: 'login', element: <Login /> },
     { path: 'register', element: <Register /> },
+    { path: 'verify/:token', element: <RegisterConfirmation /> },
     { path: 'resetPassword', element: <Reset />},
-    { path: 'registerConfirmation', element: <RegisterConfirmation /> },
+    { path: 'reset/:token', element: <ChangePassword />},
     { path: 'booking', element: <Booking /> },
 
   /* Auth Protected Routes */
-    // { path: 'registerConfirmation', element: <RegisterConfirmation /> },
-    
-    /* Auth Protected Routes */
     { path: 'admin', element: <Admin />, loader: () => authMiddleware(true) },
     { path: 'admin/promotions', element: <ManagePromotions />, loader: () => authMiddleware(true) },
     { path: 'admin/movies', element: <ManageMovies />, loader: () => authMiddleware(true) },

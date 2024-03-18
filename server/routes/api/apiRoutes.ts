@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addCategory, addMovie, addPromotion, adminCheck, authCheck, findCategories, findCategoriesList, findMovies, findPromotions, getAuthedUser, getUserByNameOrID, getUsers, login, logout, searchCategories, searchMovies, signup, updateUser }  from '../../controllers';
+import { addCategory, addMovie, addPromotion, adminCheck, authCheck, changePassword, findCategories, findCategoriesList, findMovies, findPromotions, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateUser, verifyAccount }  from '../../controllers';
 
 const router = Router();
 
@@ -22,8 +22,11 @@ const router = Router();
         router.post('/account/signup', signup); //* POST route to sign up
         router.post('/account/login', login); //* POST route to log in
         router.post('/account/logout', logout); //! POST route to log out
+        router.post('/account/reset', resetPassword); //! POST route to send a reset password email 
+        router.put('/account/reset/:token', changePassword); //! PUT route for changing password from reset
+        router.put('/account/verify/:token', verifyAccount); //! PUT route for verifying an account from a confirmation email
 
-    /*  Category Routes */
+    /* Category Routes */
         router.get('/categories', findCategories); //* GET route to find all categories and associated movies
         router.get('/categories/list', findCategoriesList); //* GET route to get a list of categories without extra stuff attached 
         router.get('/categories/:category', searchCategories); //* GET route to find a list of associated movies by category title

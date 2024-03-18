@@ -25,11 +25,6 @@ const Login = () => {
     try {
       await login({ userOrEmail, password, rememberMe });
       await dispatch({ type: 'SET_AUTH', payload: true });
-
-      // Clear the form fields after successful login
-      //setUserOrEmail('');
-      //setPassword('');
-      // If login is successful, navigate to the home page or dashboard
       navigate('/');
     } catch (error) {
       console.error('Error during login:', error);

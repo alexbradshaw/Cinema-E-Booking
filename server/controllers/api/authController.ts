@@ -1,16 +1,22 @@
 import { Admin, User } from '../../models'
-import { generateToken, verifyToken } from '../../utils/auth'
+import { generateToken, verifyUtilToken, verifyToken } from '../../utils/auth'
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
+import { sendConfirmEmail, sendResetEmail, sendUpdateEmail } from '../../utils/utils';
+import { v4 as uuidv4 } from 'uuid';
 
 export const signup = async (req: Request, res: Response) => {
   try {
-    const user = await User.create(req.body); 
+    const user = await User.create({...req.body, token: generateToken(req.body, 12), token_identifier: uuidv4()}); 
+
+    sendConfirmEmail(req.body.email, user);
 
     req.session.save(() => {
+      req.session.active = false;
       req.session.isAdmin = user.admin_id ? true : false;
       req.session.userId = user.id; 
-      req.session.jwt = generateToken(user);
+      req.session.email = user.email;
+      req.session.jwt = generateToken(user, 1);
 
       req.session.permissions = undefined;
 
@@ -44,7 +50,9 @@ export const login = async (req: Request, res: Response) => {
     })
 
     if (!user) {
-      return res.status(401).json({ message: "Invalid user" });
+      return res.status(401).json({ message: 'Invalid user' });
+    } else if (!user.active) {
+      return res.status(401).json({ message: 'Your account is not active, please contact support for further assistance.' })
     }
 
     const tokenExpiration = rememberMe ? '7d' : '1h'; // Set token expiration based on rememberMe
@@ -55,11 +63,20 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'Incorrect password!' });
     }
 
+    let expiration = 1;
+
+    if (req.body.remember) {
+      expiration = 6 * 30;
+    }
+
     try {
       req.session.save(() => {
+        req.session.active = true;
         req.session.isAdmin = user.admin_id ? true : false;
         req.session.userId = user.id; 
-        req.session.jwt = generateToken(user, { expiresIn: tokenExpiration });
+        req.session.email = user.email;
+        req.session.jwt = generateToken(user, expiration);
+        req.session.remember = req.body.remember;
 
         req.session.permissions = user.Admin ? user.Admin : undefined;
 
@@ -107,4 +124,77 @@ export const authCheck = async (req: Request, res: Response) => {
   }
   
   res.status(status).json(verified);
+}
+
+export const verifyAccount = async (req: Request, res: Response) => {
+    const user = await User.findOne({ where: { token_identifier: req.params.token }});
+    
+    if (!user) {
+      return res.status(401).json({ message: "Confirmation token invalid!" });
+    } else if (!verifyUtilToken(user.token, .125)) {
+      return res.status(403).json({ message: "Confirmation token expired!" });
+    }
+
+    req.session.active = true;
+
+    await User.update(
+      { active: true, token_identifier: '' },
+      { where: { token_identifier: req.params.token }}
+    );
+
+    res.status(200).json({ auth: req.session.jwt });
+}
+
+export const resetPassword = async (req: Request, res: Response) => {
+  const user = await User.findOne({
+      where: {
+          [Op.or]:[
+              { username: req.body.userOrEmail }, 
+              { email: req.body.userOrEmail }
+          ] 
+      }
+  });
+
+  if (!user) {
+    return res.status(200);
+  }
+
+  try {
+    const token = uuidv4();
+    await User.update({ token: generateToken(user, .125), token_identifier: token }, { where: { id: user.id } })
+    sendResetEmail(user.email, token);
+    res.status(200);
+  }
+  catch (e) {
+    console.error(e);
+    res.status(400).json(e);
+  }
+}
+
+export const changePassword = async (req: Request, res: Response) => {
+  const user = await User.findOne({ where: { token_identifier: req.params.token }});
+  
+  if (!user) {
+    return res.status(401).json({ message: "Reset token invalid!" });
+  } else if (!verifyUtilToken(user.token, .125)) {
+    return res.status(401).json({ message: "Reset token expired!" });
+  }  
+
+  try {
+    await User.update(
+      { password: req.body.password },
+      { 
+        where: { id: user.id },
+        individualHooks: true
+      },
+    );
+
+    sendUpdateEmail(user.email, user.username, '\'s Password');
+
+    res.status(200).json('Password reset!');
+  }
+  catch (e) {
+    console.error(e);
+    res.status(400).json(e);
+  }
 }
