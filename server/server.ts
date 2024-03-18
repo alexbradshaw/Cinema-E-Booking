@@ -11,9 +11,12 @@ declare module 'express-session' {
       jwt: string;
       userId: number;
       username: string;
+      email: string;
       isAdmin: boolean;
+      active: boolean;
+      remember: boolean;
 
-      permissions : Admin
+      permissions : Admin;
   }
 }
 
@@ -36,7 +39,7 @@ store.on('error', function(error: Error) {
 app.use(session({
     secret: process.env.SECRET || "secret",
     cookie: {
-      maxAge: 1000 * 60 * 60 * 4,
+      maxAge: 1000 * 60 * 60 * 24 * 30,
       sameSite: 'strict'  
     },
     store: store,
