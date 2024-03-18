@@ -378,7 +378,7 @@ export const checkAdmin = async (navigate) => {
     
             await errorCheck(response);
     
-            return response;
+            return await response.json();
         }
 
     /*

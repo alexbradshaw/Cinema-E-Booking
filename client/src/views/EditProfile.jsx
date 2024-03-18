@@ -59,7 +59,8 @@ const EditProfile = () => {
   const handleCardSubmit = async (event) => {
     event.preventDefault();
     try {
-      await addCard({ card_number, cardholder_name, expiry_date, cvv, address });
+      const newCard = await addCard({ card_number, cardholder_name, expiry_date, cvv, address });
+      setId(newCard.card_id);
       setFour(card_number.trim().slice(-4));
       setCardView(true);
     } catch (error) {

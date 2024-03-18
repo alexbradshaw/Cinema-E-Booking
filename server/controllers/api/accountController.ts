@@ -138,7 +138,7 @@ export const addCard = async (req: Request, res: Response) => {
 
         sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
 
-        res.json(user);
+        res.json(newCard);
     } catch (e) {
         console.log(e);
         res.status(500).json(e);
