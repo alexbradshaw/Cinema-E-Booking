@@ -1,3 +1,3 @@
-import { addCategory, addPromotion, addMovie, adminCheck, authCheck, findCategories, findCategoriesList, findPromotions, findMovies, getAuthedUser, getUserByNameOrID, getUsers, login, logout, searchCategories, searchMovies, signup, updateUser } from "./api";
+import { addCategory, addPromotion, addMovie, adminCheck, authCheck, changePassword, findCategories, findCategoriesList, findPromotions, findMovies, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateUser, verifyAccount } from "./api";
 
-export { addCategory, addPromotion, addMovie, adminCheck, authCheck, findCategories, findCategoriesList, findPromotions, findMovies, getAuthedUser, getUserByNameOrID, getUsers, login, logout, searchCategories, searchMovies, signup, updateUser } 
+export { addCategory, addPromotion, addMovie, adminCheck, authCheck, changePassword, findCategories, findCategoriesList, findPromotions, findMovies, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateUser, verifyAccount }
