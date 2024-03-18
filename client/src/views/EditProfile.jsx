@@ -24,6 +24,7 @@ const EditProfile = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      await updateUser({ username });
       navigate('/');
     } catch (error) {
       console.error('Error updating profile:', error);
