@@ -30,8 +30,6 @@ export const signup = async (req: Request, res: Response) => {
 }
 
 export const login = async (req: Request, res: Response) => { 
-  const { username, email, password, rememberMe } = req.body; // Destructure rememberMe from the request
-  
   const user = await User.findOne({
         where: {
             [Op.or]:[
@@ -54,8 +52,6 @@ export const login = async (req: Request, res: Response) => {
     } else if (!user.active) {
       return res.status(401).json({ message: 'Your account is not active, please contact support for further assistance.' })
     }
-
-    const tokenExpiration = rememberMe ? '7d' : '1h'; // Set token expiration based on rememberMe
 
     const passCorrect = await user.checkPassword(req.body.password); 
 

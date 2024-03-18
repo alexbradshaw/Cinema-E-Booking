@@ -363,6 +363,58 @@ export const checkAdmin = async (navigate) => {
         return response;
     }
 
+    /*
+        Adds a new payment method to a user
+    */
+        export const addCard = async (cardData) => {
+            const response = await fetch("/api/account/card", {
+                method: "POST", 
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cardData)
+            });
+    
+            await errorCheck(response);
+    
+            return response;
+        }
+
+    /*
+        Updates Payment Method Address
+    */
+        export const updateCard = async (address, card_id) => {
+            const response = await fetch(`/api/account/card/${card_id}`, {
+                method: "PUT", 
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ address })
+            });
+    
+            await errorCheck(response);
+    
+            return response;
+        }
+
+    /*
+        Deletes Payment Method by id
+    */
+        export const deleteCard = async (card_id) => {
+            const response = await fetch(`/api/account/card/${card_id}`, {
+                method: "DELETE", 
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                },
+            });
+    
+            await errorCheck(response);
+    
+            return response;
+        }
+
 
     /*
         Returns updated user object, takes an updated user object as the parameter

@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { addCategory, addMovie, addPromotion, adminCheck, authCheck, changePassword, findCategories, findCategoriesList, findMovies, findPromotions, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateUser, verifyAccount }  from '../../controllers/index.js';
+import { addCard, addCategory, addMovie, addPromotion, adminCheck, authCheck, changePassword, deleteCard, findCategories, findCategoriesList, findMovies, findPromotions, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateCard, updateUser, verifyAccount }  from '../../controllers/index.js';
 
 const router = Router();
-//              ? Key ?
-//  
-//       * Means public route * 
-//   ! Means auth protected route ! 
+// ? Key ?
+
+// * Means public route * 
+// ! Means auth protected route ! 
 // !! Means admin protected route !! 
 
 
@@ -31,13 +31,18 @@ const router = Router();
         router.post('/account/signup', signup);                  // * POST route to sign up * 
         router.post('/account/login', login);                    // * POST route to log in * 
         router.post('/account/logout', logout);                  // ! POST route to log out ! 
+        router.post('/account/card', addCard);                   // ! POST route to add a new card !
         router.post('/account/reset', resetPassword);            // ! POST route to send a reset password email ! 
         router.post('/account/auth', authCheck);                 // ! POST route to check if user is still authenticated ! 
         
         // PUT
         router.put('/account', updateUser);                      // ! PUT route to update user ! 
+        router.put('/account/card/:cardId', updateCard);         // ! PUT route for a payment method !
         router.put('/account/reset/:token', changePassword);     // ! PUT route for changing password from reset ! 
-        router.put('/account/verify/:token', verifyAccount);     // ! PUT route for verifying an account from a confirmation email ! 
+        router.put('/account/verify/:token', verifyAccount);     // ! PUT route for verifying an account from a confirmation email !
+        
+        // DELETE
+        router.delete('/account/card/:cardId', deleteCard);      // ! DELETE route for a payment method !
 
 
 //? ** Category Routes **

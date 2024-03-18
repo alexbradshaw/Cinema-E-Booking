@@ -1,13 +1,13 @@
-import admins from './admins.json';
-import cards from './cards.json';
-import categories from './categories.json';
-import members from './members.json';
-import movieCategories from './moviecategories.json';
-import movies from './movies.json';
-import persons from './persons.json';
-import promotions from './promotions.json';
-import tickets from './tickets.json';
-import transactions from './transactions.json';
-import users from './users.json';
+import admins from './admins.json' assert { type: "json" };
+import cards from './cards.json' assert { type: "json" };
+import categories from './categories.json' assert { type: "json" };
+import members from './members.json' assert { type: "json" };
+import movieCategories from './moviecategories.json' assert { type: "json" };
+import movies from './movies.json' assert { type: "json" };
+import persons from './persons.json' assert { type: "json" };
+import promotions from './promotions.json' assert { type: "json" };
+import tickets from './tickets.json' assert { type: "json" };
+import transactions from './transactions.json' assert { type: "json" };
+import users from './users.json' assert { type: "json" };
 
 export { admins, cards, categories, members, movieCategories, movies, persons, promotions, tickets, transactions, users }

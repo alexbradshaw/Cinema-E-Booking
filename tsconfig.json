@@ -107,5 +107,5 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": ["server/**/*", "env.d.ts"],
-  "exclude": ["server/dist"]
+  "exclude": ["server/dist"],
 }

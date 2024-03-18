@@ -112,12 +112,12 @@ import Ticket from './Ticket.js';
 /* Setting up Model Relation for Users to have a Credit Card */
     User.hasOne(Card, {
         foreignKey: 'card_id',
-        constraints: false
+        constraints: false,
     });
 
     Card.belongsTo(User, {
         foreignKey: 'user_id',
-        constraints: false
+        constraints: false,
     });
 
 

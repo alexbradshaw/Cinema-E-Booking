@@ -15,6 +15,7 @@ class User extends Model {
     declare token_identifier: string;
 
     declare Admin?: Admin;
+    declare card?: Card;
 
     async checkPassword(password: string) {
         return bcrypt.compareSync(password, this.password);
@@ -69,8 +70,8 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: User,
-        key: 'id'
+        model: Admin,
+        key: 'admin_id'
       }
     },
     card_id: {
@@ -78,8 +79,9 @@ User.init(
       allowNull: true,
       references: {
         model: Card,
-        key: 'id'
-      }
+        key: 'card_id',
+      },
+      onDelete: 'SET NULL'
     },
   },
   {

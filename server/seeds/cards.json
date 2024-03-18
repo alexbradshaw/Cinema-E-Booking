@@ -1,5 +1,7 @@
 [
     {
+        "card_id": 1,
+        "user_id": 1,
         "card_number": "4111 1111 1111 1111",
         "cardholder_name": "alex",
         "expiry_date": "2025-09-17",
@@ -7,6 +9,8 @@
         "address": "104 Caldwell Hall, Athens Georgia 30602"
     },
     {
+        "card_id": 2,
+        "user_id": 2,
         "card_number": "5500 0000 0000 0004",
         "cardholder_name": "josh",
         "expiry_date": "2025-09-17",
@@ -14,6 +18,8 @@
         "address": "104 Caldwell Hall, Athens Georgia 30602"
     },
     {
+        "card_id": 3,
+        "user_id": 3,
         "card_number": "3400 000000 00009",
         "cardholder_name": "tony",
         "expiry_date": "2025-09-17",
@@ -21,6 +27,8 @@
         "address": "104 Caldwell Hall, Athens Georgia 30602"
     },
     {
+        "card_id": 4,
+        "user_id": 4,
         "card_number": "6011 1111 1111 1117",
         "cardholder_name": "will",
         "expiry_date": "2025-09-17",
