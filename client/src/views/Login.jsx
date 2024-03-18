@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import Link for navigation
 import { login } from '../utils/API'; // Adjust the path based on your file structure
 import { AuthContext } from '../App';
+import "./CSS/Login.css"; // import for CSS
 
 const Login = () => {
   const [userOrEmail, setUserOrEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+  const [showPassword, setShowPassword] = useState(false); // Added for "Show Password" feature
+  const [showErrorPopup, setShowErrorPopup] = useState(false); // Added for showing the error popup
+  const [rememberMe, setRememberMe] = useState(false); // State for "Remember Me"
   const navigate = useNavigate();
   const { auth, dispatch } = useContext(AuthContext);
 
@@ -20,22 +23,37 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      await login({ userOrEmail, password });
+      await login({ userOrEmail, password, rememberMe });
       await dispatch({ type: 'SET_AUTH', payload: true });
-
-      // Clear the form fields after successful login
-      setUserOrEmail('');
-      setPassword('');
       navigate('/');
     } catch (error) {
       console.error('Error during login:', error);
-      // Handle error, e.g., display an error message to the user
-    }
+      // Set the error message to display to the user
+      setShowErrorPopup(true); // Show the error popup on catch
+    } //finally {
+      //navigate('/');
+    //}
+  };
+
+  const togglePasswordVisibility = () => { //show password function
+    setShowPassword(!showPassword);
+  };
+
+  const handleClosePopup = () => { // Function to close the error popup
+    setShowErrorPopup(false);
   };
 
   return (
     <div id="login-container">
         <h1> Login </h1>
+        
+        {showErrorPopup && ( // Conditional rendering for the error popup
+        <div className="error-popup">
+          <p>Incorrect Username or Password</p>
+          <button onClick={handleClosePopup}>X</button> {/* Button to close the popup */}
+        </div>
+        )} 
+
         <form className="form" onSubmit={handleSubmit}>
             <p className="fieldset">
                 <label className="image-replace email" htmlFor="signin-email">E-mail or Username</label>
@@ -56,25 +74,28 @@ const Login = () => {
                 <input
                     className="full-width has-padding has-border"
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"} // Toggle input type based on showPassword state
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     placeholder="Password">
                 </input>
-                <a href="#0" className="hide-password">Show</a>
-                
+                <button type="button" onClick={togglePasswordVisibility}>{showPassword ? "Hide" : "Show"}</button>   
             </p>
 
-            {/*
-            <p class="fieldset">
-                <input 
-                    type="checkbox" 
-                    id="remember-me" 
-                    checked> </input>
-                <label for="remember-me">Remember me</label>
+            
+            <p className="fieldset">
+              <label>
+                Remember Me
+                <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                />
+              </label>
+              
             </p>
-            */}   
+               
             
             
             <p className="fieldset">
