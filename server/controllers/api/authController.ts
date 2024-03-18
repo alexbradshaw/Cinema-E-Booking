@@ -16,6 +16,7 @@ export const signup = async (req: Request, res: Response) => {
       req.session.isAdmin = user.admin_id ? true : false;
       req.session.userId = user.id; 
       req.session.email = user.email;
+      req.session.username = user.username;
       req.session.jwt = generateToken(user, 1);
 
       req.session.permissions = undefined;
@@ -71,6 +72,7 @@ export const login = async (req: Request, res: Response) => {
         req.session.isAdmin = user.admin_id ? true : false;
         req.session.userId = user.id; 
         req.session.email = user.email;
+        req.session.username = user.username;
         req.session.jwt = generateToken(user, expiration);
         req.session.remember = req.body.remember;
 
