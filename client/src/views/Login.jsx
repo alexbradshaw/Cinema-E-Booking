@@ -28,11 +28,8 @@ const Login = () => {
       navigate('/');
     } catch (error) {
       console.error('Error during login:', error);
-      // Set the error message to display to the user
       setShowErrorPopup(true); // Show the error popup on catch
-    } //finally {
-      //navigate('/');
-    //}
+    }
   };
 
   const togglePasswordVisibility = () => { //show password function
