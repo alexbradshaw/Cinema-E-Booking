@@ -133,10 +133,9 @@ const EditProfile = () => {
 
           <label htmlFor="promotion_enrollment">Promotion Enrollment:</label>
           <input
-          type="checkbox"
-          checked={promotion_enrollment}
-          onChange={(e) => setEnrollment(e.target.checked)}
-          required
+            type="checkbox"
+            checked={promotion_enrollment}
+            onChange={(e) => setEnrollment(e.target.checked)}
           />
 
           <br />
