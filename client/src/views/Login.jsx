@@ -26,11 +26,10 @@ const Login = () => {
       // Clear the form fields after successful login
       setUserOrEmail('');
       setPassword('');
+      navigate('/');
     } catch (error) {
       console.error('Error during login:', error);
       // Handle error, e.g., display an error message to the user
-    } finally {
-      navigate('/');
     }
   };
 
