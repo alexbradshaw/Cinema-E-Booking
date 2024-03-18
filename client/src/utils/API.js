@@ -3,7 +3,6 @@ const errorCheck = async (res) => {
     const status = res.status;
     if (!res.ok) {
         const response = await res.json();
-        console.log(response);
         if (response.errors) {
             for (const { message, type } of response.errors) {
                 throw new Error(type, { cause: message });
@@ -42,6 +41,47 @@ export const checkAdmin = async (navigate) => {
 /* Account Routes */
 
     /*
+        Accepts username or email to send a password reset email
+    */
+    export const sendResetEmail = async (userOrEmail) => {
+        console.log(userOrEmail);
+        const response = await fetch("/api/account/reset", {
+            headers: { "Content-Type": "application/json" },
+            method: 'POST',
+            body: JSON.stringify({
+                'userOrEmail': userOrEmail
+            })
+        });
+        
+        await errorCheck(response);
+    }
+
+    /*
+        Changes the password using the email provided token
+    */
+    export const changePassword = async (token, password) => {
+        const response = await fetch(`/api/account/reset/${token}`, 
+        { 
+            headers: { "Content-Type": "application/json" },
+            method: 'PUT',
+            body: JSON.stringify({ 'password': password })
+        });
+        
+        await errorCheck(response);
+    }
+
+    /*
+        Confirms the account using the email provided token
+    */
+    export const confirmAccount = async (token) => {
+        const response = await fetch(`/api/account/verify/${token}`, { method: 'PUT' });
+        
+        await errorCheck(response);
+
+        return await response.json();
+    }
+
+    /*
         [
             {
                 "id": 1,
@@ -65,19 +105,19 @@ export const checkAdmin = async (navigate) => {
             },
         ]
     */
-        export const getAllUsers = async () => {
-            const response = await fetch("/api/admin/accounts", {
-                headers: {
-                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
-                }
-            });
-            
-            await errorCheck(response);
-            
-            const users = await response.json();
-    
-            return users;
-        }
+    export const getAllUsers = async () => {
+        const response = await fetch("/api/admin/accounts", {
+            headers: {
+                'Authorization' : `Bearer ${retrieveAuthToken()}`,
+            }
+        });
+        
+        await errorCheck(response);
+        
+        const users = await response.json();
+
+        return users;
+    }
 
     /*
         {
@@ -256,16 +296,16 @@ export const checkAdmin = async (navigate) => {
 
 
     /*
-        Returns bool for if user is an admin
+        Allows a user to sign up
     */
-    export const signup = async ({ isAdmin, username, email, password }) => {
+    export const signup = async ({ promotion_enrollment, username, email, password }) => {
         const response = await fetch("/api/account/signup", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                isAdmin,
+                promotion_enrollment,
                 username,
                 email,
                 password
@@ -277,15 +317,13 @@ export const checkAdmin = async (navigate) => {
         const { token } = await response.json();
 
         localStorage.setItem('auth', token);
-
-        return isAdmin;
     }
 
 
     /*
         Returns bool for if user is an admin
     */
-    export const login = async ({ userOrEmail, password }) => {
+    export const login = async ({ userOrEmail, password, rememberMe }) => {
         const response = await fetch("/api/account/login", {
             method: "POST", 
             headers: {
@@ -294,7 +332,8 @@ export const checkAdmin = async (navigate) => {
             body: JSON.stringify({
                 'username': userOrEmail, // accepts username or
                 'email': userOrEmail, // email
-                password
+                password,
+                rememberMe
             }), 
         });
 
