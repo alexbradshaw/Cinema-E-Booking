@@ -1,7 +1,8 @@
-import { Op, Model, where } from 'sequelize';
+import { Op } from 'sequelize';
 import { Admin, Movie, Promotion, Ticket, Transaction, User } from '../../models'
 import { verifyToken } from '../../utils/auth'
 import { Request, Response } from 'express';
+import { sendUpdateEmail } from '../../utils/utils';
 
 export const getAuthedUser = async (req: Request, res: Response) => {
     if (!verifyToken(req)) {
@@ -125,6 +126,8 @@ export const updateUser = async (req: Request, res: Response) => {
                     id: req.session.userId
                 }
             });
+
+        sendUpdateEmail(req.session.email, req.session.username, '');
 
         res.json(user);
     } catch (e) {
