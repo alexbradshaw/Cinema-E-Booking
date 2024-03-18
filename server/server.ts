@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Admin } from './models';
+import { Admin } from './models/index.js';
 
 import express, { Express } from 'express';
 const app: Express = express();
@@ -23,10 +23,13 @@ declare module 'express-session' {
 import sequelizeSession from 'connect-session-sequelize';
 const SequelizeStore = sequelizeSession(Store);
 
-import router from './routes';
-import sequelize from './config/connection';
+import router from './routes/index.js';
+import sequelize from './config/connection.js';
 const PORT: string | number = process.env.PORT || 3001;
-import path from 'path';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const store = new SequelizeStore({
     db: sequelize
@@ -51,7 +54,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use(router); 
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV == 'production' || true) {
   app.use(express.static(path.join(__dirname, '../../client/dist'))); 
 
   app.get('*', (req, res) => {

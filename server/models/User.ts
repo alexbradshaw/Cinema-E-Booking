@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
-import sequelize from "../config/connection";
+import sequelize from "../config/connection.js";
 
 import { Model, DataTypes } from 'sequelize';
-import { Admin, Card } from './';
+import { Admin, Card } from './index.js';
 
 class User extends Model {
     declare id: number;

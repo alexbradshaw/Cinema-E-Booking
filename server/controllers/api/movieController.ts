@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-import { Category, Movie, Person } from '../../models'
+import { Category, Movie, Person } from '../../models/index.js'
 import { Request, Response } from 'express';
 
     export const findMovies = async (req: Request, res: Response) => {

@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from "../config/connection";
-import Movie from './Movie';
+import sequelize from "../config/connection.js";
+import { Movie } from './index.js';
 
 class Category extends Model {
     declare id: number;

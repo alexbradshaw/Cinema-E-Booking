@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from "../config/connection";
+import sequelize from "../config/connection.js";
 import bcrypt from 'bcrypt';
-import { User } from './';
+import { User } from './index.js';
 
 class Card extends Model {
   declare id: number;

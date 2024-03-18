@@ -1,4 +1,4 @@
-import { Promotion, User } from '../../models'
+import { Promotion, User } from '../../models/index.js'
 import { Request, Response } from 'express';
 
     export const findPromotions = async (req: Request, res: Response) => {

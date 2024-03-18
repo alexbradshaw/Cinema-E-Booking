@@ -1,8 +1,8 @@
 import { Op } from 'sequelize';
-import { Admin, Movie, Promotion, Ticket, Transaction, User } from '../../models'
-import { verifyToken } from '../../utils/auth'
+import { Admin, Movie, Promotion, Ticket, Transaction, User } from '../../models/index.js'
+import { verifyToken } from '../../utils/auth.js'
 import { Request, Response } from 'express';
-import { sendUpdateEmail } from '../../utils/utils';
+import { sendUpdateEmail } from '../../utils/utils.js';
 
 export const getAuthedUser = async (req: Request, res: Response) => {
     if (!verifyToken(req)) {

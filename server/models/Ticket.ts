@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from "../config/connection";
-import { Movie, Transaction } from './';
+import sequelize from "../config/connection.js";
+import { Movie, Transaction } from './index.js';
 
 class Ticket extends Model {
     declare id: number;

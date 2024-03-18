@@ -1,7 +1,7 @@
 import { promises } from 'fs';
 import { exec } from 'child_process';
 import { input } from '@inquirer/prompts';
-import envPass from '../utils/env';
+import envPass from '../utils/env.js';
 
 const sourceSQL = async () => {
   let pass = envPass.length == 0 ? "" : envPass

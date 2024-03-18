@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import { User } from '../models/index.js';
 import { Request } from 'express';
 
 const secret = process.env.SECRET || "Secret";

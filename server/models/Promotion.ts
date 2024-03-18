@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from "../config/connection";
+import sequelize from "../config/connection.js";
 
-import { User } from './';
+import { User } from './index.js';
 
 class Promotion extends Model {
     declare id: number;

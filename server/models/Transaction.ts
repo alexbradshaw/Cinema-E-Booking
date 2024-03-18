@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from "../config/connection";
-import { Promotion } from './';
+import sequelize from "../config/connection.js";
+import { Promotion } from './index.js';
 
 class Transaction extends Model {
     declare id: number;

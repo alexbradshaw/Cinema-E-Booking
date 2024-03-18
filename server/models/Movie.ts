@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from "../config/connection";
-import Person from './Person';
+import sequelize from "../config/connection.js";
+import { Person } from './index.js';
 
 class Movie extends Model {
     declare id: number;

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import routes from './api';
+import routes from './api/index.js';
 
 const router = Router();
 

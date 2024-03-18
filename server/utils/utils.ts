@@ -1,5 +1,5 @@
 import mail from 'nodemailer';
-import { User } from '../models';
+import { User } from '../models/index.js';
 
 const transporter = mail.createTransport({
     host: 'smtp-relay.brevo.com', 

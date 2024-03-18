@@ -1,7 +1,7 @@
-import sequelize from '../config/connection';
+import sequelize from '../config/connection.js';
 
-import { Admin, Category, CastMember, MovieCategory, Movie, Person, Promotion, Ticket, Transaction, User, Card } from '../models';
-import { admins, cards, categories, members, movieCategories, movies, persons, promotions, tickets, transactions, users } from './';
+import { Admin, Category, CastMember, MovieCategory, Movie, Person, Promotion, Ticket, Transaction, User, Card } from '../models/index.js';
+import { admins, cards, categories, members, movieCategories, movies, persons, promotions, tickets, transactions, users } from './index.js';
 
 const seed = async () => {
     try {

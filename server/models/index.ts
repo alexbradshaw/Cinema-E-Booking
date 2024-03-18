@@ -1,14 +1,14 @@
-import Admin from './Admin';
-import Card from './Card';
-import CastMember from './CastMember';
-import Category from './Category';
-import Movie from './Movie';
-import MovieCategory from './MovieCategory';
-import Person from './Person';
-import Promotion from './Promotion';
-import Ticket from './Ticket';
-import Transaction from './Transaction';
-import User from './User';
+import Admin from './Admin.js';
+import Person from './Person.js';
+import Card from './Card.js';
+import Movie from './Movie.js';
+import User from './User.js';
+import Category from './Category.js';
+import CastMember from './CastMember.js';
+import MovieCategory from './MovieCategory.js';
+import Promotion from './Promotion.js';
+import Transaction from './Transaction.js';
+import Ticket from './Ticket.js';
 
 /* Setting up Model Relation to Allow Search by Categories */
     /* Associating Movies and Categories together */

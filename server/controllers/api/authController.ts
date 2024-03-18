@@ -1,8 +1,8 @@
-import { Admin, User } from '../../models'
-import { generateToken, verifyUtilToken, verifyToken } from '../../utils/auth'
+import { Admin, User } from '../../models/index.js'
+import { generateToken, verifyUtilToken, verifyToken } from '../../utils/auth.js'
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
-import { sendConfirmEmail, sendResetEmail, sendUpdateEmail } from '../../utils/utils';
+import { sendConfirmEmail, sendResetEmail, sendUpdateEmail } from '../../utils/utils.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export const signup = async (req: Request, res: Response) => {

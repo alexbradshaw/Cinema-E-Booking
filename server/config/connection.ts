@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import 'dotenv/config';
-import password from "../utils/env"
+import password from "../utils/env.js"
 
 let sequelize: Sequelize;
 
