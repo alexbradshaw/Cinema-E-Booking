@@ -5,10 +5,10 @@ import { Model, DataTypes } from 'sequelize';
 class Admin extends Model {
     declare admin_id: number;
 
+    declare manage_admins: boolean;
     declare create_promotion: boolean;
-    declare permission2: boolean;
-    declare permission3: boolean;
-    declare permission4: boolean;
+    declare disable_accounts: boolean;
+    declare delete_accounts: boolean;
 
 }
 
@@ -19,22 +19,22 @@ Admin.init(
       autoIncrement: true,
       primaryKey: true
     },
+    manage_admins: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     create_promotion: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
     },
-    permission2: {
+    disable_accounts: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
     },
-    permission3: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    permission4: {
+    delete_accounts: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
