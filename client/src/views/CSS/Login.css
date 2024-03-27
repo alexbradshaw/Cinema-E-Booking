@@ -57,6 +57,21 @@
   padding-right: 35px;
 }
 
+.showButton { 
+  border: none;
+  background: black;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px;
+  font-size: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.showButtonContainer { 
+  
+}
+
 .inputContainer {
   display: flex;
   flex-direction: column;

@@ -81,8 +81,11 @@ const Login = () => {
                       required
                       placeholder="Password">
                   </input>
+
+                  <div className = "showButtonContainer">
+                    <button className="showButton" type="button" onClick={togglePasswordVisibility}>{showPassword ? "Hide" : "Show"}</button>   
+                  </div>
                   
-                  <button type="button" onClick={togglePasswordVisibility}>{showPassword ? "Hide" : "Show"}</button>   
               </div>
               <br />
 
