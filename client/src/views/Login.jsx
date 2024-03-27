@@ -50,63 +50,70 @@ const Login = () => {
           <button onClick={handleClosePopup}>X</button> {/* Button to close the popup */}
         </div>
         )} 
+        <div className='mainContainer'>
+          <form className="form" onSubmit={handleSubmit}>
 
-        <form className="form" onSubmit={handleSubmit}>
-            <p className="fieldset">
-                <label className="image-replace email" htmlFor="signin-email">E-mail or Username</label>
-                <input 
-                    className="full-width has-padding has-border" 
+              {/* Login Input */}
+              <div className="inputContainer">
+                  <label className="image-replace email" htmlFor="signin-email">E-mail or Username</label>
+                  <input 
+                    className = {'inputBox'}
+                    
                     id="userOrEmail" 
                     type="text"
                     value={userOrEmail}
                     onChange={(e) => setUserOrEmail(e.target.value)}
                     required
                     placeholder="E-mail or Username">
-                </input>
-               
-            </p>
+                  </input>
+              </div>
+              <br />
 
-            <p className="fieldset">
-                <label className="image-replace password" htmlFor="signin-password">Password</label>
-                <input
-                    className="full-width has-padding has-border"
-                    id="password"
-                    type={showPassword ? "text" : "password"} // Toggle input type based on showPassword state
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    placeholder="Password">
-                </input>
-                <button type="button" onClick={togglePasswordVisibility}>{showPassword ? "Hide" : "Show"}</button>   
-            </p>
+              {/* Password Input */}
+              <div className="inputContainer">
+                  <label className="image-replace password" htmlFor="signin-password">Password</label>
+                  <input
+                      className = {'inputBox'}
+                      
+                      id="password"
+                      type={showPassword ? "text" : "password"} // Toggle input type based on showPassword state
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      placeholder="Password">
+                  </input>
+                  <button type="button" onClick={togglePasswordVisibility}>{showPassword ? "Hide" : "Show"}</button>   
+              </div>
+              <br />
 
-            
-            <p className="fieldset">
-              <label>
-                Remember Me
-                <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                />
-              </label>
-              
-            </p>
-               
-            
-            
-            <p className="fieldset">
-                <input 
-                    className="full-width" 
-                    type="submit" 
-                    value="Login"> 
-                </input>
-            </p>
-        </form>
+              {/* Remember Me Button */}
+              <div className="inputContainer">
+                <label>
+                  Remember Me
+                  <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                </label>
+              </div>
 
-        <p className="form-bottom-message"><a href="/register">Create an Account</a></p>
+              {/* Submit Button */}
+              <div className="buttonContainer">
+                <div className="inputContainer">
+                    <input 
+                        className="full-width" 
+                        type="submit" 
+                        value="Login"> 
+                    </input>
+                </div>
+              </div>
+          </form>
+        
+          <p className="form-bottom-message"><a href="/register">Create an Account</a></p>
 
-        <p className="form-bottom-message"><a href="/resetPassword">Forgot Your Password?</a></p>
+          <p className="form-bottom-message"><a href="/resetPassword">Forgot Your Password?</a></p>
+        </div>
     </div>
 
   );

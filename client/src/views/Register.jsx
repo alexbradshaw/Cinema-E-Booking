@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { signup } from '../utils/API';
 import { AuthContext } from '../App';
+import "./CSS/Login.css"; // import for CSS
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -37,51 +38,80 @@ const Register = () => {
         !submitted ? 
         <>
           <h1>Register</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+          <div className='mainContainer'>
+            <form onSubmit={handleSubmit}>
 
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+              {/* Username Input */}
+              <div className='inputContainer'>
+                <label htmlFor="username">Username:</label>
+                <input
+                  className = {'inputBox'}
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
+                  required
+                />
+              </div>
+              <br />
 
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+              {/* Email Input */}
+              <div className='inputContainer'>
+                <label htmlFor="email">Email:</label>
+                <input
+                  className = {'inputBox'}
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <br />
 
-            {/* You may have a checkbox for admin registration */}
+              {/* Password Input */}
+              <div className='inputContainer'>
+                <label htmlFor="password">Password:</label>
+                <input
+                  className = {'inputBox'}
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  required
+                />
+              </div>
+
+              {/* You may have a checkbox for admin registration */}
+              <br />
+              <label>
+                <input
+                  type="checkbox"
+                  checked={promotion_enrollment}
+                  onChange={(e) => setPromotions(e.target.checked)}
+                />
+                Would you like to be enrolled in promotions?
+              </label>
             
-            <label>
-              <input
-                type="checkbox"
-                checked={promotion_enrollment}
-                onChange={(e) => setPromotions(e.target.checked)}
-              />
-              Would you like to be enrolled in promotions?
-            </label>
+
+              {/* Submit Button */}
+              <div className="buttonContainer">
+                <div className="inputContainer">
+                    <input 
+                        className="full-width" 
+                        type="submit" 
+                        value="Register"> 
+                    </input>
+                </div>
+              </div>
+            </form>
           
-
-            <button type="submit">Register</button>
-          </form>
-
-          {/* Link to the login page */}
-          <p>Already have an account? <Link to="/login">Login here</Link></p>
+            {/* Link to the login page */}
+            <p className="form-bottom-message">Already have an account? <Link to="/login">Login here</Link></p>
+          </div>
         </>
         :
         <>
