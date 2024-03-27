@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { signup } from '../utils/API';
 import { AuthContext } from '../App';
-import "./CSS/Login.css"; // import for CSS
+import "./CSS/Register.css"; // import for CSS
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -89,6 +89,7 @@ const Register = () => {
               <br />
               <label>
                 <input
+                  className = {'rememberInputBox'}
                   type="checkbox"
                   checked={promotion_enrollment}
                   onChange={(e) => setPromotions(e.target.checked)}
