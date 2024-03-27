@@ -74,7 +74,6 @@ const Login = () => {
                   <label className="image-replace password" htmlFor="signin-password">Password</label>
                   <input
                       className = {'inputBox'}
-                      
                       id="password"
                       type={showPassword ? "text" : "password"} // Toggle input type based on showPassword state
                       value={password}
@@ -82,6 +81,7 @@ const Login = () => {
                       required
                       placeholder="Password">
                   </input>
+                  
                   <button type="button" onClick={togglePasswordVisibility}>{showPassword ? "Hide" : "Show"}</button>   
               </div>
               <br />
@@ -91,10 +91,12 @@ const Login = () => {
                 <label>
                   Remember Me
                   <input
+                      className = {'rememberInputBox'}
                       type="checkbox"
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
                   />
+
                 </label>
               </div>
 
