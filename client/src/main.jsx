@@ -23,6 +23,7 @@ import ManagePromotions from './views/ManagePromotions.jsx';
 import ManageMovies from './views/ManageMovies.jsx'
 import AddMovie from './views/AddMovie.jsx';
 import ManageUsers from './views/ManageUsers';
+import ManageUser from './views/ManageUser';
 import Reset from './views/ResetPassword.jsx';
 import RegisterConfirmation from './views/RegisterConfirmation.jsx';
 import ChangePassword from './views/ChangePassword.jsx';
@@ -54,6 +55,7 @@ const routes = [
     { path: 'admin/movies', element: <ManageMovies />, loader: () => authMiddleware(true) },
     { path: 'admin/movies/addMovie', element: <AddMovie />, loader: () => authMiddleware(true) },
     { path: 'admin/users', element: <ManageUsers />, loader: () => authMiddleware(true) },
+    { path: 'admin/users/:id', element: <ManageUser />, loader: () => authMiddleware(true) },
     { path: 'booking', element: <Booking />, loader: () => authMiddleware(false) },
     { path: 'editProfile', element: <EditProfile />, loader: () => authMiddleware(false) },
     { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false) },
