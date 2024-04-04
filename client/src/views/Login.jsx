@@ -9,6 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // Added for "Show Password" feature
   const [showErrorPopup, setShowErrorPopup] = useState(false); // Added for showing the error popup
+  const [newErr, setErr] = useState(""); // Added for showing the error popup
   const [rememberMe, setRememberMe] = useState(false); // State for "Remember Me"
   const navigate = useNavigate();
   const { auth, dispatch } = useContext(AuthContext);
@@ -28,6 +29,7 @@ const Login = () => {
       navigate('/');
     } catch (error) {
       console.error('Error during login:', error);
+      setErr(error.cause);
       setShowErrorPopup(true); // Show the error popup on catch
     }
   };
@@ -46,7 +48,7 @@ const Login = () => {
         
         {showErrorPopup && ( // Conditional rendering for the error popup
         <div className="error-popup">
-          <p>Incorrect Username or Password</p>
+          <p>{newErr}</p>
           <button onClick={handleClosePopup}>X</button> {/* Button to close the popup */}
         </div>
         )} 
