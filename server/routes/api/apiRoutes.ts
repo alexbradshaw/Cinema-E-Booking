@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addCard, addCategory, addMovie, addPromotion, adminCheck, authCheck, changePassword, deleteCard, findCategories, findCategoriesList, findMovies, findPromotions, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateCard, updateUser, verifyAccount }  from '../../controllers/index.js';
+import { addAdmin, addCard, addCategory, addPromotion, addMovie, adminCheck, authCheck, changePassword, editAccountStanding, editAdminPermissions, deleteCard, deletePromotion, editPromotion, findCategories, findCategoriesList, findPromotions, findMovies, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateCard, updateUser, verifyAccount } from '../../controllers/index.js';
 
 const router = Router();
 // ? Key ?
@@ -12,13 +12,22 @@ const router = Router();
 //? ** Admin Routes **
 
         // GET
-        router.get('/admin', adminCheck);                        // !! GET route to check if user is admin and their permissions !! 
-        router.get('/admin/accounts', getUsers);                 // !! GET route to get all users !! 
+        router.get('/admin', adminCheck);                             // !! GET route to check if user is admin and their permissions !! 
+        router.get('/admin/accounts', getUsers);                      // !! GET route to get all users !! 
         
         // POST
-        router.post('/admin/movie', addMovie);                   // !! POST route to add a new movie !! 
-        router.post('/admin/category', addCategory);             // !! POST route to add a new category !! 
-        router.post('/admin/promotion', addPromotion);           // !! POST route to add a new promotion !! 
+        router.post('/admin', addAdmin);                    // !! POST route to create a new admin !! 
+        router.post('/admin/movie', addMovie);                        // !! POST route to add a new movie !! 
+        router.post('/admin/category', addCategory);                  // !! POST route to add a new category !! 
+        router.post('/admin/promotion', addPromotion);                // !! POST route to add a new promotion !! 
+
+        // PUT 
+        router.put('/admin/standing/:id', editAccountStanding);     // !! PUT route to update account standing
+        router.put('/admin/permissions/:id', editAdminPermissions); // !! PUT route to update admin permissions
+        router.put('/admin/promotion/:id', editPromotion);            // !! PUT route to update promotion information
+
+        // DELETE
+        router.delete('/admin/promotion/:id', deletePromotion);       // !! DELETE route for a single promotion
 
 
 //? ** Account Routes **
