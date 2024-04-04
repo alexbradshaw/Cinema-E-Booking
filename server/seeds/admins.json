@@ -2,33 +2,41 @@
     {
         "admin_id":1,
         "user_id": 1,
+        "manage_accounts": true,
         "manage_admins": true,
-        "create_promotion": true,
-        "disable_accounts": true,
-        "delete_accounts": true
+        "manage_categories": true,
+        "manage_movies": true,
+        "manage_promotions": true,
+        "refund": true
     },
     {
         "admin_id":2,
         "user_id": 2,
+        "manage_accounts": true,
         "manage_admins": true,
-        "create_promotion": true,
-        "disable_accounts": true,
-        "delete_accounts": true
+        "manage_categories": true,
+        "manage_movies": true,
+        "manage_promotions": true,
+        "refund": true
     },
     {
         "admin_id":3,
         "user_id": 3,
+        "manage_accounts": true,
         "manage_admins": true,
-        "create_promotion": true,
-        "disable_accounts": true,
-        "delete_accounts": true
+        "manage_categories": true,
+        "manage_movies": true,
+        "manage_promotions": true,
+        "refund": true
     },
     {
         "admin_id":4,
         "user_id": 4,
+        "manage_accounts": true,
         "manage_admins": true,
-        "create_promotion": true,
-        "disable_accounts": true,
-        "delete_accounts": true
+        "manage_categories": true,
+        "manage_movies": true,
+        "manage_promotions": true,
+        "refund": true
     }
 ]
