@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './views/components/Navbar';
+import './App.css'
 
 export const AuthContext = createContext();
 
