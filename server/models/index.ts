@@ -77,42 +77,46 @@ import Ticket from './Ticket.js';
     /* Promotion Association (so we know who made the promotion)*/
     User.hasMany(Promotion, {
         foreignKey: 'user_id',
+        onDelete: 'CASCADE'
     });
 
     /* User Association (if we query promotions, we can see who made it) */
     Promotion.belongsTo(User, {
         foreignKey: 'user_id',
-        as: "User"
+        as: "User",
     });
 
 
 /* Setting up Model Relation to link a User to a Transaction */
     /* Transaction Association (so we know who made the Transaction)*/
     User.hasMany(Transaction, {
-        foreignKey: 'user_id'
+        foreignKey: 'user_id',
     });
 
     /* User Association (if we query transactions, we can see the associated user) */
     Transaction.belongsTo(User, {
         foreignKey: 'user_id',
-        as: "Transaction"
+        as: "Transaction",
+        onDelete: 'NO ACTION'
     });
 
 /* Setting up Model Relation for Users to have an admin object */
     User.hasOne(Admin, {
         foreignKey: 'admin_id',
-        constraints: false
+        constraints: false,
+        onDelete: 'CASCADE'
     });
 
     Admin.belongsTo(User, {
         foreignKey: 'user_id',
-        constraints: false
+        constraints: false,
     });
 
 /* Setting up Model Relation for Users to have a Credit Card */
     User.hasOne(Card, {
         foreignKey: 'card_id',
         constraints: false,
+        onDelete: 'CASCADE'
     });
 
     Card.belongsTo(User, {

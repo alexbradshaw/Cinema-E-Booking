@@ -14,7 +14,7 @@ class User extends Model {
     declare token: string;
     declare token_identifier: string;
 
-    declare Admin?: Admin;
+    declare admin?: Admin;
     declare card?: Card;
 
     async checkPassword(password: string) {
@@ -52,6 +52,10 @@ User.init(
     profile_pic: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: true
     },
     promotion_enrollment: {
       type: DataTypes.BOOLEAN,
