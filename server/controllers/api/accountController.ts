@@ -6,7 +6,7 @@ import { sendUpdateEmail } from '../../utils/utils.js';
 
 export const getAuthedUser = async (req: Request, res: Response) => {
     if (!verifyToken(req)) {
-        res.status(401).json({ message: "You are not signed in!" });
+        res.status(401).json("You are not signed in!");
         return;
     } else {
         try {
@@ -43,7 +43,7 @@ export const getAuthedUser = async (req: Request, res: Response) => {
             );
 
             if (!user) {
-                return res.status(404).json({ message: 'No user found!'});
+                return res.status(404).json('No user found!');
             }
 
             res.json({ user, card });
@@ -98,36 +98,16 @@ export const getUserByNameOrID = async (req: Request, res: Response) => {
     }
 }
 
-export const getUsers = async (req: Request, res: Response) => {
-    try {
-        if (!req.session.isAdmin) {
-            res.status(401).json({ message: "You do not have permission to view these!" });
-            return;
-        }
-        const user = await User.findAll({  
-            attributes: { 
-                exclude: ['email', 'password', 'admin_id'] 
-            },
-            include: [{ model: Admin, }],   
-            });
-
-        res.json(user);
-    } catch (e) {
-        console.log(e);
-        res.status(500).json(e);
-    }
-}
-
 export const addCard = async (req: Request, res: Response) => {
     try {
         if (!verifyToken(req)) {
-            res.status(401).json({ message: "You are not authorized!" });
+            res.status(401).json("You are not authorized!");
             return;
         }
 
         const newCard = await Card.create({ ...req.body, user_id: req.session.userId });
 
-        const user = await User.update({
+        await User.update({
             card_id: newCard.card_id
             },
             {
@@ -148,7 +128,7 @@ export const addCard = async (req: Request, res: Response) => {
 export const updateCard = async (req: Request, res: Response) => {
     try {
         if (!verifyToken(req)) {
-            res.status(401).json({ message: "You are not authorized!" });
+            res.status(401).json("You are not authorized!");
             return;
         }
 
@@ -156,7 +136,7 @@ export const updateCard = async (req: Request, res: Response) => {
 
         sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
 
-        res.json({ message: "Card successfully updated."});
+        res.json("Card successfully updated.");
     } catch (e) {
         console.log(e);
         res.status(500).json(e);
@@ -166,7 +146,7 @@ export const updateCard = async (req: Request, res: Response) => {
 export const deleteCard = async (req: Request, res: Response) => {
     try {
         if (!verifyToken(req)) {
-            res.status(401).json({ message: "You are not authorized!" });
+            res.status(401).json("You are not authorized!");
             return;
         }
 
@@ -174,7 +154,7 @@ export const deleteCard = async (req: Request, res: Response) => {
 
         sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
 
-        res.json({ message: "Card successfully deleted."});
+        res.json("Card successfully deleted.");
     } catch (e) {
         console.log(e);
         res.status(500).json(e);
@@ -184,7 +164,7 @@ export const deleteCard = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
     try {
         if (!verifyToken(req)) {
-            res.status(401).json({ message: "You are not authorized!" });
+            res.status(401).json("You are not authorized!");
             return;
         }
         const user = await User.update({

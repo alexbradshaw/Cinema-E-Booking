@@ -38,7 +38,7 @@ import { Request, Response } from 'express';
       });
 
       if (!movies) {
-        return res.status(404).json({ message: "No movies were found" });
+        return res.status(404).json("No movies were found");
       }
 
       res.json(movies)
@@ -111,24 +111,8 @@ import { Request, Response } from 'express';
         }
   
         if (movieIDs.length == 0) {
-          return res.status(404).json({ message: "No movie was found matching these terms" });
+          return res.status(404).json("No movie was found matching these terms");
         }
     
         res.json(movies)
       }
-  
-    export const addMovie = async (req: Request, res: Response) => {
-      try {
-        if (!req.session.isAdmin) {
-          return res.status(401).json({ message: "Your account does not have permission to add a new Movie!" });
-        }
-        
-        const movie = await Movie.create(req.body); 
-  
-        res.json(movie);
-      } 
-      catch (e) {
-        console.error(e);
-        res.status(400).json(e);
-      }
-    }

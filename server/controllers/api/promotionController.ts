@@ -16,27 +16,9 @@ import { Request, Response } from 'express';
       });
 
       if (!promotions) {
-        return res.status(404).json({ message: "No promotions were found" });
+        return res.status(404).json("No promotions were found");
       }
 
       res.json(promotions)
     }
   
-    export const addPromotion = async (req: Request, res: Response) => {
-      try {
-        if (!req.session.permissions?.create_promotion) {
-          return res.status(401).json({ message: "Your account does not have permission to add a new promotion!" });
-        }
-        
-        const promotion = await Promotion.create({
-          ...req.body,
-          "user_id": req.session.userId
-        }); 
-  
-        res.json(promotion);
-      } 
-      catch (e) {
-        console.error(e);
-        res.status(400).json(e);
-      }
-    }

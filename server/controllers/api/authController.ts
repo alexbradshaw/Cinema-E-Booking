@@ -42,22 +42,22 @@ export const login = async (req: Request, res: Response) => {
           {
             model: Admin,
             attributes: {
-              exclude: ['admin_id']
+              exclude: ['admin_id', 'user_id']
             }
           }
         ]
     })
 
     if (!user) {
-      return res.status(401).json({ message: 'Invalid user' });
+      return res.status(401).json('Invalid user');
     } else if (!user.active) {
-      return res.status(401).json({ message: 'Your account is not active, please contact support for further assistance.' })
+      return res.status(401).json('Your account is not active, please contact support for further assistance.')
     }
 
     const passCorrect = await user.checkPassword(req.body.password); 
 
     if (!passCorrect) {
-      return res.status(401).json({ message: 'Incorrect password!' });
+      return res.status(401).json('Incorrect password!');
     }
 
     let expiration = 1;
@@ -65,6 +65,9 @@ export const login = async (req: Request, res: Response) => {
     if (req.body.remember) {
       expiration = 6 * 30;
     }
+
+    console.log(user.dataValues);
+    
 
     try {
       req.session.save(() => {
@@ -76,7 +79,7 @@ export const login = async (req: Request, res: Response) => {
         req.session.jwt = generateToken(user, expiration);
         req.session.remember = req.body.remember;
 
-        req.session.permissions = user.Admin ? user.Admin : undefined;
+        req.session.permissions = user.admin ? user.admin.dataValues : undefined;
 
         res.json({ isAdmin: req.session.isAdmin, token: req.session.jwt }); 
       })
@@ -89,7 +92,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   if (!verifyToken(req)) {
-      res.status(401).json({ message: "You are not signed in!"})
+      res.status(401).json("You are not signed in!")
       return;
   } else {
       try {
@@ -97,7 +100,7 @@ export const logout = async (req: Request, res: Response) => {
           if (err) {
             throw err;
           }
-          res.status(200).json({message: "Successfully logged out."});
+          res.status(200).json("Successfully logged out.");
         });
       } catch (e) {
         console.error(e);
