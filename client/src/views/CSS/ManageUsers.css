@@ -1,0 +1,161 @@
+.manage-users-container {
+    display: flex;
+    justify-content: center;
+  }
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header > div {
+  width: 1150px;
+}
+
+.users-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rows {
+  width: 1150px;
+  border: 3px solid black;
+}
+
+.user-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: .6fr 1fr .7fr .7fr .7fr 1fr;
+}
+
+.user-row > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid black;
+}
+
+.manage-user {
+  font-size: 1.4rem;
+  margin-right: 0px;
+}
+
+.user {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.user > div:first-child {
+  margin-top: 20px;
+}
+
+.user-header {
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  column-gap: 40px;
+}
+
+.user-header > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+}
+
+.user-column {
+  min-height: 700px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.user-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.user-column form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.user-form-submit {
+  width: 100%;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.user-form-submit button {
+  width: 250px;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px;
+  font-size: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.user-options {
+  width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.user-options > div {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.profile-pic {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin-bottom: 70px;
+}
+
+.profile-pic > img {
+  width: 300px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.permission {
+  width: 350px;
+  display: flex;
+  justify-content: center;
+}
+
+.permission > div {
+  width: 250px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.permission > div > div {
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+.permission label {
+  padding-bottom: 0px;
+}

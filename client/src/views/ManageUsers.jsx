@@ -1,11 +1,12 @@
+import './CSS/ManageUsers.css'; 
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate, Link } from 'react-router-dom'; 
 import { AuthContext } from '../App';
-import { checkAdmin, getAllUsers } from '../utils/API'; // Import function to fetch users
-
+import { checkAdmin, getAllUsers } from '../utils/API';
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([]);
+    const [userId, setUserId] = useState([]);
     const navigate = useNavigate();
 
     const { admin: { isAdmin } } = useContext(AuthContext);
@@ -15,8 +16,9 @@ const ManageUsers = () => {
     useEffect(() => {
       const fetchMovies = async () => {
         try {
-          const usersData = await getAllUsers();
-          setUsers(usersData);
+          const { users, currentUserId } = await getAllUsers();
+          setUsers(users);
+          setUserId(currentUserId);
         } catch (error) {
           console.error("Error fetching accounts:", error);
         }
@@ -26,22 +28,63 @@ const ManageUsers = () => {
     }, []);
 
     return (
-        <div className="manage-promotions-container">
-          <h2>Manage Users</h2>
-          <div className="promotions-list">
+        <div className="manager-users-container">
+          <div className='header'>
+            <div>
+              <h2 style={{"fontSize":"3rem"}}>Current Users</h2>
+            </div>
+          </div>
+          <div className="users-list">
+            <div className='rows'>
+              <div key={'header'} className="user-row">
+                <div>
+                  <h3>ID</h3>
+                </div>
+                <div>
+                  <h3>Username</h3>
+                </div>
+                <div>
+                  <h3>Active</h3>
+                </div>
+                <div>
+                  <h3>Admin</h3>
+                </div>
+                <div>
+                  <h3>Promotions</h3>
+                </div>
+                <div>
+                  <h3>Manage</h3>
+                </div>
+              </div>
               {
-                users.map((user) => (
-                  <div key={user.id} className="promotion-item">
-                    <h3>User: {user.username}</h3>
-                    <p>Admin: {`${user.admin ? true : false}`}</p>
-                    <div className="promotion-actions">
-                        <button className="edit-button" disabled>Edit</button>
-                        <button className="delete-button" disabled>Delete</button>
-                        <button className="view-button" disabled>View</button>
-                    </div>
-                  </div>
-                ))
+                users.map((user) => {
+                  if (user.id != userId) {
+                    return (
+                      <div key={user.id} className="user-row">
+                        <div>
+                          <h4>{user.id}</h4>
+                        </div>
+                        <div>
+                          <h4>{user.username}</h4>
+                        </div>
+                        <div>
+                          <h4>{user.active ? <span style={{"color":"green"}}>true</span> : <span style={{"color":"red"}}>false</span>}</h4>
+                        </div>
+                        <div>
+                          <h4>{user.admin ? <span style={{"color":"green"}}>true</span> : <span style={{"color":"red"}}>false</span>}</h4>
+                        </div>
+                        <div>
+                          <h4>{user.promotion_enrollment ? <span style={{"color":"green"}}>true</span> : <span style={{"color":"red"}}>false</span>}</h4>
+                        </div>
+                        <div>
+                          <Link className='edit-button manage-user' state={{'user' : user}} to={`${user.id}`}>Modify User</Link>
+                        </div>
+                      </div>
+                    );
+                  }
+                })
               }
+            </div>
           </div>
         </div>
     );
