@@ -31,31 +31,6 @@
     display: flex;
     gap: 10px;
   }
-  
-  /* Styling for buttons */
-  .view-button,
-  .edit-button,
-  .delete-button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .view-button {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .edit-button {
-    background-color: #ffc107;
-    color: #000;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-    color: #fff;
-  }
 
   .add-movie-button {
     padding: 10px 20px;
@@ -71,12 +46,5 @@
   
   .add-movie-button:hover {
     background-color: #218838;
-  }
-  
-  /* Hover effects for buttons */
-  .view-button:hover,
-  .edit-button:hover,
-  .delete-button:hover {
-    opacity: 0.8;
   }
   

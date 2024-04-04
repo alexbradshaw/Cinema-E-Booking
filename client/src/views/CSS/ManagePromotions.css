@@ -15,8 +15,10 @@
   }
   
   .edit-button,
+  .success-button,
   .delete-button,
   .view-button {
     margin-right: 8px;
   }
+
   
