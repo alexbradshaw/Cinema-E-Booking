@@ -11,7 +11,18 @@ export const addAdmin = async (req: Request, res: Response) => {
 
     const newAdmin = await Admin.create(req.body);
 
-    res.json(newAdmin);
+    const updated = await User.update(
+      {
+        admin_id: newAdmin.admin_id
+      },
+      {
+        where: { 
+          id: req.body.user_id 
+        }
+      }
+    );
+
+    res.json(updated);
   }
   catch (e) {
     console.log(e);

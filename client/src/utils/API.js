@@ -58,9 +58,9 @@ export const checkAdmin = async (navigate) => {
             
             await errorCheck(response);
     
-            const newAdmin = await response.json();
+            const updated = await response.json();
     
-            return newAdmin;
+            return updated;
         }
 
     /*
