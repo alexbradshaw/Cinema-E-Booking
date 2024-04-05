@@ -37,7 +37,7 @@ const authMiddleware = (isAdmin, permission) => {
     return redirect('/login');
   } else if (isAdmin && !localStorage.getItem('admin')) {
     return redirect('/');
-  } else if (permission && isAdmin && !permissions[permission]) {
+  } else if (permission && !permissions[permission]) {
     return redirect('/');
   } else {
     return null;
