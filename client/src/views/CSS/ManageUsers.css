@@ -14,6 +14,12 @@
   width: 1150px;
 }
 
+.new-admin {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .users-list {
   display: flex;
   justify-content: center;
@@ -97,7 +103,7 @@
   justify-content: center;
 }
 
-.user-form-submit button {
+.default-button {
   width: 250px;
   border: none;
   color: white;

@@ -1,12 +1,13 @@
 import './CSS/ManageUsers.css'; 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { editAccountStanding, editAdminPermissions } from '../utils/API';
+import { createAdmin, editAccountStanding, editAdminPermissions, getAdminFields } from '../utils/API';
 
 const ManageUser = () => {
     const navigate = useNavigate();
     const { state: { user } } = useLocation();
     const { id, active, admin, username, promotion_enrollment, profile_pic } = user;
+    const [adminForm, setAdminForm] = useState(false);
     const [success, setSuccess] = useState(false);
 
     const generatePermissions = (admin) => {
@@ -30,9 +31,27 @@ const ManageUser = () => {
         return perms;
     }
 
+    const generateFormObject = (id) => {
+        let formObject = '{';
+
+        for(let i = 0; i < form.length; i++) {
+            formObject += `"${form[i].permission}": ${form[i].value ? 1 : 0}`;
+            if (i < form.length - 1) {
+                formObject += ', ';
+            }
+        }
+
+        if (id) {
+            formObject += `, "user_id": ${id}`;
+        }
+
+        formObject += '}';
+
+        return formObject;
+    }
+
     const updateAccountStanding = async () => {
         const edit = await editAccountStanding(id, active);
-        console.log(edit);
         if (edit[0] == 1) {
             let newUser = user;
             newUser.active = !active;
@@ -44,21 +63,14 @@ const ManageUser = () => {
 
     const formHandler = async (e) => {
         e.preventDefault();
-        let formObject = '{';
+        
+        const formObject = generateFormObject();
 
-        for(let i = 0; i < form.length; i++) {
-            formObject += `"${form[i].permission}": ${form[i].value ? 1 : 0}`;
-            if (i < form.length - 1) {
-                formObject += ', ';
-            }
-        }
-
-        formObject += '}';
         const updated = await editAdminPermissions(id, formObject);
 
         if (updated[0] == 1) {
             let newUser = user;
-            newUser.admin = JSON.parse(formObject);
+            newUser.admin = await JSON.parse(formObject);
             navigate(`/admin/users/${id}`, {state: {'user': newUser}});
             setSuccess(true);
             setTimeout(() => setSuccess(false), 1700);
@@ -70,6 +82,34 @@ const ManageUser = () => {
         updated[name] = { ...form[name], value: !form[name].value } 
         setForm([...updated]);
     }
+
+    const newAdmin = async (e) => {
+        e.preventDefault();
+        const formObject = generateFormObject(id);
+        const admin = await createAdmin(formObject);
+        if (admin) {
+            let newUser = user;
+            newUser.admin = await JSON.parse(formObject);
+            navigate(`/admin/users/${id}`, {state: {'user': newUser}});
+            setSuccess(true);
+            setTimeout(() => setSuccess(false), 1700);
+        }
+    }
+
+    const getFields = async () => {
+        if (!admin) {
+            const fields = await getAdminFields();
+            const objArr = {};
+            for (let i = 0; i < fields.length; i++) {
+                Object.assign(objArr, await JSON.parse(`{"${fields[i]}": false}`))
+            }
+            setForm(generatePermissions(objArr));
+        }
+    }
+
+    useEffect(()=> {
+        getFields();
+    }, [])
 
     return (
         <div key={id} className="user">
@@ -124,14 +164,45 @@ const ManageUser = () => {
                                         <input type='submit' value={success ? 'Changes Submitted': 'Update Admin'} />
                                         {
                                         active ? 
-                                                <button onClick={updateAccountStanding} className='delete-button account-status'>Suspend Account</button>
+                                                <button onClick={updateAccountStanding} className='delete-button default-button'>Suspend Account</button>
                                             :
-                                                <button onClick={updateAccountStanding} className='success-button account-status'>Reactivate Account</button>
+                                                <button onClick={updateAccountStanding} className='success-button default-button'>Reactivate Account</button>
                                         }
                                     </div>
                             </form>
                             : 
-                            <button className="success-button user-buttons">Create Admin</button>
+                            (
+                                adminForm ?
+                                    <div className='new-admin'>
+                                        <form onSubmit={newAdmin}>
+                                        {
+                                            form
+                                                .map(
+                                                    ({ name, permission, value }, index) => {
+                                                        return (
+                                                            <div key={permission + ' input'} className='permission'>
+                                                                <div>
+                                                                    <input type="checkbox" checked={value} value={form[index].value} name={index} id={permission} onChange={onUpdate}/>
+                                                                    <div>
+                                                                        <label htmlFor={permission}>{name}</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    }
+                                                )
+                                            }
+                                            <div className='user-form-submit'>
+                                                <input type='submit' value={success ? 'New Admin Submitted': 'Create Admin'} />
+                                                <button onClick={()=> setAdminForm(!adminForm)} className='delete-button default-button' style={{"width":"fit-content"}}>Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    :
+                                    <div className='new-admin'>
+                                        <button onClick={()=> setAdminForm(!adminForm)} className="success-button default-button">Create Admin</button>
+                                    </div>
+                            )
                     }
                     </div>
                 </div>

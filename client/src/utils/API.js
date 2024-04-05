@@ -53,7 +53,7 @@ export const checkAdmin = async (navigate) => {
                     'Content-Type': 'application/json',
                     'Authorization' : `Bearer ${retrieveAuthToken()}`,
                 },
-                body: JSON.stringify(formData),
+                body: formData,
             });
             
             await errorCheck(response);
@@ -200,6 +200,23 @@ export const checkAdmin = async (navigate) => {
             const updatedRows = await response.json();
 
             return updatedRows;
+        }
+    
+    /*
+        Returns an object full of admin fields
+    */
+        export const getAdminFields = async () => {
+            const response = await fetch("/api/admin/fields", {
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                }
+            });
+            
+            await errorCheck(response);
+            
+            const fields = await response.json();
+
+            return fields;
         }
 
     /*
