@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addAdmin, addCard, addCategory, addPromotion, addMovie, adminCheck, authCheck, changePassword, editAccountStanding, editAdminPermissions, deleteCard, deletePromotion, editPromotion, findCategories, findCategoriesList, findPromotions, findMovies, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateCard, updateUser, verifyAccount } from '../../controllers/index.js';
+import { addAdmin, addCard, addCategory, addPromotion, addMovie, adminCheck, authCheck, changePassword, deleteCard, deletePromotion, editAccountStanding, editAdminPermissions, editPromotion, findCategories, findCategoriesList, findPromotions, findMovies, getAdminFields, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateCard, updateUser, verifyAccount } from '../../controllers/index.js';
 
 const router = Router();
 // ? Key ?
@@ -14,6 +14,7 @@ const router = Router();
         // GET
         router.get('/admin', adminCheck);                             // !! GET route to check if user is admin and their permissions !! 
         router.get('/admin/accounts', getUsers);                      // !! GET route to get all users !! 
+        router.get('/admin/fields', getAdminFields);                      // !! GET route to get fields for the Admin Model !! 
         
         // POST
         router.post('/admin', addAdmin);                    // !! POST route to create a new admin !! 

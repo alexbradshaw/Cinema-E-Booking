@@ -181,6 +181,26 @@ export const editPromotion = async (req: Request, res: Response) => {
   }
 }
 
+export const getAdminFields = async (req: Request, res: Response) => {
+  try {
+      if (!req.session.permissions?.manage_admins) {
+          res.status(401).json("Your account is not authorized to manage admins!");
+          return;
+      }
+
+      const fields = [];
+
+      for (let field in Admin.getAttributes()) {
+        fields.push(field);
+      }
+
+      res.json(fields);
+  } catch (e) {
+      console.log(e);
+      res.status(500).json(e);
+  }
+}
+
 export const getUsers = async (req: Request, res: Response) => {
   try {
       if (!req.session.permissions?.manage_accounts) {
@@ -191,7 +211,9 @@ export const getUsers = async (req: Request, res: Response) => {
           attributes: { 
               exclude: ['email', 'password', 'admin_id'] 
           },
-          include: [{ model: Admin, }],   
+          include: [{ model: Admin, attributes: {
+            exclude: ['admin_id', 'user_id']
+          } }],   
           });
 
       res.json({ users: user, currentUserId: req.session.userId });
