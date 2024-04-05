@@ -6,18 +6,47 @@ import { checkAdmin } from '../utils/API';
 
 const Admin = () => {
     const navigate = useNavigate();
-    const { admin: { isAdmin } } = useContext(AuthContext);
+    const { admin: { isAdmin, permissions } } = useContext(AuthContext);
 
     useEffect(() => { checkAdmin(navigate) }, [isAdmin]);
+
+    const routes = [
+        {
+            'route': 'promotions',
+            'name': 'Manage Promotions',
+            'permission': 'manage_promotions'
+        },
+        {
+            'route': 'movies',
+            'name': 'Manage Movies',
+            'permission': 'manage_movies'
+        },
+        {
+            'route': 'users',
+            'name': 'Manage Users',
+            'permission': 'manage_accounts'
+        }
+    ]
 
     return (
         <div className='adminControlPanel'>
             <div className='controlPanelGrid'>
                 <h2>Admin Control Panel</h2>
                 <ul>
-                    <li><Link to='/admin/promotions'>Manage Promotions</Link></li>
-                    <li><Link to='/admin/movies'>Manage Movies</Link></li>
-                    <li><Link to='/admin/users'>Manage Users</Link></li>
+                    {
+                        routes
+                            .map(
+                                ({route, name, permission}, index) => {
+                                    if (permissions[permission]) {
+                                        return (
+                                            <li key={index}>
+                                                <Link to={`/admin/${route}`}>{name}</Link>
+                                            </li>
+                                        );
+                                    }
+                                }
+                            )
+                    }
                 </ul>
             </div>
         </div>

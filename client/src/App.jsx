@@ -8,6 +8,7 @@ export const AuthContext = createContext();
 const initialState = {
   admin: {
     isAdmin: false,
+    permissions: {}
   },
   auth: false,
 };
@@ -20,6 +21,7 @@ const reducer = (state, action) => {
       return initialState;
     case 'SET_ADMIN':
       localStorage.setItem('admin', action.payload.isAdmin);
+      localStorage.setItem('permissions', JSON.stringify(action.payload.permissions));
       return { ...state, admin: action.payload };
     case 'SET_AUTH':
       return { ...state, auth: action.payload };

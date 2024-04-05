@@ -28,10 +28,16 @@ import Reset from './views/ResetPassword.jsx';
 import RegisterConfirmation from './views/RegisterConfirmation.jsx';
 import ChangePassword from './views/ChangePassword.jsx';
 
-const authMiddleware = (isAdmin) => {
+const authMiddleware = (isAdmin, permission) => {
+  let permissions = {};
+  if (localStorage.getItem('permissions')) {
+    permissions = JSON.parse(localStorage.getItem('permissions'));
+  }
   if (!localStorage.getItem('auth')) {
     return redirect('/login');
   } else if (isAdmin && !localStorage.getItem('admin')) {
+    return redirect('/');
+  } else if (permission && isAdmin && !permissions[permission]) {
     return redirect('/');
   } else {
     return null;
@@ -51,11 +57,11 @@ const routes = [
 
   /* Auth Protected Routes */
     { path: 'admin', element: <Admin />, loader: () => authMiddleware(true) },
-    { path: 'admin/promotions', element: <ManagePromotions />, loader: () => authMiddleware(true) },
-    { path: 'admin/movies', element: <ManageMovies />, loader: () => authMiddleware(true) },
-    { path: 'admin/movies/addMovie', element: <AddMovie />, loader: () => authMiddleware(true) },
-    { path: 'admin/users', element: <ManageUsers />, loader: () => authMiddleware(true) },
-    { path: 'admin/users/:id', element: <ManageUser />, loader: () => authMiddleware(true) },
+    { path: 'admin/promotions', element: <ManagePromotions />, loader: () => authMiddleware(true, 'manage_promotions') },
+    { path: 'admin/movies', element: <ManageMovies />, loader: () => authMiddleware(true, 'manage_movies') },
+    { path: 'admin/movies/addMovie', element: <AddMovie />, loader: () => authMiddleware(true, 'manage_movies') },
+    { path: 'admin/users', element: <ManageUsers />, loader: () => authMiddleware(true, 'manage_accounts') },
+    { path: 'admin/users/:id', element: <ManageUser />, loader: () => authMiddleware(true, 'manage_accounts') },
     { path: 'booking', element: <Booking />, loader: () => authMiddleware(false) },
     { path: 'editProfile', element: <EditProfile />, loader: () => authMiddleware(false) },
     { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false) },
