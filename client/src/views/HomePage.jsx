@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Carousel } from 'react-responsive-carousel';
-//import { Carousel } from 'react-elastic-carousel';
-import "./CSS/HomePage.css";
 import { getAllMovies } from '../utils/API';
 import Navbar from './components/Navbar';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import MovieRow from './components/MovieRow';
-import { v4 as uuidv4 } from 'uuid';
+import MovieCard from './components/MovieCard';
+import { Slide, Slider, ButtonBack, ButtonNext, CarouselProvider } from 'pure-react-carousel';
+import { Card, CardGroup } from 'semantic-ui-react';
+import "./CSS/HomePage.css";
+//import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import 'semantic-ui-css/semantic.min.css';
 
 const Home = () => {
-  const containerStyle = {
-    backgroundColor: 'blue',
-    // Add other styles as needed
-  };
 
-  const carouselStyle = {
-    maxWidth: '800px', // Adjust the maximum width as needed
-    margin: 'auto',    // Center the carousel
-  };
-
+  let i = 0;
   const [movies, setMovies] = useState([]);
+
+  {/*
+  const genresAry = ["Action", "Adventure", "Animation", "Comedy", 
+                    "Crime", "Documentary", "Drama", "Family", "Fantasy", 
+                    "History", "Horror", "Music", "Mystery", "Romance", "Science Fiction", 
+                    "TV Movie", "Thriller", "War", "Western"];
+  let index = 0
+
+  genreFilter = (genreSearch) => {
+    const movies = this.state.movies.slice(0)
+    return movies.filter(movie => movie.genres.includes(genreSearch))
+  }
+*/}
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -35,8 +40,41 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="screenBody">
-        
+    <div className="carousel-container">
+        {movies.length > 0 ? (
+          <CarouselProvider orientation='horizontal' step={5} naturalSlideWidth={100} naturalSlideHeight={20} totalSlides={1}>
+            <ButtonBack className="carousel-button">Back</ButtonBack>
+            <ButtonNext className="carousel-button">Next</ButtonNext>
+            <CardGroup>
+              {movies.map((movie) => 
+                <Card key={movie.id}>
+                  <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} /> 
+                </Card>
+              )}
+            </CardGroup>
+
+            {/*
+            <Slider className="carousel-slider" style={{ display: 'flex', flexdirection: 'row' }}>
+              {movies.map((movie) => 
+                <Slide index={i++} key={movie.id}>
+                  <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} />
+                </Slide>
+            )}
+            </Slider>
+            */}
+          </CarouselProvider>
+        ) : (
+          <p>Loading...</p>
+        )}
+
+    </div>
+  );
+};
+
+export default Home;
+
+
+     {/*
         {movies.length > 0 ? (
           <Carousel className="carouselStyle" axis="horizontal" showArrows={false} showIndicators={false}>
             {movies.map((movie) => (
@@ -61,6 +99,8 @@ const Home = () => {
         <p>Loading...</p>
       )}
       
+      /*}
+
       {/*
       <MovieRow
         key={uuidv4()}
@@ -68,8 +108,3 @@ const Home = () => {
         movies={movies}
       />
       */}
-    </div>
-  );
-};
-
-export default Home;
