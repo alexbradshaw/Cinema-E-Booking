@@ -65,8 +65,6 @@ export const login = async (req: Request, res: Response) => {
     if (req.body.remember) {
       expiration = 6 * 30;
     }
-
-    console.log(user.dataValues);
     
 
     try {
