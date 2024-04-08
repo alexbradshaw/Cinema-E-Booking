@@ -3,7 +3,7 @@ import { getAllMovies } from '../utils/API';
 import Navbar from './components/Navbar';
 import MovieCard from './components/MovieCard';
 import { Slide, Slider, ButtonBack, ButtonNext, CarouselProvider } from 'pure-react-carousel';
-import { Card, CardGroup } from 'semantic-ui-react';
+import { Card, CardGroup, Container, Header } from 'semantic-ui-react';
 import "./CSS/HomePage.css";
 //import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -42,26 +42,42 @@ const Home = () => {
   return (
     <div className="carousel-container">
         {movies.length > 0 ? (
-          <CarouselProvider orientation='horizontal' step={5} naturalSlideWidth={100} naturalSlideHeight={20} totalSlides={1}>
+          <CarouselProvider orientation='horizontal' step={5} naturalSlideWidth={100} naturalSlideHeight={20} totalSlides={2}>
+            
             <ButtonBack className="carousel-button">Back</ButtonBack>
             <ButtonNext className="carousel-button">Next</ButtonNext>
-            <CardGroup>
-              {movies.map((movie) => 
-                <Card key={movie.id}>
-                  <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} /> 
-                </Card>
-              )}
-            </CardGroup>
-
-            {/*
-            <Slider className="carousel-slider" style={{ display: 'flex', flexdirection: 'row' }}>
-              {movies.map((movie) => 
-                <Slide index={i++} key={movie.id}>
-                  <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} />
-                </Slide>
-            )}
+            
+            {/* Now Showing */}
+            <Header size='large'>{"Now Showing"}</Header>
+            <Slider infiniteLoop={true} showArrows={false}>
+              <div className="slideContainer">
+                <Slide>
+                  <CardGroup itemsPerRow={5}>
+                    {movies.slice(0,5).map((movie) => 
+                      <Card key={movie.id}>
+                        <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} /> 
+                      </Card>
+                    )}
+                  </CardGroup>
+              </Slide>
+            </div>
             </Slider>
-            */}
+
+            {/* Coming Soon */}
+            <Header size='large'>{"Coming Soon"}</Header>
+            <Slider>
+            <div className="slideContainer">
+              <Slide>
+                <CardGroup itemsPerRow={5}>
+                  {movies.slice(0,5).map((movie) => 
+                    <Card key={movie.id}>
+                      <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} /> 
+                    </Card>
+                  )}
+                </CardGroup>
+              </Slide>
+            </div>
+            </Slider>
           </CarouselProvider>
         ) : (
           <p>Loading...</p>

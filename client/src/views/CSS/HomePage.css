@@ -19,7 +19,8 @@ h1 {
 .carousel-container {
     display: flex;
     flex-direction: row;
-    //align-items: center;
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
   }
   
@@ -82,4 +83,8 @@ h1 {
   .carousel-description {
     font-size: 14px;
     color: #666;
+  }
+
+  .slideContainer { 
+
   }
