@@ -24,6 +24,10 @@ Movie.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    vote_average: { 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     poster_url: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -66,6 +70,7 @@ Movie.init(
         key: 'id'
       }
     },
+    
   },
   {
     sequelize,
