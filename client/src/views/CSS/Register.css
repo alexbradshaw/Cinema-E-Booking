@@ -1,8 +1,3 @@
-#login-container {
-    border: 1px solid #ddd; /* Add border styling as needed */
-    padding: 20px; /* Add padding for spacing inside the container */
-}
-
 .error-popup {
     position: fixed; /* Or absolute, depending on your layout */
     top: 20%; /* Adjust as needed */
