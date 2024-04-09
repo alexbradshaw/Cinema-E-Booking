@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { Admin } from './models/index.js';
 
-import express, { Express } from 'express';
+import express, { Express, Request, Response } from 'express';
 const app: Express = express();
 
 import session, { Store } from 'express-session';
@@ -57,7 +57,7 @@ app.use(router);
 if (process.env.NODE_ENV == 'production' || true) {
   app.use(express.static(path.join(__dirname, '../../client/dist'))); 
 
-  app.get('*', (req, res) => {
+  app.get('*', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
   });
 }
