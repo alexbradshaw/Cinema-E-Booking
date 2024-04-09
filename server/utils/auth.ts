@@ -14,7 +14,7 @@ export const verifyToken = (req: Request) => {
     const userProvidedToken = req.headers.authorization?.split(' ')[1];
 
     if (!req.session.active || userProvidedToken == '' || token != userProvidedToken) {
-        return false;
+        throw new Error();
     }
 
     try {
