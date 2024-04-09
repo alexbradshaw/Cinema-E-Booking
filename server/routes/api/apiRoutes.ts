@@ -1,7 +1,27 @@
-import { Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import { addAdmin, addCard, addCategory, addPromotion, addMovie, adminCheck, authCheck, changePassword, deleteCard, deletePromotion, editAccountStanding, editAdminPermissions, editPromotion, findCategories, findCategoriesList, findPromotions, findMovies, getAdminFields, getAuthedUser, getUserByNameOrID, getUsers, login, logout, resetPassword, searchCategories, searchMovies, signup, updateCard, updateUser, verifyAccount } from '../../controllers/index.js';
 
 const router = Router();
+
+const timeLog = (req: Request, res: Response, next: NextFunction) => {
+    console.log('Time: ', Date.now())
+    next();
+}
+
+
+const account = Router();
+const admin = Router(); 
+const categories = Router();
+const movies = Router();
+const promotions = Router();
+
+router.use('/account', account);
+router.use('/admin', admin);
+router.use('/categories', categories);
+router.use('/movies', movies);
+router.use('/promotions', promotions);
+
+
 // ? Key ?
 
 // * Means public route * 
@@ -9,71 +29,79 @@ const router = Router();
 // !! Means admin protected route !! 
 
 
-//? ** Admin Routes **
+// //? ** Admin Routes **
+
+        admin.use(timeLog);
 
         // GET
-        router.get('/admin', adminCheck);                             // !! GET route to check if user is admin and their permissions !! 
-        router.get('/admin/accounts', getUsers);                      // !! GET route to get all users !! 
-        router.get('/admin/fields', getAdminFields);                      // !! GET route to get fields for the Admin Model !! 
+        admin.get('/', adminCheck);                            // !! GET route to check if user is admin and their permissions !! 
+        admin.get('/accounts', getUsers);                      // !! GET route to get all users !! 
+        admin.get('/fields', getAdminFields);                  // !! GET route to get fields for the Admin Model !! 
         
         // POST
-        router.post('/admin', addAdmin);                    // !! POST route to create a new admin !! 
-        router.post('/admin/movie', addMovie);                        // !! POST route to add a new movie !! 
-        router.post('/admin/category', addCategory);                  // !! POST route to add a new category !! 
-        router.post('/admin/promotion', addPromotion);                // !! POST route to add a new promotion !! 
+        admin.post('/', addAdmin);                             // !! POST route to create a new admin !! 
+        admin.post('/movie', addMovie);                        // !! POST route to add a new movie !! 
+        admin.post('/category', addCategory);                  // !! POST route to add a new category !! 
+        admin.post('/promotion', addPromotion);                // !! POST route to add a new promotion !! 
 
         // PUT 
-        router.put('/admin/standing/:id', editAccountStanding);     // !! PUT route to update account standing
-        router.put('/admin/permissions/:id', editAdminPermissions); // !! PUT route to update admin permissions
-        router.put('/admin/promotion/:id', editPromotion);            // !! PUT route to update promotion information
+        admin.put('/standing/:id', editAccountStanding);       // !! PUT route to update account standing
+        admin.put('/permissions/:id', editAdminPermissions);   // !! PUT route to update admin permissions
+        admin.put('/promotion/:id', editPromotion);            // !! PUT route to update promotion information
 
         // DELETE
-        router.delete('/admin/promotion/:id', deletePromotion);       // !! DELETE route for a single promotion
+        admin.delete('/promotion/:id', deletePromotion);       // !! DELETE route for a single promotion
 
 
+        
 //? ** Account Routes **
 
         // GET
-        router.get('/account', getAuthedUser)                    // ! GET route to get the logged in user ! 
-        router.get('/account/:usernameOrID', getUserByNameOrID)  // * GET to get a user based on username or id * 
+        account.get('/', getAuthedUser)                   // ! GET route to get the logged in user ! 
+        account.get('/:usernameOrID', getUserByNameOrID)  // * GET to get a user based on username or id * 
         
         // POST
-        router.post('/account/signup', signup);                  // * POST route to sign up * 
-        router.post('/account/login', login);                    // * POST route to log in * 
-        router.post('/account/logout', logout);                  // ! POST route to log out ! 
-        router.post('/account/card', addCard);                   // ! POST route to add a new card !
-        router.post('/account/reset', resetPassword);            // ! POST route to send a reset password email ! 
-        router.post('/account/auth', authCheck);                 // ! POST route to check if user is still authenticated ! 
+        account.post('/signup', signup);                  // * POST route to sign up * 
+        account.post('/login', login);                    // * POST route to log in * 
+        account.post('/logout', logout);                  // ! POST route to log out ! 
+        account.post('/card', addCard);                   // ! POST route to add a new card !
+        account.post('/reset', resetPassword);            // ! POST route to send a reset password email ! 
+        account.post('/auth', authCheck);                 // ! POST route to check if user is still authenticated ! 
         
         // PUT
-        router.put('/account', updateUser);                      // ! PUT route to update user ! 
-        router.put('/account/card/:cardId', updateCard);         // ! PUT route for a payment method !
-        router.put('/account/reset/:token', changePassword);     // ! PUT route for changing password from reset ! 
-        router.put('/account/verify/:token', verifyAccount);     // ! PUT route for verifying an account from a confirmation email !
+        account.put('/', updateUser);                     // ! PUT route to update user ! 
+        account.put('/card/:cardId', updateCard);         // ! PUT route for a payment method !
+        account.put('/reset/:token', changePassword);     // ! PUT route for changing password from reset ! 
+        account.put('/verify/:token', verifyAccount);     // ! PUT route for verifying an account from a confirmation email !
         
         // DELETE
-        router.delete('/account/card/:cardId', deleteCard);      // ! DELETE route for a payment method !
+        account.delete('/card/:cardId', deleteCard);      // ! DELETE route for a payment method !
+        
 
 
 //? ** Category Routes **
 
         // GET
-        router.get('/categories', findCategories);               // * GET route for all categories/associated movies * 
-        router.get('/categories/list', findCategoriesList);      // * GET route to get a slim list of categories * 
-        router.get('/categories/:category', searchCategories);   // * GET route to find a list of associated movies by cat title * 
+        categories.get('/', findCategories);               // * GET route for all categories/associated movies * 
+        categories.get('/list', findCategoriesList);       // * GET route to get a slim list of categories * 
+        categories.get('/:category', searchCategories);    // * GET route to find a list of associated movies by cat title * 
+
 
 
 //? ** Promotion Routes **
 
         // GET
-        router.get('/promotions', findPromotions);               // * GET route to find all promotions * 
+        promotions.get('/', findPromotions);               // * GET route to find all promotions * 
+
 
 
 //? **  Movie Routes **
 
         // GET
-        router.get('/movies', findMovies);                       // * GET route to find all movies * 
-        router.get('/movies/:title', searchMovies);              // * GET route to find a list of movies matching a title * 
-    
+        movies.get('/', findMovies);                       // * GET route to find all movies * 
+        movies.get('/:title', searchMovies);               // * GET route to find a list of movies matching a title * 
+
+
+
 
 export default router;
