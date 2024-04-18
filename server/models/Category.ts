@@ -4,7 +4,8 @@ import { Movie } from './index.js';
 
 class Category extends Model {
     declare id: number;
-    declare movies: [Movie]
+    declare name: string;
+    declare movies: [Movie];
 }
 
 Category.init(
@@ -16,12 +17,19 @@ Category.init(
     },
   },
   {
+    indexes: [
+      {
+        name: 'cat_names',
+        unique: true,
+        fields: ['name']
+      }
+    ],
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
     modelName: 'category',
-  }
+  },
 );
 
 export default Category;

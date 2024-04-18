@@ -1,10 +1,11 @@
 declare namespace Express {
     export interface Request {
-      auth: {
-        status: boolean;
+      auth?: {
+        status?: boolean;
+        error?: string;
       };
-      admin: {
-        status: boolean;
+      admin?: {
+        status?: boolean;
       };
     }
   }

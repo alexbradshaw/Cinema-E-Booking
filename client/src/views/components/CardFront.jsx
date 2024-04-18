@@ -9,7 +9,7 @@ const CardFront = (props, frontKey, handleClick) => {
     // console.log(props.movie.title);
     //console.log(props.movie.poster_url);
     const navigate = useNavigate();
-    console.log((props.movie.vote_average));
+    
     return (
     <div>
         <Card fluid>
