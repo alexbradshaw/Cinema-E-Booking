@@ -33,7 +33,7 @@ export const addAdmin = async (req: Request, res: Response) => {
 export const addCategory = async (req: Request, res: Response) => {
   try {
     if (!req.session.permissions?.manage_categories) {
-      return res.status(401).json("Your account is not authorized to add a category!" );
+      return res.status(403).json("Your account is not authorized to add a category!" );
     }
 
     const category = await Category.create(req.body); 
@@ -49,7 +49,7 @@ export const addCategory = async (req: Request, res: Response) => {
 export const addMovie = async (req: Request, res: Response) => {
   try {
     if (!req.session.permissions?.manage_movies) {
-      return res.status(401).json("Your account is not authorized to add a movie!" );
+      return res.status(403).json("Your account is not authorized to add a movie!" );
     }
     
     const movie = await Movie.create(req.body); 
@@ -65,7 +65,7 @@ export const addMovie = async (req: Request, res: Response) => {
 export const addPromotion = async (req: Request, res: Response) => {
   try {
     if (!req.session.permissions?.manage_promotions) {
-      return res.status(401).json("Your account is not authorized to add a promotion!" );
+      return res.status(403).json("Your account is not authorized to add a promotion!" );
     }
     
     const newPromotion = await Promotion.create({
@@ -100,7 +100,7 @@ export const adminCheck = async (req: Request, res: Response) => {
 export const deletePromotion = async (req: Request, res: Response) => {
   try {
     if (!req.session.permissions?.manage_promotions) {
-      return res.status(401).json("Your account is not authorized to delete a promotion!" );
+      return res.status(403).json("Your account is not authorized to delete a promotion!" );
     }
     
     const deleted = await Promotion.destroy(
@@ -122,7 +122,7 @@ export const deletePromotion = async (req: Request, res: Response) => {
 export const editAccountStanding = async (req: Request, res: Response) => {
   try {
     if (!req.session.permissions?.manage_accounts) {
-        res.status(401).json("Your account is not authorized to modify account standings!" );
+        res.status(403).json("Your account is not authorized to modify account standings!" );
         return;
     }
 
@@ -148,7 +148,7 @@ export const editAccountStanding = async (req: Request, res: Response) => {
 export const editAdminPermissions = async (req: Request, res: Response) => {
   try {
     if (!req.session.permissions?.manage_admins) {
-        res.status(401).json("Your account is not authorized to manage other admins!" );
+        res.status(403).json("Your account is not authorized to manage other admins!" );
         return;
     }
 
@@ -172,7 +172,7 @@ export const editAdminPermissions = async (req: Request, res: Response) => {
 export const editPromotion = async (req: Request, res: Response) => {
   try {
     if (!req.session.permissions?.manage_promotions) {
-      return res.status(401).json("Your account is not authorized to edit a promotion!");
+      return res.status(403).json("Your account is not authorized to edit a promotion!");
     }
     
     const updated = await Promotion.update(
