@@ -3,9 +3,15 @@ import { findCategories, findCategoriesList, searchCategories } from '../../cont
 
 const categories = Router();
 
-// GET
-categories.get('/', findCategories);               // * GET route for all categories/associated movies * 
-categories.get('/list', findCategoriesList);       // * GET route to get a slim list of categories * 
-categories.get('/:category', searchCategories);    // * GET route to find a list of associated movies by cat title * 
+// ? Key ?
+
+// * Means public route * 
+// ! Means auth protected route ! 
+// !! Means admin protected route !! 
+
+    // GET
+    categories.get('/', findCategories);               // * GET route for all categories/associated movies * 
+    categories.get('/list', findCategoriesList);       // * GET route to get a slim list of categories * 
+    categories.get('/:category', searchCategories);    // * GET route to find a list of associated movies by cat title * 
 
 export default categories;
