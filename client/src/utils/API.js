@@ -1,8 +1,15 @@
 
 const errorCheck = async (res) => {
     const status = res.status;
+
+    if (await JSON.parse(await res.headers.get('terminated'))) {
+        localStorage.clear();
+        location.assign('/login');
+    }
+
     if (!res.ok) {
         const response = await res.json();
+
         console.log(response);
         if (response.errors) {
             for (const { message, type } of response.errors) {
