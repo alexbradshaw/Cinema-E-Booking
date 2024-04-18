@@ -5,7 +5,7 @@ import { Admin, Category, Movie, Promotion, User } from "../../models/index.js";
 export const addAdmin = async (req: Request, res: Response) => {
   try {
     if (!req.session.permissions?.manage_admins) {
-        res.status(401).json("Your account is not authorized to add an admin!" );
+        res.status(403).json("Your account is not authorized to add an admin!" );
         return;
     }
 
@@ -22,7 +22,7 @@ export const addAdmin = async (req: Request, res: Response) => {
       }
     );
 
-    res.json(updated);
+    res.status(201).json(updated);
   }
   catch (e) {
     console.log(e);
@@ -38,7 +38,7 @@ export const addCategory = async (req: Request, res: Response) => {
 
     const category = await Category.create(req.body); 
 
-    res.json(category);
+    res.status(201).json(category);
   } 
   catch (e) {
     console.error(e);
@@ -54,7 +54,7 @@ export const addMovie = async (req: Request, res: Response) => {
     
     const movie = await Movie.create(req.body); 
 
-    res.json(movie);
+    res.status(201).json(movie);
   } 
   catch (e) {
     console.error(e);
@@ -73,7 +73,7 @@ export const addPromotion = async (req: Request, res: Response) => {
       "user_id": req.session.userId
     }); 
 
-    res.json(newPromotion);
+    res.status(201).json(newPromotion);
   } 
   catch (e) {
     console.error(e);
@@ -195,7 +195,7 @@ export const editPromotion = async (req: Request, res: Response) => {
 export const getAdminFields = async (req: Request, res: Response) => {
   try {
       if (!req.session.permissions?.manage_admins) {
-          res.status(401).json("Your account is not authorized to manage admins!");
+          res.status(403).json("Your account is not authorized to manage admins!");
           return;
       }
 
@@ -215,7 +215,7 @@ export const getAdminFields = async (req: Request, res: Response) => {
 export const getUsers = async (req: Request, res: Response) => {
   try {
       if (!req.session.permissions?.manage_accounts) {
-          res.status(401).json("Your account is not authorized to view all users!");
+          res.status(403).json("Your account is not authorized to view all users!");
           return;
       }
       const user = await User.findAll({  

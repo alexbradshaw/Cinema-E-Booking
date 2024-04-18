@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 25px 0px;
 }
 
 .header > div {
@@ -24,6 +25,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.users-list > * {
+  background-color: #E2DECC;
+}
+
+.users-list h3, h4 {
+  font-size: 25px !important;
+  margin: 20px 0px;
 }
 
 .rows {
@@ -46,7 +56,7 @@
 
 .manage-user {
   font-size: 1.4rem;
-  margin-right: 0px;
+  margin: 18px 0px;
 }
 
 .user {
