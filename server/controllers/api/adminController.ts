@@ -82,10 +82,9 @@ export const addPromotion = async (req: Request, res: Response) => {
 }
 
 export const adminCheck = async (req: Request, res: Response) => {
-  const verified = verifyToken(req);
   let status;
 
-  if (verified && req.session.isAdmin) {
+  if (req.session.isAdmin) {
     status = 200;
   } else {
     status = 401;
