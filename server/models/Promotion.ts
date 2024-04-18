@@ -45,6 +45,11 @@ Promotion.init(
     },
   },
   {
+    hooks: {
+      beforeCreate: async (newPromotion: Promotion) => {
+          
+      },
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
