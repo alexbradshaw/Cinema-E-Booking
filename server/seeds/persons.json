@@ -1,150 +1,162 @@
 [
     {
         "name": "Joe Russo",
-        "image_url": "/placeholder.png",
-        "movie_id": [1]
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Kevin Feige",
-        "image_url": "/placeholder.png",
-        "movie_id": [1]
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Chris Evans",
-        "image_url": "/placeholder.png",
-        "movie_id": [1],
-        "played": "Captain America"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Robert Downey Jr.",
-        "image_url": "/placeholder.png",
-        "movie_id": [1],
-        "played": "Iron Man"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Chris Hemsworth",
-        "image_url": "/placeholder.png",
-        "movie_id": [1],
-        "played": "Thor"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Scarlett Johansson",
-        "image_url": "/placeholder.png",
-        "movie_id": [1],
-        "played": "Black Widow"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Jeremy Renner",
-        "image_url": "/placeholder.png",
-        "movie_id": [1],
-        "played": "Hawkeye"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Samuel L. Jackson",
-        "image_url": "/placeholder.png",
-        "movie_id": [1],
-        "played": "Nick Fury"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Mark Ruffalo",
-        "image_url": "/placeholder.png",
-        "movie_id": [1],
-        "played": "Hulk"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Tom Hiddleston",
-        "image_url": "/placeholder.png",
-        "movie_id": [1],
-        "played": "Loki"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Brad Bird",
-        "image_url": "/placeholder.png",
-        "movie_id": [2]
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Brad Lewis",
-        "image_url": "/placeholder.png",
-        "movie_id": [2]
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Will Arnett",
-        "image_url": "/placeholder.png",
-        "movie_id": [2],
-        "played": "Horst"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Patton Oswalt",
-        "image_url": "/placeholder.png",
-        "movie_id": [2],
-        "played": "Remy"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Lou Romano",
-        "image_url": "/placeholder.png",
-        "movie_id": [2],
-        "played": "Alfredo Linguini"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Peter O'Toole",
-        "image_url": "/placeholder.png",
-        "movie_id": [2],
-        "played": "Anton Ego"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Steven Spielberg",
-        "image_url": "/placeholder.png",
-        "movie_id": [3]
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Mark Gordon",
-        "image_url": "/placeholder.png",
-        "movie_id": [3]
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Tom Hanks",
-        "image_url": "/placeholder.png",
-        "movie_id": [3],
-        "played": "Captain Miller"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Matt Damon",
-        "image_url": "/placeholder.png",
-        "movie_id": [3],
-        "played": "Private Ryan"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Justin Lin",
-        "image_url": "/placeholder.png",
-        "movie_id": [4]
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Brian Tyler",
-        "image_url": "/placeholder.png",
-        "movie_id": [4]
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Lucas Black",
-        "image_url": "/placeholder.png",
-        "movie_id": [4],
-        "played": "Sean Boswell"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Sung Kang",
-        "image_url": "/placeholder.png",
-        "movie_id": [4],
-        "played": "Han Lue"
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Brian Tee",
-        "image_url": "/placeholder.png",
-        "movie_id": [4],
-        "played": "D. K."
+        "image_url": "/placeholder.png"
     },
     {
         "name": "Nathalie Kelley",
-        "image_url": "/placeholder.png",
-        "movie_id": [4],
-        "played": "Neela"
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Bong Joon Ho",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Song Kang-ho",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Todd Phillips",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Joaquin Phoenix",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Sam Mendes",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "George MacKay",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Dean-Charles Chapman",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Anthony Russo",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Quentin Tarantino",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Leonardo DiCaprio",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Brad Pitt",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Rian Johnson",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Daniel Craig",
+        "image_url": "/placeholder.png"
+    },
+    {
+        "name": "Ana de Armas",
+        "image_url": "/placeholder.png"
     }
 ]
