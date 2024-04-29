@@ -10,7 +10,6 @@ const errorCheck = async (res) => {
     if (!res.ok) {
         const response = await res.json();
 
-        console.log(response);
         if (response.errors) {
             for (const { message, type } of response.errors) {
                 throw new Error(type, { cause: message });
@@ -152,7 +151,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Disable/Enable accounts by ID
     */
-        export const editAccountStanding = async (id, active) => {
+        export const editAccountStanding = async ({ id, active }) => {
             const response = await fetch(`/api/admin/standing/${id}`, {
                 headers: {
                     'Authorization' : `Bearer ${retrieveAuthToken()}`,
@@ -172,7 +171,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Change Admin Permissions of a User by ID
     */
-        export const editAdminPermissions = async (id, permissions) => {
+        export const editAdminPermissions = async ({ id, permissions }) => {
             const response = await fetch(`/api/admin/permissions/${id}`, {
                 headers: {
                     'Authorization' : `Bearer ${retrieveAuthToken()}`,
@@ -192,7 +191,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Change Admin Permissions of a User by ID
     */
-        export const editPromotion = async (id, permissions) => {
+        export const editPromotion = async ({ id, permissions }) => {
             const response = await fetch(`/api/admin/permissions/${id}`, {
                 headers: {
                     'Authorization' : `Bearer ${retrieveAuthToken()}`,
@@ -249,7 +248,6 @@ export const checkAdmin = async (navigate) => {
         Accepts username or email to send a password reset email
     */
         export const sendResetEmail = async (userOrEmail) => {
-            console.log(userOrEmail);
             const response = await fetch('/api/account/reset', {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
@@ -264,7 +262,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Changes the password using the email provided token
     */
-        export const changePassword = async (token, password) => {
+        export const changePassword = async ({ token, password }) => {
             const response = await fetch(`/api/account/reset/${token}`, 
             { 
                 headers: { 'Content-Type': 'application/json' },
@@ -430,7 +428,7 @@ export const checkAdmin = async (navigate) => {
     /*
         Updates Payment Method Address
     */
-        export const updateCard = async (address, card_id) => {
+        export const updateCard = async ({ address, card_id }) => {
             const response = await fetch(`/api/account/card/${card_id}`, {
                 method: 'PUT', 
                 headers: {
@@ -555,6 +553,18 @@ export const checkAdmin = async (navigate) => {
             return movies; 
         }
 
+    /*
+        Returns an array of every movie in db without associated info (actors, directors, etc)
+    */
+        export const getAllMoviesSlim = async () => {
+            const response = await fetch('/api/movies/slim');
+
+            await errorCheck(response);
+            
+            const movies = await response.json();
+            
+            return movies; 
+        }
 
     /*
         Returns an array of movie objects matching query
