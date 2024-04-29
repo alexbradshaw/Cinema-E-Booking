@@ -149,14 +149,14 @@ export const resetPassword = async (req: Request, res: Response) => {
   });
 
   if (!user) {
-    return res.status(200);
+    return res.sendStatus(200);
   }
 
   try {
     const token = uuidv4();
     await User.update({ token: generateToken(user, .125), token_identifier: token }, { where: { id: user.id } })
     sendResetEmail(user.email, token);
-    res.status(200);
+    res.sendStatus(200);
   }
   catch (e) {
     console.error(e);

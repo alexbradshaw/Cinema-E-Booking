@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { verifyToken } from "../../utils/auth.js";
 import { Admin, Category, Movie, Promotion, User } from "../../models/index.js";
 
 export const addAdmin = async (req: Request, res: Response) => {
