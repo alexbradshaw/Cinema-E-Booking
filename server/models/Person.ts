@@ -16,10 +16,6 @@ Person.init(
       type: DataTypes.STRING,
       allowNull: true
     },
-    played: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
   },
   {
     sequelize,
