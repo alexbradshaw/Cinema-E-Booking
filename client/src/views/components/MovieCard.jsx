@@ -9,6 +9,7 @@ const MovieCard = ({ movie }) => {
 
   const handleClick = () => {
     setIsFlipped(!isFlipped);
+    console.log("flip");
   };
 
   return (
