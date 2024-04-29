@@ -3,16 +3,27 @@ import { useNavigate } from 'react-router-dom'; // Import Link for navigation
 import { login } from '../utils/API'; // Adjust the path based on your file structure
 import { AuthContext } from '../App';
 import "./CSS/Login.css"; // import for CSS
+import { useMutation } from '@tanstack/react-query';
 
 const Login = () => {
   const [userOrEmail, setUserOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // Added for "Show Password" feature
   const [showErrorPopup, setShowErrorPopup] = useState(false); // Added for showing the error popup
-  const [newErr, setErr] = useState(""); // Added for showing the error popup
   const [rememberMe, setRememberMe] = useState(false); // State for "Remember Me"
   const navigate = useNavigate();
   const { auth, dispatch } = useContext(AuthContext);
+
+  const loginMutation = useMutation({ 
+    mutationFn: login, 
+    onSuccess: async () => {
+      await dispatch({ type: 'SET_AUTH', payload: true });
+      navigate('/');
+    },
+    onError: () => {
+      setShowErrorPopup(true);
+    }
+  })
 
   useEffect(() => {
     if (!localStorage.getItem('auth') && auth) {
@@ -22,24 +33,11 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    try {
-      await login({ userOrEmail, password, rememberMe });
-      await dispatch({ type: 'SET_AUTH', payload: true });
-      navigate('/');
-    } catch (error) {
-      console.error('Error during login:', error);
-      setErr(error.cause);
-      setShowErrorPopup(true); // Show the error popup on catch
-    }
+    loginMutation.mutate({ userOrEmail, password, rememberMe });
   };
 
   const togglePasswordVisibility = () => { //show password function
     setShowPassword(!showPassword);
-  };
-
-  const handleClosePopup = () => { // Function to close the error popup
-    setShowErrorPopup(false);
   };
 
   return (
@@ -48,8 +46,8 @@ const Login = () => {
         
         {showErrorPopup && ( // Conditional rendering for the error popup
         <div className="error-popup">
-          <p>{newErr}</p>
-          <button onClick={handleClosePopup}>X</button> {/* Button to close the popup */}
+          <p>{loginMutation.error.cause}</p>
+          <button onClick={() => setShowErrorPopup(false)}>X</button> {/* Button to close the popup */}
         </div>
         )} 
         <div className='mainContainer'>
