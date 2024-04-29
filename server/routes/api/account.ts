@@ -20,9 +20,9 @@ export const accountWithAuth = Router();
     // POST
     account.post('/signup', signup);                          // * POST route to sign up * 
     account.post('/login', login);                            // * POST route to log in * 
+    account.post('/reset', resetPassword);                    // * POST route to send a reset password email * 
     accountWithAuth.post('/logout', logout);                  // ! POST route to log out ! 
     accountWithAuth.post('/card', addCard);                   // ! POST route to add a new card !
-    accountWithAuth.post('/reset', resetPassword);            // ! POST route to send a reset password email ! 
     accountWithAuth.post('/auth', authCheck);                 // ! POST route to check if user is still authenticated ! 
 
     // PUT
