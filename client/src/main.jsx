@@ -27,6 +27,7 @@ import ManageUser from './views/ManageUser';
 import Reset from './views/ResetPassword.jsx';
 import RegisterConfirmation from './views/RegisterConfirmation.jsx';
 import ChangePassword from './views/ChangePassword.jsx';
+import ManageMovie from './views/ManageMovie.jsx';
 
 const authMiddleware = (isAdmin, permission) => {
   let permissions = {};
@@ -59,6 +60,7 @@ const routes = [
     { path: 'admin', element: <Admin />, loader: () => authMiddleware(true) },
     { path: 'admin/promotions', element: <ManagePromotions />, loader: () => authMiddleware(true, 'manage_promotions') },
     { path: 'admin/movies', element: <ManageMovies />, loader: () => authMiddleware(true, 'manage_movies') },
+    { path: 'admin/movies/:id', element: <ManageMovie />, loader: () => authMiddleware(true, 'manage_movies') },
     { path: 'admin/movies/addMovie', element: <AddMovie />, loader: () => authMiddleware(true, 'manage_movies') },
     { path: 'admin/users', element: <ManageUsers />, loader: () => authMiddleware(true, 'manage_accounts') },
     { path: 'admin/users/:id', element: <ManageUser />, loader: () => authMiddleware(true, 'manage_accounts') },
