@@ -1,12 +1,12 @@
-import React, { memo, useEffect, useState } from 'react';
-import { getAllMovies } from '../utils/API';
-import Navbar from './components/Navbar';
+import React, { memo } from 'react';
+import { getAllMoviesSlim } from '../utils/API';
 import MovieCard from './components/MovieCard';
 import { Slide, Slider, ButtonBack, ButtonNext, CarouselProvider } from 'pure-react-carousel';
 import { Card, CardGroup, Container, Header } from 'semantic-ui-react';
 import "./CSS/HomePage.css";
 //import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import 'semantic-ui-css/semantic.min.css';
+import { useQuery } from '@tanstack/react-query';
 
 const MovieSlider = memo(({ movies, header }) => {
     return (
@@ -36,7 +36,6 @@ const MovieSlider = memo(({ movies, header }) => {
 const Home = () => {
 
   let i = 0;
-  const [movies, setMovies] = useState([]);
 
   {/*
   const genresAry = ["Action", "Adventure", "Animation", "Comedy", 
@@ -51,36 +50,29 @@ const Home = () => {
   }
 */}
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const moviesData = await getAllMovies();
-        setMovies(moviesData);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-      }
-    };
-
-    fetchMovies();
-  }, []);
+  const { isPending, data: movies } = useQuery({ queryKey: ['slimMovies'], queryFn: getAllMoviesSlim })
 
   return (
     <div className="carousel-container">
-        {movies.length > 0 ? (
-          <CarouselProvider orientation='horizontal' step={5} naturalSlideWidth={100} naturalSlideHeight={20} totalSlides={2}>
-            
-            <ButtonBack className="carousel-button">Back</ButtonBack>
-            <ButtonNext className="carousel-button">Next</ButtonNext>
-            
-            {/* Now Showing */}
-            <MovieSlider movies={movies} header={'Now Showing'} />
+        {
+          isPending 
+            ?
+              <p>Loading...</p>
+            :
+            (
+              <CarouselProvider orientation='horizontal' step={5} naturalSlideWidth={100} naturalSlideHeight={20} totalSlides={2}>
+                
+                <ButtonBack className="carousel-button">Back</ButtonBack>
+                <ButtonNext className="carousel-button">Next</ButtonNext>
+                
+                {/* Now Showing */}
+                <MovieSlider movies={movies.filter((movie)=> new Date(movie.starts_showing).getTime() < Date.now())} header={'Now Showing'} />
 
-            {/* Coming Soon */}
-            <MovieSlider movies={movies} header={'Coming Soon'} />
-          </CarouselProvider>
-        ) : (
-          <p>Loading...</p>
-        )}
+                {/* Coming Soon */}
+                <MovieSlider movies={movies.filter((movie)=> new Date(movie.starts_showing).getTime() > Date.now())} header={'Coming Soon'} />
+              </CarouselProvider>
+            )
+        }
     </div>
   );
 };
