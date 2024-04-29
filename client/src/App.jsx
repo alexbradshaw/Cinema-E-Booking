@@ -1,9 +1,11 @@
 import React, { createContext, useReducer } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Outlet } from 'react-router-dom';
 import Navbar from './views/components/Navbar';
 import './App.css'
 
 export const AuthContext = createContext();
+const queryClient = new QueryClient()
 
 const initialState = {
   admin: {
@@ -36,8 +38,10 @@ const App = () => {
   return (
     <div className='app'>
       <AuthContext.Provider value={{ ...state, dispatch }}>
-        <Navbar/>
-        <Outlet />
+        <QueryClientProvider client={queryClient}>
+          <Navbar/>
+          <Outlet />
+        </QueryClientProvider>
       </AuthContext.Provider>
     </div>
   );
