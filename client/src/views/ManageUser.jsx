@@ -3,14 +3,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { createAdmin, editAccountStanding, editAdminPermissions, getAdminFields } from '../utils/API';
 import { AuthContext } from '../App';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 const ManageUser = () => {
     const navigate = useNavigate();
     const { state: { user } } = useLocation();
     const { id, active, admin, username, promotion_enrollment, profile_pic } = user;
     const { admin: { permissions: { manage_admins } } } = useContext(AuthContext);
-    const [success, setSuccess] = useState(false);
+    
+    const { isPending, data: fields } = useQuery({ queryKey: ['adminFields'], queryFn: getAdminFields })
 
+    const [success, setSuccess] = useState(false);
+    const [adminForm, setAdminForm] = useState(false);
+    
     const generatePermissions = (admin) => {
         const perms = [];
         for (let permission in admin) {
@@ -53,6 +58,16 @@ const ManageUser = () => {
 
     const [form, setForm] = useState(generatePermissions(admin));
 
+    useEffect(()=> {
+        if (!admin && !isPending) {
+            const objArr = {};
+            for (let i = 0; i < fields.length; i++) {
+                Object.assign(objArr, JSON.parse(`{"${fields[i]}": false}`))
+            }
+            setForm(generatePermissions(objArr));
+        }
+    }, [])
+
     const onUpdate = ({ target: { name } }) => {
         let updated = form;
         updated[name] = { ...form[name], value: !form[name].value } 
@@ -60,13 +75,14 @@ const ManageUser = () => {
     }
 
     const AdminPermsConditional = () => {
+        const editProfile = useMutation({ mutationFn: editAdminPermissions })
 
         const formHandler = async (e) => {
             e.preventDefault();
             
             const formObject = generateFormObject();
     
-            const updated = await editAdminPermissions(id, formObject);
+            const updated = await editProfile.mutateAsync({ id, formObject });
     
             if (updated[0] == 1) {
                 let newUser = user;
@@ -108,9 +124,10 @@ const ManageUser = () => {
     }
 
     const ActiveConditional = () => {
+        const editStanding = useMutation({ mutationFn: editAccountStanding })
 
         const updateAccountStanding = async () => {
-            const edit = await editAccountStanding(id, active);
+            const edit = await editStanding.mutateAsync({ id, active });
             if (edit[0] == 1) {
                 let newUser = user;
                 newUser.active = !active;
@@ -127,13 +144,12 @@ const ManageUser = () => {
     }
 
     const NewAdminConditional = () => {
-
-        const [adminForm, setAdminForm] = useState(false);
+        const createAdminMutation = useMutation({ mutationFn: createAdmin })
 
         const newAdmin = async (e) => {
             e.preventDefault();
             const formObject = generateFormObject(id);
-            const updated = await createAdmin(formObject);
+            const updated = await createAdminMutation.mutateAsync(formObject);
             if (updated[0] == 1) {
                 let newUser = user;
                 newUser.admin = await JSON.parse(formObject);
@@ -142,21 +158,6 @@ const ManageUser = () => {
                 setTimeout(() => setSuccess(false), 1700);
             }
         }
-
-        const getFields = async () => {
-            if (!admin) {
-                const fields = await getAdminFields();
-                const objArr = {};
-                for (let i = 0; i < fields.length; i++) {
-                    Object.assign(objArr, await JSON.parse(`{"${fields[i]}": false}`))
-                }
-                setForm(generatePermissions(objArr));
-            }
-        }
-    
-        useEffect(()=> {
-            getFields();
-        }, [])
 
         return (
             adminForm ?
@@ -197,6 +198,9 @@ const ManageUser = () => {
         <div key={id} className="user">
             <div>
                 <h2>Manage User</h2>
+                <div className='back-link'>
+                    <Link to={'..'} relative="path">Back</Link>
+                </div>
             </div>
             <div className='user-header'>
                 <div>
