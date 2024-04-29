@@ -77,9 +77,9 @@ import { Request, Response } from 'express';
               {
                 model: Person, 
                 as: "Cast",
-                attributes: ['name', 'played', 'image_url'],
+                attributes: ['name', 'image_url'],
                 through: {
-                  attributes: []
+                  attributes: ['played']
                 }
               },
               {
