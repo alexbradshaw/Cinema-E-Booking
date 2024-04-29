@@ -61,6 +61,13 @@ Card.init(
           updatedCardData.card_number = await bcrypt.hash(updatedCardData.card_number, 10);
       },
     },
+    indexes: [
+      {
+        name: 'user',
+        unique: true,
+        fields: ['user_id']
+      }
+    ],
     sequelize,
     timestamps: false,
     freezeTableName: true,

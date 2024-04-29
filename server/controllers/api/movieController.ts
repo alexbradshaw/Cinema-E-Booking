@@ -21,9 +21,9 @@ import { Request, Response } from 'express';
             {
               model: Person, 
               as: "Cast",
-              attributes: ['name', 'played', 'image_url'],
+              attributes: ['name', 'image_url'],
               through: {
-                attributes: []
+                attributes: ['played']
               }
             },
             {
@@ -35,6 +35,20 @@ import { Request, Response } from 'express';
               }
             }
           ]
+      });
+
+      if (!movies) {
+        return res.status(404).json("No movies were found");
+      }
+
+      res.json(movies)
+    }
+
+    export const findMoviesSlim = async (req: Request, res: Response) => {
+      const movies = await Movie.findAll({
+          attributes: {
+            exclude: ['director_id', 'producer_id'],
+          }
       });
 
       if (!movies) {
@@ -63,9 +77,9 @@ import { Request, Response } from 'express';
               {
                 model: Person, 
                 as: "Cast",
-                attributes: ['name', 'played', 'image_url'],
+                attributes: ['name', 'image_url'],
                 through: {
-                  attributes: []
+                  attributes: ['played']
                 }
               },
               {

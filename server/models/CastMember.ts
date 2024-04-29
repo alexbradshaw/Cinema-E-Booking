@@ -24,6 +24,10 @@ CastMember.init(
         key: 'id'
       }
     },
+    played: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
   },
   {
     sequelize,

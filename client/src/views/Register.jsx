@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { signup } from '../utils/API';
 import { AuthContext } from '../App';
 import "./CSS/Register.css"; // import for CSS
+import { useMutation } from '@tanstack/react-query';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -12,6 +13,8 @@ const Register = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const { auth, dispatch } = useContext(AuthContext);
+
+  const signupMutation = useMutation({ mutationFn: signup })
 
   useEffect(() => {
     if (!localStorage.getItem('auth') && auth) {
@@ -23,7 +26,7 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      await signup({ promotion_enrollment, username, email, password });
+      await signupMutation.mutateAsync({ promotion_enrollment, username, email, password });
       setSubmitted(true);
     } catch (error) {
       console.error('Error during registration:', error);

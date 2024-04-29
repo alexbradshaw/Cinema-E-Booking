@@ -65,7 +65,7 @@
       "promotion_enrollment": false,
       "address": "123 ez street, athens ga 30601",
       "token": "",
-      "active": true
+      "active": false
     },
     {
       "username": "isaac",
@@ -75,7 +75,7 @@
       "promotion_enrollment": false,
       "address": "123 ez street, athens ga 30601",
       "token": "",
-      "active": true
+      "active": false
     },
     {
       "username": "noodles",

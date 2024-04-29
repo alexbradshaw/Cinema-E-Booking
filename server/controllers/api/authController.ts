@@ -49,7 +49,7 @@ export const login = async (req: Request, res: Response) => {
     })
 
     if (!user) {
-      return res.status(401).json('Invalid user');
+      return res.status(401).json('Invalid credentials!');
     } else if (!user.active) {
       return res.status(401).json('Your account is not active, please contact support for further assistance.')
     }
@@ -57,7 +57,7 @@ export const login = async (req: Request, res: Response) => {
     const passCorrect = await user.checkPassword(req.body.password); 
 
     if (!passCorrect) {
-      return res.status(401).json('Incorrect password!');
+      return res.status(401).json('Invalid credentials!');
     }
 
     let expiration = 1;
@@ -89,29 +89,23 @@ export const login = async (req: Request, res: Response) => {
   }
 
 export const logout = async (req: Request, res: Response) => {
-  if (!verifyToken(req)) {
-      res.status(401).json("You are not signed in!")
-      return;
-  } else {
-      try {
-        req.session.destroy((err) => {
-          if (err) {
-            throw err;
-          }
-          res.status(200).json("Successfully logged out.");
-        });
-      } catch (e) {
-        console.error(e);
-        res.status(400).json(e);
-      }
-  }
+    try {
+      req.session.destroy((err) => {
+        if (err) {
+          throw err;
+        }
+        res.status(200).json("Successfully logged out.");
+      });
+    } catch (e) {
+      console.error(e);
+      res.status(400).json(e);
+    }
 }
 
 export const authCheck = async (req: Request, res: Response) => {
-  const verified = verifyToken(req);
   let status;
 
-  if (verified) {
+  if (req.auth?.status) {
     status = 200;
   } else {
     status = 401;
@@ -122,7 +116,7 @@ export const authCheck = async (req: Request, res: Response) => {
     });
   }
   
-  res.status(status).json(verified);
+  res.status(status).json(req.auth?.status);
 }
 
 export const verifyAccount = async (req: Request, res: Response) => {
@@ -155,14 +149,14 @@ export const resetPassword = async (req: Request, res: Response) => {
   });
 
   if (!user) {
-    return res.status(200);
+    return res.sendStatus(200);
   }
 
   try {
     const token = uuidv4();
     await User.update({ token: generateToken(user, .125), token_identifier: token }, { where: { id: user.id } })
     sendResetEmail(user.email, token);
-    res.status(200);
+    res.sendStatus(200);
   }
   catch (e) {
     console.error(e);

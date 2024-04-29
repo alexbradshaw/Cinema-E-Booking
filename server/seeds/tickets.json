@@ -118,5 +118,185 @@
         "type": "Standard",
         "transaction_id": 4,
         "movie_id": 4
+    },
+    {
+      "seat_number": 1,
+      "type": "Standard",
+      "transaction_id": 5,
+      "movie_id": 5
+    },
+    {
+      "seat_number": 2,
+      "type": "Senior",
+      "transaction_id": 5,
+      "movie_id": 5
+    },
+    {
+      "seat_number": 3,
+      "type": "Child",
+      "transaction_id": 5,
+      "movie_id": 5
+    },
+    {
+      "seat_number": 4,
+      "type": "Standard",
+      "transaction_id": 5,
+      "movie_id": 5
+    },
+    {
+      "seat_number": 5,
+      "type": "Senior",
+      "transaction_id": 5,
+      "movie_id": 5
+    },
+    {
+      "seat_number": 1,
+      "type": "Standard",
+      "transaction_id": 6,
+      "movie_id": 6
+    },
+    {
+      "seat_number": 2,
+      "type": "Senior",
+      "transaction_id": 6,
+      "movie_id": 6
+    },
+    {
+      "seat_number": 3,
+      "type": "Child",
+      "transaction_id": 6,
+      "movie_id": 6
+    },
+    {
+      "seat_number": 4,
+      "type": "Standard",
+      "transaction_id": 6,
+      "movie_id": 6
+    },
+    {
+      "seat_number": 5,
+      "type": "Senior",
+      "transaction_id": 6,
+      "movie_id": 6
+    },
+    {
+      "seat_number": 1,
+      "type": "Standard",
+      "transaction_id": 7,
+      "movie_id": 7
+    },
+    {
+      "seat_number": 2,
+      "type": "Senior",
+      "transaction_id": 7,
+      "movie_id": 7
+    },
+    {
+      "seat_number": 3,
+      "type": "Child",
+      "transaction_id": 7,
+      "movie_id": 7
+    },
+    {
+      "seat_number": 4,
+      "type": "Standard",
+      "transaction_id": 7,
+      "movie_id": 7
+    },
+    {
+      "seat_number": 5,
+      "type": "Senior",
+      "transaction_id": 7,
+      "movie_id": 7
+    },
+    {
+      "seat_number": 1,
+      "type": "Standard",
+      "transaction_id": 8,
+      "movie_id": 8
+    },
+    {
+      "seat_number": 2,
+      "type": "Senior",
+      "transaction_id": 8,
+      "movie_id": 8
+    },
+    {
+      "seat_number": 3,
+      "type": "Child",
+      "transaction_id": 8,
+      "movie_id": 8
+    },
+    {
+      "seat_number": 4,
+      "type": "Standard",
+      "transaction_id": 8,
+      "movie_id": 8
+    },
+    {
+      "seat_number": 5,
+      "type": "Senior",
+      "transaction_id": 8,
+      "movie_id": 8
+    },
+    {
+      "seat_number": 1,
+      "type": "Standard",
+      "transaction_id": 9,
+      "movie_id": 9
+    },
+    {
+      "seat_number": 2,
+      "type": "Senior",
+      "transaction_id": 9,
+      "movie_id": 9
+    },
+    {
+      "seat_number": 3,
+      "type": "Child",
+      "transaction_id": 9,
+      "movie_id": 9
+    },
+    {
+      "seat_number": 4,
+      "type": "Standard",
+      "transaction_id": 9,
+      "movie_id": 9
+    },
+    {
+      "seat_number": 5,
+      "type": "Senior",
+      "transaction_id": 9,
+      "movie_id": 9
+    },
+    {
+      "seat_number": 1,
+      "type": "Standard",
+      "transaction_id": 10,
+      "movie_id": 10
+    },
+    {
+      "seat_number": 2,
+      "type": "Senior",
+      "transaction_id": 10,
+      "movie_id": 10
+    },
+    {
+      "seat_number": 3,
+      "type": "Child",
+      "transaction_id": 10,
+      "movie_id": 10
+    },
+    {
+      "seat_number": 4,
+      "type": "Standard",
+      "transaction_id": 10,
+      "movie_id": 10
+    },
+    {
+      "seat_number": 5,
+      "type": "Senior",
+      "transaction_id": 10,
+      "movie_id": 10
     }
 ]

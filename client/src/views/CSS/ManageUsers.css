@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 25px 0px;
 }
 
 .header > div {
@@ -26,8 +27,17 @@
   align-items: center;
 }
 
+.users-list > * {
+  background-color: #E2DECC;
+}
+
+.users-list h3, h4 {
+  font-size: 25px !important;
+  margin: 20px 0px;
+}
+
 .rows {
-  width: 1150px;
+  width: 1450px;
   border: 3px solid black;
 }
 
@@ -46,7 +56,7 @@
 
 .manage-user {
   font-size: 1.4rem;
-  margin-right: 0px;
+  margin: 18px 0px;
 }
 
 .user {
@@ -62,7 +72,6 @@
 
 .user-header {
   width: 100%;
-  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: start;

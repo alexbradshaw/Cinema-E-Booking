@@ -1,45 +1,39 @@
 import React, { useState } from 'react';
 import { sendResetEmail } from '../utils/API';
+import { useMutation } from '@tanstack/react-query';
 
 const Reset = () => {
   const [userOrEmail, setUserOrEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const resetEmail = useMutation({ mutationFn: sendResetEmail })
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    try {
-      await sendResetEmail(userOrEmail);
-      setSubmitted(true);
-    } catch (error) {
-      console.error('Error during registration:', error);
-
-      alert('Password change failed. Please try again.');
-    }
+    resetEmail.mutate(userOrEmail);
   };
 
   return (
     <div>
       {
-        !submitted ?
-        <>
-          <h1>Reset Password</h1>
-          <form onSubmit={handleSubmit}>
+        resetEmail.isSuccess 
+          ?
+            <h1 style={{"marginTop": "50px"}}>Our system will send a reset link shortly.</h1>
+            :
+            <>
+              <h1>Reset Password</h1>
+              <form onSubmit={handleSubmit}>
 
-            <label htmlFor="userOrEmail">Enter your Username or Email:</label>
-            <input
-              type="text"
-              id="userOrEmail"
-              value={userOrEmail}
-              onChange={(e) => setUserOrEmail(e.target.value)}
-              required
-            />
+                <label htmlFor="userOrEmail">Enter your Username or Email:</label>
+                <input
+                  type="text"
+                  id="userOrEmail"
+                  value={userOrEmail}
+                  onChange={(e) => setUserOrEmail(e.target.value)}
+                  required
+                />
 
-            <button type="submit">Reset</button>
-          </form>
-        </>
-        : 
-        <h1>Our system will send a reset link shortly.</h1>
+                <button type="submit">Reset</button>
+              </form>
+            </>
       }
     </div>
   );

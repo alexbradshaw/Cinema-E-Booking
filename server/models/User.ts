@@ -102,6 +102,13 @@ User.init(
         updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
     },
   },
+  indexes: [
+    {
+      name: 'emails',
+      unique: true,
+      fields: ['email', 'username']
+    }
+  ],
     sequelize,
     timestamps: false,
     freezeTableName: true,

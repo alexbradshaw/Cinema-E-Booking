@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node ./dist/server.js",
-    "dev": "node --loader ts-node/esm server.ts",
+    "dev": "tsx server.ts",
     "build": "tsc -p ..",
-    "source": "node --loader ts-node/esm ./utils/source.ts",
+    "source": "bash ./utils/generateEnv.sh && node --loader ts-node/esm ./utils/source.ts",
     "seed": "node --loader ts-node/esm seeds/seed.ts"
   },
   "keywords": [],
@@ -35,6 +35,7 @@
     "@types/node": "^20.11.11",
     "@types/nodemailer": "^6.4.14",
     "@types/sequelize": "^4.28.20",
+    "tsx": "^4.7.2",
     "typescript": "^5.3.3"
   }
 }

@@ -70,9 +70,14 @@ Movie.init(
         key: 'id'
       }
     },
-    
   },
   {
+    indexes: [
+      {
+        name: 'titles',
+        fields: ['title']
+      }
+    ],
     sequelize,
     timestamps: false,
     freezeTableName: true,

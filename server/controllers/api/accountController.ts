@@ -1,58 +1,59 @@
 import { Op } from 'sequelize';
-import { Admin, Card, Movie, Promotion, Ticket, Transaction, User } from '../../models/index.js'
-import { verifyToken } from '../../utils/auth.js'
+import { Card, Movie, Promotion, Ticket, Transaction, User } from '../../models/index.js'
 import { Request, Response } from 'express';
 import { sendUpdateEmail } from '../../utils/utils.js';
 
 export const getAuthedUser = async (req: Request, res: Response) => {
-    if (!verifyToken(req)) {
-        res.status(401).json("You are not signed in!");
-        return;
-    } else {
-        try {
-            const card = await Card.findOne({ where: { user_id: req.session.userId }});
+    try {
+        const card = await Card.findOne({ where: { user_id: req.session.userId }});
 
-            const user = await User.findOne(
-                { 
-                    where: { id: req.session.userId },
-                    attributes: { exclude: ['password'] },
-                    include: [
-                        {
-                            model: Promotion,
-                            attributes: ['id', 'title', 'discount_value']
-                        },
-                        {
-                            model: Transaction,
-                            include: [
-                                {
-                                    order: ['id', 'ASC'],
-                                    model: Ticket,
-                                    attributes: ['seat_number', 'type'],
-                                    include: [
-                                        {
-                                            model: Movie,
-                                            attributes: ['title']
-                                        }
-                                    ]
-                                }
-                            ],
-                            attributes: ['id', 'date', 'total']
-                        }
-                    ]
-                }
-            );
-
-            if (!user) {
-                return res.status(404).json('No user found!');
+        const user = await User.findOne(
+            { 
+                where: { id: req.session.userId },
+                attributes: { exclude: ['password'] },
+                include: [
+                    {
+                        model: Promotion,
+                        attributes: ['id', 'title', 'discount_value']
+                    },
+                    {
+                        model: Transaction,
+                        include: [
+                            {
+                                order: ['id', 'ASC'],
+                                model: Ticket,
+                                attributes: ['seat_number', 'type'],
+                                include: [
+                                    {
+                                        model: Movie,
+                                        attributes: ['title']
+                                    }
+                                ]
+                            }
+                        ],
+                        attributes: ['id', 'date', 'total']
+                    }
+                ]
             }
+        );
 
-            res.json({ user, card });
-        } catch (e) {
-            console.log(e);
-            res.status(500).json(e);
+        if (!user) {
+            return res.status(404).json('No user found!');
+        } else if (!user?.active) {
+            return req.session.destroy(() => {
+                res.append('terminated', 'true');
+                res.status(401).json('Account is not active, please contact support.')
+            }
+        );
         }
+
+        res.json({ user, card });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(e);
     }
 }
+
 
 export const getUserByNameOrID = async (req: Request, res: Response) => {
     try {
@@ -100,11 +101,6 @@ export const getUserByNameOrID = async (req: Request, res: Response) => {
 
 export const addCard = async (req: Request, res: Response) => {
     try {
-        if (!verifyToken(req)) {
-            res.status(401).json("You are not authorized!");
-            return;
-        }
-
         const newCard = await Card.create({ ...req.body, user_id: req.session.userId });
 
         await User.update({
@@ -127,11 +123,6 @@ export const addCard = async (req: Request, res: Response) => {
 
 export const updateCard = async (req: Request, res: Response) => {
     try {
-        if (!verifyToken(req)) {
-            res.status(401).json("You are not authorized!");
-            return;
-        }
-
         await Card.update(req.body, { where: { card_id: req.params.cardId, user_id: req.session.userId }});
 
         sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
@@ -145,11 +136,6 @@ export const updateCard = async (req: Request, res: Response) => {
 
 export const deleteCard = async (req: Request, res: Response) => {
     try {
-        if (!verifyToken(req)) {
-            res.status(401).json("You are not authorized!");
-            return;
-        }
-
         await Card.destroy({ where: { card_id: req.params.cardId, user_id: req.session.userId }});
 
         sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
@@ -163,10 +149,6 @@ export const deleteCard = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
     try {
-        if (!verifyToken(req)) {
-            res.status(401).json("You are not authorized!");
-            return;
-        }
         const user = await User.update({
             ...req.body
             },

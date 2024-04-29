@@ -1,104 +1,125 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { addCard, deleteCard, getLoggedInUser, updateCard, updateUser } from '../utils/API';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import './CSS/EditProfile.css';
 
 const EditProfile = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [profile_pic, setProfilePic] = useState('');
-  const [promotion_enrollment, setEnrollment] = useState(false);
+  const { isPending, data, isError, error } = useQuery({ queryKey: ['users'], queryFn: getLoggedInUser })
 
-  const [card, setCardView] = useState(false);
-  const [active, setActive] = useState(false);
-  const [card_id, setId] = useState(0);
-  const [card_number, setCardNumber] = useState('');
-  const [last_four, setFour] = useState('');
-  const [cardholder_name, setCardName] = useState('');
-  const [expiry_date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  const [cvv, setCVV] = useState(0);
-  const [address, setAddy] = useState();
+  if (isError) {
+    console.error('Error getting logged in user:', error);
+  }
+
+  const ProfileBody = (props) => {
+    const { data: { user: { username: name, email, profile_pic: pic, promotion_enrollment: enrolled }, card: cardInfo } } = props
+      
+    const [username, setUsername] = useState(name);
+    const [profile_pic, setProfilePic] = useState(pic ? pic : '/placeholder.png');
+    const [promotion_enrollment, setEnrollment] = useState(enrolled);
+    const [status, setStatus] = useState({ profile: false, card: false });
   
-  const navigate = useNavigate();
+    const [card, setCardView] = useState(cardInfo ? true : false);
+  
+    const [card_id, setId] = useState(cardInfo ? cardInfo.card_id : 0);
+    const [card_number, setCardNumber] = useState('');
+    const [last_four, setFour] = useState(cardInfo ? cardInfo.last_four : '');
+    const [cardholder_name, setCardName] = useState(cardInfo ? cardInfo.cardholder_name : '');
+    const [expiry_date, setDate] = useState(cardInfo ? cardInfo.expiry_date : new Date().toISOString().split('T')[0]);
+    const [cvv, setCVV] = useState(cardInfo ? cardInfo.cvv : 0);
+    const [address, setAddy] = useState(cardInfo ? cardInfo.address : '');
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const { user, card } = await getLoggedInUser();
-        setUsername(user.username);
-        setEmail(user.email);
-        setProfilePic(user.profile_pic);
-        setEnrollment(user.promotion_enrollment);
-
-        if (card) {
-          setCardView(true);
-          setId(card.card_id);
-          setFour(card.last_four);
-          setCardName(card.cardholder_name);
-          setDate(card.expiry_date);
-          setCVV(card.cvv);
-          setAddy(card.address);
-        }
-      } catch (error) {
-        console.error('Error getting logged in user:', error);
+    const updateUserProfile = useMutation({ 
+      mutationFn: updateUser,
+      onMutate: () => {
+        setStatus({...status, profile: true});
+        setTimeout(() => {
+          setStatus({...status, profile: false});
+        }, 2000)
+      },
+      onError: async (error) => {
+        console.error('Error updating profile:', error);
       }
+    })
+
+    const submitCard = useMutation({ 
+      mutationFn: addCard,
+      onMutate: () => {
+        setStatus({...status, card: true});
+        setTimeout(() => {
+          setStatus({...status, card: false});
+        }, 2000)
+      },
+      onSuccess: async (data) => {
+        setId(data.card_id);
+        setFour(card_number.trim().slice(-4));
+        setCardView(true);
+      },
+      onError: async (error) => {
+        console.error('Error creating card:', error);
+      }
+    })
+  
+    const updateProfileCard = useMutation({ 
+      mutationFn: updateCard,
+      onMutate: () => {
+        setStatus({...status, card: true});
+        setTimeout(() => {
+          setStatus({...status, card: false});
+        }, 2000)
+      },
+      onError: async (error) => {
+        console.error('Error updating card:', error);
+      }
+    })
+  
+    const deleteProfileCard = useMutation({ 
+      mutationFn: deleteCard,
+      onMutate: () => {
+        setCardView(false);
+        return { card_number, cardholder_name, expiry_date, cvv, address }
+      },
+      onSuccess: async () => {
+        setCardName('');
+        setCardNumber('');
+        setAddy('');
+        setCVV('');
+        setDate(new Date().toISOString().split('T')[0]);
+      },
+      onError: async (error, context) => {
+        const { card_number, cardholder_name, expiry_date, cvv, address } = context
+
+        setCardName(cardholder_name);
+        setCardNumber(card_number);
+        setAddy(address);
+        setCVV(cvv);
+        setDate(expiry_date);
+        setCardView(true);
+
+        console.error('Error deleting card:', error);
+      }
+    })
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      updateUserProfile.mutate({ username, promotion_enrollment, profile_pic });
     };
-    fetchUserData();
-  }, []);
+  
+    const handleCardSubmit = async (event) => {
+      event.preventDefault();
+      submitCard.mutate({ card_number, cardholder_name, expiry_date, cvv, address });
+    };
+  
+    const handleCardUpdate = async (event) => {
+      event.preventDefault();
+      updateProfileCard.mutate({ address, card_id });
+    };
+  
+    const handleDelete = async (event) => {
+      event.preventDefault();
+      deleteProfileCard.mutate(card_id);
+    };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await updateUser({ username, promotion_enrollment, profile_pic });
-      navigate('/');
-    } catch (error) {
-      console.error('Error updating profile:', error);
-    }
-  };
-
-  const handleCardSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const newCard = await addCard({ card_number, cardholder_name, expiry_date, cvv, address });
-      setId(newCard.card_id);
-      setFour(card_number.trim().slice(-4));
-      setCardView(true);
-    } catch (error) {
-      console.error('Error creating card:', error);
-    }
-  };
-
-  const handleCardUpdate = async (event) => {
-    event.preventDefault();
-    try {
-      await updateCard(address, card_id);
-      setActive(true);
-      setTimeout(() => {
-        setActive(false);
-      }, 2000)
-    } catch (error) {
-      console.error('Error updating card:', error);
-    }
-  };
-
-  const handleDelete = async (event) => {
-    event.preventDefault();
-    try {
-      await deleteCard(card_id);
-      setCardName('');
-      setCardNumber('');
-      setAddy('');
-      setCVV('');
-      setDate(new Date().toISOString().split('T')[0])
-      setCardView(false);
-    } catch (error) {
-      console.error('Error deleting card:', error);
-    }
-  };
-
-  return (
-    <div className="editProfileContainer">
-      <h2>Manage Profile</h2>
+    return (
       <div className='twoColumn'>
         <form onSubmit={handleSubmit} className="editProfileForm">
           <label htmlFor="username">Username:</label>
@@ -139,7 +160,7 @@ const EditProfile = () => {
           />
 
           <br />
-          <button type="submit" className='save-changes'>Save Changes</button>
+          <button type="submit" className='save-changes'>{status.profile ? "Saved!" : "Save Changes"}</button>
         </form>
         <form onSubmit={card ? handleCardUpdate : handleCardSubmit} className="editProfileForm">
           {
@@ -216,7 +237,7 @@ const EditProfile = () => {
 
           <br />
           {
-            !active ?
+            !status.card ?
             <button type="submit" className='save-changes'>Save Card</button>
             :
             <button disabled className='save-changes'>Saved!</button>
@@ -229,6 +250,21 @@ const EditProfile = () => {
           }
         </form>
       </div>
+    );
+  }
+
+  return (
+    <div className="editProfileContainer">
+      <h2>Manage Profile</h2>
+      {
+        isPending || data.user == undefined
+          ?
+            <>
+              <h1>Loading...</h1>
+            </>
+            :
+            <ProfileBody data={data} />
+      }
     </div>
   );
 };

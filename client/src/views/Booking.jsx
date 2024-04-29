@@ -1,31 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { getAllMovies } from '../utils/API';
+import React, { useState } from 'react';
+import { getAllMoviesSlim } from '../utils/API';
 import { useNavigate } from 'react-router-dom';
 import "./CSS/Booking.css";
+import { useQuery } from '@tanstack/react-query';
 
 const Booking = () => {
   const [selectedMovie, setSelectedMovie] = useState('');
   const [selectedShowtime, setSelectedShowtime] = useState('');
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatAges, setSeatAges] = useState({});
-  const [movies, setMovies] = useState([]);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const moviesData = await getAllMovies();
-        setMovies(moviesData);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-      }
-    };
+  const { isPending, data } = useQuery({ queryKey: ['slimMovies'], queryFn: getAllMoviesSlim })
 
-    fetchMovies();
-  }, [])
-
-  // Sample data, replace with your actual movie and showtime data
+  // Sample data, replace with actual movie and showtime data
   const showtimes = ['12:00 PM', '3:00 PM', '6:00 PM'];
 
   const handleMovieChange = (event) => {
@@ -80,10 +69,13 @@ const Booking = () => {
           <label htmlFor="movie">Select a Movie:</label>
           <select id="movie" value={selectedMovie} onChange={handleMovieChange} required>
             <option value="" disabled>Select a movie</option>
-            {movies.map((movie) => (
-              <option key={movie.id} value={movie.title}>
-                {movie.title}</option>
-            ))}
+            {
+              isPending 
+                ? 
+                  <option value="" disabled>Loading..</option> 
+                : 
+                  data.map((movie) => <option key={movie.id} value={movie.title}> {movie.title}</option>)
+            }
           </select>
         </div>
         {selectedMovie && (

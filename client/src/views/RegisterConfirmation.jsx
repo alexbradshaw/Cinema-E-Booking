@@ -2,14 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { confirmAccount } from '../utils/API';
 import { AuthContext } from '../App';
+import { useMutation } from '@tanstack/react-query';
 
 const RegisterConfirmation = () => {
   const { token } = useParams();
   const { dispatch } = useContext(AuthContext);
+  const confirmAccountMutation = useMutation({ mutationFn: confirmAccount })
 
   const confirm = async () => {
-    const { auth } = await confirmAccount(token);
-    console.log(auth);
+    const { auth } = await confirmAccountMutation.mutateAsync(token);
     localStorage.setItem('auth', auth);
     await dispatch({ type: 'SET_AUTH', payload: true });
   }
