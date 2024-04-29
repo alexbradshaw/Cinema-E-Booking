@@ -4,40 +4,43 @@ import { Link, useNavigate } from 'react-router-dom';
 import { adminCheck, authCheck, logout, searchMovies } from '../../utils/API'; 
 import { AuthContext } from '../../App';
 import "../CSS/Navbar.css";
+import { useMutation } from '@tanstack/react-query';
 
 const AuthenticatedNav = () => {
   const { admin: { isAdmin }, auth, dispatch } = useContext(AuthContext);
 
-  const adminStatus = async () => {
-    try {
-      const adminObject = await adminCheck();
-      dispatch({ type:'SET_ADMIN', payload: adminObject });
-    } catch (e) {
-      dispatch({ type:'SET_ADMIN', payload: false });
+  const check = useMutation({ 
+    mutationFn: adminCheck,
+    onSuccess: async (data) => {
+      await dispatch({ type:'SET_ADMIN', payload: data });
+    },
+    onError: async () => {
+      await dispatch({ type:'SET_ADMIN', payload: false });
     }
-  };
+  })
 
   useEffect(() => {
     if (auth) {
-      adminStatus();
+      check.mutate();
     }
   }, [auth]);
 
-  const signOut = async () => {
-    try {
-        await logout();
-        dispatch({ type:'RESET' });
-    } catch (e) {
-        console.log('Something went wrong with logout!')
-        console.log('Message: ', e.message);
+  const signOut = useMutation({ 
+    mutationFn: logout,
+    onSuccess: async () => {
+      await dispatch({ type:'RESET' });
+    },
+    onError: async (error) => {
+      console.error("Something went wrong with logout!\n" + error);
+      await dispatch({ type:'RESET' });
     }
-}
+  })
 
   return (
     <>
       <li><Link to="/">Home</Link></li>
       <li><Link to="/editProfile">Profile</Link></li>
-      <li><Link onClick={signOut}>Logout</Link></li>
+      <li><Link onClick={() => signOut.mutate()}>Logout</Link></li>
       { isAdmin ? <li><Link to="/admin">Admin</Link></li> : <></> }
     </>
   );
@@ -49,27 +52,31 @@ const Navbar = () => {
 
   const { auth, dispatch } = useContext(AuthContext);
 
-  const authStatus = async () => {
-    try {
-      await authCheck();
-    } catch (e) {
-      dispatch({ type:'RESET' });
+  const authStatus = useMutation({ 
+    mutationFn: authCheck,
+    onSuccess: async (data) => {
+      await dispatch({ type:'SET_ADMIN', payload: data });
+    },
+    onError: async () => {
+      await dispatch({ type:'RESET' });
     }
-  };
+  })
 
   useEffect(() => {
     if (localStorage.getItem('auth')) {
       dispatch({ type:'SET_AUTH', payload: true });
-      authStatus();
+      authStatus.mutate();
     }
   }, [])
+  
+  const search = useMutation({ mutationFn: searchMovies })
 
   const handleSearch = async (event) => {
     event.preventDefault();
 
     try {
       // Call the search function with the current search term
-      const searchResults = await searchMovies(searchTerm);
+      const searchResults = await search.mutateAsync(searchTerm);
 
       // Redirect to the search results page with the search term and results
       /*
