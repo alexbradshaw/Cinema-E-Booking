@@ -3,6 +3,7 @@ import { getAllMovies } from '../utils/API';
 import Navbar from './components/Navbar';
 import MovieCard from './components/MovieCard';
 import { Slide, Slider, ButtonBack, ButtonNext, CarouselProvider } from 'pure-react-carousel';
+//import Slider from "./components/slider/Slider.jsx";
 import { Card, CardGroup, Container, Header } from 'semantic-ui-react';
 import "./CSS/HomePage.css";
 //import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -43,11 +44,13 @@ const Home = () => {
     <div className="carousel-container">
         {movies.length > 0 ? (
           <CarouselProvider orientation='horizontal' step={5} naturalSlideWidth={100} naturalSlideHeight={20} totalSlides={2}>
-            
+
+            {/*         
             <ButtonBack className="carousel-button">Back</ButtonBack>
             <ButtonNext className="carousel-button">Next</ButtonNext>
-            
+            */} 
             {/* Now Showing */}
+
             <Header size='large'>{"Now Showing"}</Header>
             <Slider infiniteLoop={true} showArrows={false}>
               <div className="slideContainer">
@@ -59,26 +62,11 @@ const Home = () => {
                       </Card>
                     )}
                   </CardGroup>
-              </Slide>
-            </div>
-            </Slider>
-
-            {/* Coming Soon */}
-            <Header size='large'>{"Coming Soon"}</Header>
-            <Slider>
-            <div className="slideContainer">
-              <Slide>
-                <CardGroup itemsPerRow={5}>
-                  {movies.slice(0,5).map((movie) => 
-                    <Card key={movie.id}>
-                      <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} /> 
-                    </Card>
-                  )}
-                </CardGroup>
-              </Slide>
-            </div>
+                </Slide>
+              </div>
             </Slider>
           </CarouselProvider>
+
         ) : (
           <p>Loading...</p>
         )}
@@ -124,3 +112,51 @@ export default Home;
         movies={movies}
       />
       */}
+
+
+               {/*
+          <CarouselProvider orientation='horizontal' step={5} naturalSlideWidth={100} naturalSlideHeight={20} totalSlides={2}>
+            
+            <ButtonBack className="carousel-button">Back</ButtonBack>
+            <ButtonNext className="carousel-button">Next</ButtonNext>
+            
+        */}
+        
+            {/* Now Showing */}
+            {/*
+            <Header size='large'>{"Now Showing"}</Header>
+            <Slider infiniteLoop={true} showArrows={false}>
+              <div className="slideContainer">
+                <Slide>
+                  <CardGroup itemsPerRow={5}>
+                    {movies.slice(0,5).map((movie) => 
+                      <Card key={movie.id}>
+                        <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} /> 
+                      </Card>
+                    )}
+                  </CardGroup>
+                </Slide>
+              </div>
+            </Slider>
+
+                    */}
+            {/* Coming Soon */}
+            {/*}
+            </div>
+            <Header size='large'>{"Coming Soon"}</Header>
+            
+            <Slider>
+            <div className="slideContainer">
+              <Slide>
+                <CardGroup itemsPerRow={5}>
+                  {movies.slice(0,5).map((movie) => 
+                    <Card key={movie.id}>
+                      <MovieCard movie={movie} key={movie.id} style={{ marginRight: '10px' }} /> 
+                    </Card>
+                  )}
+                </CardGroup>
+              </Slide>
+            </div>
+            </Slider>
+          </CarouselProvider>
+                  */}

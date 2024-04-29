@@ -24,6 +24,8 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@iconify/icons-mdi": "^1.2.48",
+    "@iconify/react": "^4.1.1",
     "@types/uuid": "^9.0.8",
     "concurrently": "^8.2.2",
     "ts-node": "^10.9.2",
