@@ -14,9 +14,9 @@ const EditProfile = () => {
     const { data: { user: { username: name, email, profile_pic: pic, promotion_enrollment: enrolled }, card: cardInfo } } = props
       
     const [username, setUsername] = useState(name);
-    const [profile_pic, setProfilePic] = useState(pic);
+    const [profile_pic, setProfilePic] = useState(pic ? pic : '/placeholder.png');
     const [promotion_enrollment, setEnrollment] = useState(enrolled);
-    const [status, setStatus] = useState({profile: false, card: false});
+    const [status, setStatus] = useState({ profile: false, card: false });
   
     const [card, setCardView] = useState(cardInfo ? true : false);
   

@@ -26,10 +26,10 @@ export const accountWithAuth = Router();
     accountWithAuth.post('/auth', authCheck);                 // ! POST route to check if user is still authenticated ! 
 
     // PUT
+    account.put('/verify/:token', verifyAccount);             // * PUT route for verifying an account from a confirmation email *
     accountWithAuth.put('/', updateUser);                     // ! PUT route to update user ! 
     accountWithAuth.put('/card/:cardId', updateCard);         // ! PUT route for a payment method !
     accountWithAuth.put('/reset/:token', changePassword);     // ! PUT route for changing password from reset ! 
-    accountWithAuth.put('/verify/:token', verifyAccount);     // ! PUT route for verifying an account from a confirmation email !
 
     // DELETE
     accountWithAuth.delete('/card/:cardId', deleteCard);      // ! DELETE route for a payment method !

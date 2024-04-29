@@ -31,7 +31,7 @@ import ManageMovie from './views/ManageMovie.jsx';
 
 const authMiddleware = (isAdmin, permission) => {
   let permissions = {};
-  if (localStorage.getItem('permissions')) {
+  if (localStorage.getItem('permissions') != undefined) {
     permissions = JSON.parse(localStorage.getItem('permissions'));
   }
   if (!localStorage.getItem('auth')) {

@@ -15,7 +15,7 @@ const AuthenticatedNav = () => {
       await dispatch({ type:'SET_ADMIN', payload: data });
     },
     onError: async () => {
-      await dispatch({ type:'SET_ADMIN', payload: false });
+      await dispatch({ type:'SET_ADMIN', payload: { isAdmin: false, permissions: {}} });
     }
   })
 
