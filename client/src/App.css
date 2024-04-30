@@ -36,3 +36,22 @@
 .delete-button:hover {
 opacity: 0.8;
 }
+
+.iconButton {
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+}
+
+.iconButton:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+.confirm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

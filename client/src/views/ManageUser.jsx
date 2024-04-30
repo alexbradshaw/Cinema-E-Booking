@@ -82,7 +82,7 @@ const ManageUser = () => {
             
             const formObject = generateFormObject();
     
-            const updated = await editProfile.mutateAsync({ id, formObject });
+            const updated = await editProfile.mutateAsync({ id, permissions: formObject });
     
             if (updated[0] == 1) {
                 let newUser = user;
@@ -139,7 +139,7 @@ const ManageUser = () => {
             active ? 
                 <button onClick={updateAccountStanding} className='delete-button default-button'>Suspend Account</button>
                 :
-                <button onClick={updateAccountStanding} className='success-button default-button'>Reactivate Account</button>
+                <button onClick={updateAccountStanding} className='add-user-button default-button'>Reactivate Account</button>
         );
     }
 

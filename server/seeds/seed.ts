@@ -1,7 +1,7 @@
 import sequelize from '../config/connection.js';
 
-import { Admin, Category, CastMember, MovieCategory, Movie, Person, Promotion, Ticket, Transaction, User, Card } from '../models/index.js';
-import { admins, cards, categories, members, movieCategories, movies, persons, promotions, tickets, transactions, users } from './index.js';
+import { Admin, Category, Card, CastMember, MovieCategory, Movie, Person, Promotion, Ticket, TicketType, Transaction, User, } from '../models/index.js';
+import { admins, cards, categories, members, movieCategories, movies, persons, promotions, tickets, ticketTypes, transactions, users } from './index.js';
 
 const seed = async () => {
     try {
@@ -13,14 +13,14 @@ const seed = async () => {
         await Person.bulkCreate(persons);
         console.log('Persons Seeded');
 
-        await Card.bulkCreate(cards);
-        console.log('Cards Seeded');
-
         await Movie.bulkCreate(movies);
         console.log('Movies Seeded');
 
         await User.bulkCreate(users);
         console.log('Users Seeded');
+
+        await Card.bulkCreate(cards);
+        console.log('Cards Seeded');
 
         await Category.bulkCreate(categories);
         console.log('Categories Seeded');
@@ -36,6 +36,9 @@ const seed = async () => {
 
         await Transaction.bulkCreate(transactions);
         console.log('Transactions Seeded');
+
+        await TicketType.bulkCreate(ticketTypes);
+        console.log('Tickets Seeded');
 
         await Ticket.bulkCreate(tickets);
         console.log('Tickets Seeded');

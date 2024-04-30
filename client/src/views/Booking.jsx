@@ -5,47 +5,43 @@ import "./CSS/Booking.css";
 import { useQuery } from '@tanstack/react-query';
 
 const Booking = () => {
-  const [selectedMovie, setSelectedMovie] = useState('');
-  const [selectedShowtime, setSelectedShowtime] = useState('');
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [seatAges, setSeatAges] = useState({});
-
-  const navigate = useNavigate();
-
-  const { isPending, data } = useQuery({ queryKey: ['slimMovies'], queryFn: getAllMoviesSlim })
+    const [selectedMovie, setSelectedMovie] = useState('');
+    const [selectedShowtime, setSelectedShowtime] = useState('');
+    const [ticketCount, setTicketCount] = useState(1);  // State for the number of tickets
+    const [ticketAges, setTicketAges] = useState([]);  // State for the ages of each ticket
+    const [selectedSeats, setSelectedSeats] = useState([]);
+    const navigate = useNavigate();
+    const { isPending, data } = useQuery({ queryKey: ['slimMovies'], queryFn: getAllMoviesSlim });
 
   const showtimes = ['12:00 PM', '3:00 PM', '6:00 PM'];
 
   const handleMovieChange = (event) => {
     setSelectedMovie(event.target.value);
+    // Reset showtime and selected seats when movie changes
     setSelectedShowtime('');
     setSelectedSeats([]);
-    setSeatAges({});
   };
 
   const handleShowtimeChange = (event) => {
     setSelectedShowtime(event.target.value);
+    // Reset selected seats when showtime changes
     setSelectedSeats([]);
-    setSeatAges({});
-  };
-
-  const handleDeselectAll = () => {
-    setSelectedSeats([]);
-    setSeatAges({});
   };
 
   const handleSeatClick = (seat) => {
+    // Toggle selected seats
     setSelectedSeats((prevSeats) => {
       if (prevSeats.includes(seat)) {
-        const updatedSeats = prevSeats.filter((prevSeat) => prevSeat !== seat);
-        const updatedSeatAges = { ...seatAges };
-        delete updatedSeatAges[seat];
-        setSeatAges(updatedSeatAges);
-        return updatedSeats;
+        return prevSeats.filter((prevSeat) => prevSeat !== seat);
       } else {
         return [...prevSeats, seat];
       }
     });
+  };
+
+  const handleAgeChange = (seat, event) => {
+    const age = event.target.value;
+    setSeatAges((prevAges) => ({ ...prevAges, [seat]: age }));
   };
 
   const handleSubmit = (event) => {

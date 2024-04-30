@@ -1,7 +1,42 @@
 import { Op } from 'sequelize';
-import { Card, Movie, Promotion, Ticket, Transaction, User } from '../../models/index.js'
+import { Card, Movie, Promotion, Ticket, TicketType, Transaction, User } from '../../models/index.js'
 import { Request, Response } from 'express';
 import { sendUpdateEmail } from '../../utils/utils.js';
+
+export const addCard = async (req: Request, res: Response) => {
+    try {
+        const newCard = await Card.create({ ...req.body, user_id: req.session.userId });
+
+        await User.update({
+            card_id: newCard.card_id
+            },
+            {
+                where: {
+                    id: req.session.userId
+                }
+            });
+
+        sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
+
+        res.json(newCard);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(e);
+    }
+}
+
+export const deleteCard = async (req: Request, res: Response) => {
+    try {
+        await Card.destroy({ where: { card_id: req.params.cardId, user_id: req.session.userId }});
+
+        sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
+
+        res.json("Card successfully deleted.");
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(e);
+    }
+}
 
 export const getAuthedUser = async (req: Request, res: Response) => {
     try {
@@ -22,11 +57,15 @@ export const getAuthedUser = async (req: Request, res: Response) => {
                             {
                                 order: ['id', 'ASC'],
                                 model: Ticket,
-                                attributes: ['seat_number', 'type'],
+                                attributes: ['seat_number'],
                                 include: [
                                     {
                                         model: Movie,
                                         attributes: ['title']
+                                    },
+                                    {
+                                        model: TicketType,
+                                        attributes: ['name', 'price']
                                     }
                                 ]
                             }
@@ -54,7 +93,6 @@ export const getAuthedUser = async (req: Request, res: Response) => {
     }
 }
 
-
 export const getUserByNameOrID = async (req: Request, res: Response) => {
     try {
         const user = await User.findOne(
@@ -77,11 +115,15 @@ export const getUserByNameOrID = async (req: Request, res: Response) => {
                             {
                                 order: ['id', 'ASC'],
                                 model: Ticket,
-                                attributes: ['seat_number', 'type'],
+                                attributes: ['seat_number'],
                                 include: [
                                     {
                                         model: Movie,
                                         attributes: ['title']
+                                    },
+                                    {
+                                        model: TicketType,
+                                        attributes: ['name', 'price']
                                     }
                                 ]
                             }
@@ -99,28 +141,6 @@ export const getUserByNameOrID = async (req: Request, res: Response) => {
     }
 }
 
-export const addCard = async (req: Request, res: Response) => {
-    try {
-        const newCard = await Card.create({ ...req.body, user_id: req.session.userId });
-
-        await User.update({
-            card_id: newCard.card_id
-            },
-            {
-                where: {
-                    id: req.session.userId
-                }
-            });
-
-        sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
-
-        res.json(newCard);
-    } catch (e) {
-        console.log(e);
-        res.status(500).json(e);
-    }
-}
-
 export const updateCard = async (req: Request, res: Response) => {
     try {
         await Card.update(req.body, { where: { card_id: req.params.cardId, user_id: req.session.userId }});
@@ -128,19 +148,6 @@ export const updateCard = async (req: Request, res: Response) => {
         sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
 
         res.json("Card successfully updated.");
-    } catch (e) {
-        console.log(e);
-        res.status(500).json(e);
-    }
-}
-
-export const deleteCard = async (req: Request, res: Response) => {
-    try {
-        await Card.destroy({ where: { card_id: req.params.cardId, user_id: req.session.userId }});
-
-        sendUpdateEmail(req.session.email, req.session.username, '\'s available payment method');
-
-        res.json("Card successfully deleted.");
     } catch (e) {
         console.log(e);
         res.status(500).json(e);

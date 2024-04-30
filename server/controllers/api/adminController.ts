@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Admin, Category, Movie, Promotion, User } from "../../models/index.js";
+import { Admin, Category, Movie, Promotion, TicketType, User } from "../../models/index.js";
 
 export const addAdmin = async (req: Request, res: Response) => {
   try {
@@ -80,18 +80,40 @@ export const addPromotion = async (req: Request, res: Response) => {
   }
 }
 
+export const addTicketType = async (req: Request, res: Response) => {
+  try {
+    if (!req.session.permissions?.manage_movies) {
+      return res.status(403).json("Your account is not authorized to add a ticket type!" );
+    }
+    
+    const newTicket = await TicketType.create(req.body); 
+
+    res.status(201).json(newTicket);
+  } 
+  catch (e) {
+    console.error(e);
+    res.status(400).json(e);
+  }
+}
+
 export const adminCheck = async (req: Request, res: Response) => {
   let status;
 
-  if (req.session.isAdmin) {
+  const admin = await Admin.findOne({ 
+    where: {
+      user_id: req.session.userId
+    }
+  })
+
+  if (admin) {
     status = 200;
   } else {
     status = 401;
   }
 
   res.status(status).json({
-      isAdmin: req.session.isAdmin,
-      permissions: req.session.permissions
+      isAdmin: admin ? true: false,
+      permissions: admin
   });
 }
 
@@ -190,6 +212,29 @@ export const editPromotion = async (req: Request, res: Response) => {
   }
 }
 
+export const editTicket = async (req: Request, res: Response) => {
+  try {
+    if (!req.session.permissions?.manage_movies) {
+      return res.status(403).json("Your account is not authorized to edit tickets!");
+    }
+    
+    const updated = await TicketType.update(
+      { ...req.body },
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    );
+
+    res.json(updated);
+  } 
+  catch (e) {
+    console.error(e);
+    res.status(400).json(e);
+  }
+}
+
 export const getAdminFields = async (req: Request, res: Response) => {
   try {
       if (!req.session.permissions?.manage_admins) {
@@ -204,6 +249,22 @@ export const getAdminFields = async (req: Request, res: Response) => {
       }
 
       res.json(fields);
+  } catch (e) {
+      console.log(e);
+      res.status(500).json(e);
+  }
+}
+
+export const getTicketTypes = async (req: Request, res: Response) => {
+  try {
+      if (!req.session.permissions?.manage_movies) {
+          res.status(403).json("Your account is not authorized to manage tickets!");
+          return;
+      }
+
+      const tickets = await TicketType.findAll({});
+
+      res.json(tickets);
   } catch (e) {
       console.log(e);
       res.status(500).json(e);

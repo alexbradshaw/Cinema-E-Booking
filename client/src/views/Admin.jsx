@@ -12,13 +12,18 @@ const Admin = () => {
 
     const routes = [
         {
+            'route': 'movies',
+            'name': 'Manage Movies',
+            'permission': 'manage_movies'
+        },
+        {
             'route': 'promotions',
             'name': 'Manage Promotions',
             'permission': 'manage_promotions'
         },
         {
-            'route': 'movies',
-            'name': 'Manage Movies',
+            'route': 'tickets',
+            'name': 'Manage Ticket Prices',
             'permission': 'manage_movies'
         },
         {
