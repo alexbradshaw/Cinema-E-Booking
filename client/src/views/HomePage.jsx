@@ -48,9 +48,11 @@ const Home = () => {
               
               <CarouselProvider orientation='horizontal' step={5} naturalSlideWidth={100} naturalSlideHeight={20} totalSlides={2}>
                 
+                {/*
                 <ButtonBack className="carousel-button">Back</ButtonBack>
                 <ButtonNext className="carousel-button">Next</ButtonNext>
-                
+                */}
+
                 {/* Now Showing */}
                 
                 <MovieSlider movies={movies.filter((movie)=> new Date(movie.starts_showing).getTime() < Date.now())} header={'Now Showing'} />

@@ -271,6 +271,10 @@ const EditProfile = () => {
             <></>
           }
         </form>
+        <div>
+          <label htmlFor="purchases">Purchases</label>
+        </div>
+
       </div>
     );
   }
