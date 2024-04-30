@@ -250,7 +250,10 @@ const EditProfile = () => {
           }
         </form>
         <div>
-          <label htmlFor="purchases">Purchases</label>
+          <label htmlFor="purchases">Purchases:</label>
+          <div className="purchasesTab"> 
+          
+          </div>
         </div>
 
       </div>
