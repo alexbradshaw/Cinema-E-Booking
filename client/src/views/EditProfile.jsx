@@ -11,10 +11,12 @@ const EditProfile = () => {
   }
 
   const ProfileBody = (props) => {
-    const { data: { user: { username: name, email, profile_pic: pic, promotion_enrollment: enrolled }, card: cardInfo } } = props
+    const { data: { user: { username: name, fname, lname, email, profile_pic: pic, promotion_enrollment: enrolled, promotions, transactions }, card: cardInfo } } = props
       
     const [username, setUsername] = useState(name);
-    const [profile_pic, setProfilePic] = useState(pic ? pic : '/placeholder.png');
+    const [profile_pic, setProfilePic] = useState(pic);
+    const [firstName, setFname] = useState(fname);
+    const [lastName, setLname] = useState(lname);
     const [promotion_enrollment, setEnrollment] = useState(enrolled);
     const [status, setStatus] = useState({ profile: false, card: false });
   
@@ -23,7 +25,7 @@ const EditProfile = () => {
     const [card_id, setId] = useState(cardInfo ? cardInfo.card_id : 0);
     const [card_number, setCardNumber] = useState('');
     const [last_four, setFour] = useState(cardInfo ? cardInfo.last_four : '');
-    const [cardholder_name, setCardName] = useState(cardInfo ? cardInfo.cardholder_name : '');
+    const [cardholder_name, setCardName] = useState(cardInfo ? cardInfo.cardholder_name : fname);
     const [expiry_date, setDate] = useState(cardInfo ? cardInfo.expiry_date : new Date().toISOString().split('T')[0]);
     const [cvv, setCVV] = useState(cardInfo ? cardInfo.cvv : 0);
     const [address, setAddy] = useState(cardInfo ? cardInfo.address : '');
@@ -101,7 +103,7 @@ const EditProfile = () => {
   
     const handleSubmit = async (event) => {
       event.preventDefault();
-      updateUserProfile.mutate({ username, promotion_enrollment, profile_pic });
+      updateUserProfile.mutate({ username, promotion_enrollment, profile_pic, fname: firstName, lname: lastName });
     };
   
     const handleCardSubmit = async (event) => {
@@ -128,6 +130,26 @@ const EditProfile = () => {
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className="inputField"
+            required
+          />
+
+          <label htmlFor="firstName">First Name:</label>
+          <input
+            type="text"
+            id="firstName"
+            value={firstName}
+            onChange={(e) => setFname(e.target.value)}
+            className="inputField"
+            required
+          />
+
+          <label htmlFor="lastName">Last Name:</label>
+          <input
+            type="text"
+            id="lastName"
+            value={lastName}
+            onChange={(e) => setLname(e.target.value)}
             className="inputField"
             required
           />
