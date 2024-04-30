@@ -1,18 +1,18 @@
 /* Home.css */
 
 body { 
-    //background: #E2DECC;
+    /* background: #E2DECC; */
     background: #33698f
 }
 
-h1 { 
+.carousel-container h1 { 
     text-align: center;
 }
 
 .screenBody {
     
-    //justify-items: center;
-    //align-items: center;
+    /* justify-items: center;
+    align-items: center; */
 }
 
 /* Carousel container */

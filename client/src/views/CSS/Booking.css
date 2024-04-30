@@ -1,5 +1,5 @@
 /* Booking.css */
-body {
+.booking body {
     font-family: Arial, sans-serif;
     background-color: #33698f; /* Matching the dark theme from the Home page */
     color: #fff; /* Light text for visibility */
@@ -7,12 +7,12 @@ body {
     padding: 20px;
 }
 
-h1 {
+.booking h1 {
     text-align: center;
     color: #f0f0f0;
 }
 
-form {
+.booking form {
     background: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -22,13 +22,13 @@ form {
     border: 1px solid #ccc;
 }
 
-label {
+.booking label {
     display: block;
     margin-bottom: 10px;
     color: #333; /* Dark text on light background */
 }
 
-select, input[type="number"], input[type="text"] {
+.booking select, input[type="number"], input[type="text"] {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -38,11 +38,11 @@ select, input[type="number"], input[type="text"] {
     box-sizing: border-box;
 }
 
-input[type="checkbox"] {
+.booking input[type="checkbox"] {
     margin-right: 5px;
 }
 
-button {
+.booking button {
     background-color: #0275d8;
     color: white;
     border: none;
@@ -56,7 +56,7 @@ button {
     border-radius: 4px;
 }
 
-button:hover {
+.booking button:hover {
     background-color: #025aa5;
 }
 
