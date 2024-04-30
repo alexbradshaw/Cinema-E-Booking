@@ -20,6 +20,10 @@ const CardFront = (props, frontKey, handleClick) => {
       setModalOpen(false);
     };
 
+    const bookNowClick = () => { 
+        navigate('/booking');
+    };
+
     return (
     <div>
         <Card fluid>
@@ -50,7 +54,7 @@ const CardFront = (props, frontKey, handleClick) => {
                 <Rating icon='star' defaultRating={props.movie.vote_average} maxRating={5} disabled />
                 <Icon onClick={() => props.handleMovie(props.movie)} name={props.icon} color={props.color} />
 
-                <Button animated='vertical'>
+                <Button animated='vertical' onClick={bookNowClick}>
                     <ButtonContent visible>Book Now</ButtonContent>
                     <ButtonContent hidden>
                         <Icon name='shop' />
