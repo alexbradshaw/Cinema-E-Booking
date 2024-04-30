@@ -25,8 +25,11 @@ const retrieveAuthToken = () => {
 }
 
 export const checkAdmin = async (navigate) => {
-    if (!localStorage.getItem('admin') || !(await adminCheck()).isAdmin) {
+    const check = await adminCheck();
+    if (!localStorage.getItem('auth') || !check.isAdmin) {
         navigate('/')
+    } else {
+        localStorage.setItem('permissions', JSON.stringify(check.permissions));
     }
 }
 
@@ -130,6 +133,26 @@ export const checkAdmin = async (navigate) => {
         }
 
     /*
+        Creates a new ticket based on form data, returns new ticket object
+    */
+        export const createTicket = async (formData) => {
+            const response = await fetch('/api/admin/ticket', {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                },
+                body: JSON.stringify(formData),
+            });
+            
+            await errorCheck(response);
+    
+            const newTicket = await response.json();
+    
+            return newTicket;
+        }
+
+    /*
         Delete a Promotion by ID
         Returns true if successful
     */
@@ -207,6 +230,26 @@ export const checkAdmin = async (navigate) => {
 
             return updatedRows;
         }
+
+    /*
+        Change Ticket Type Information by ID
+    */
+        export const editTicket = async ({ id, name, price }) => {
+            const response = await fetch(`/api/admin/tickets/${id}`, {
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify({ name, price })
+            });
+            
+            await errorCheck(response);
+            
+            const updatedRows = await response.json();
+
+            return updatedRows;
+        }
     
     /*
         Returns an object full of admin fields
@@ -240,6 +283,23 @@ export const checkAdmin = async (navigate) => {
             const { users, currentUserId } = await response.json();
 
             return { users: users, currentUserId: currentUserId };
+        }
+
+    /*
+        Returns an object array of users with admin perms if applicable
+    */
+        export const getAllTicketTypes = async () => {
+            const response = await fetch("/api/admin/tickets", {
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                }
+            });
+            
+            await errorCheck(response);
+            
+            const tickets = await response.json();
+
+            return tickets;
         }
 
 /* Account Routes */
