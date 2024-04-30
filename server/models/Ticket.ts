@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from "../config/connection.js";
 import { Movie, Transaction } from './index.js';
+import TicketType from './TicketType.js';
 
 class Ticket extends Model {
     declare id: number;
@@ -13,8 +14,12 @@ Ticket.init(
       allowNull: false,
     },
     type: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: TicketType,
+        key: 'id'
+      }
     },
     movie_id: {
       type: DataTypes.INTEGER,

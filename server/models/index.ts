@@ -9,6 +9,7 @@ import MovieCategory from './MovieCategory.js';
 import Promotion from './Promotion.js';
 import Transaction from './Transaction.js';
 import Ticket from './Ticket.js';
+import TicketType from './TicketType.js';
 
 /* Setting up Model Relation to Allow Search by Categories */
     /* Associating Movies and Categories together */
@@ -113,16 +114,28 @@ import Ticket from './Ticket.js';
     });
 
 /* Setting up Model Relation for Users to have a Credit Card */
-    User.hasOne(Card, {
-        foreignKey: 'card_id',
+    User.hasMany(Card, {
+        foreignKey: 'user_id',
         constraints: false,
         onDelete: 'CASCADE'
     });
 
     Card.belongsTo(User, {
         foreignKey: 'user_id',
+        constraints: false
+    });
+
+/* Setting up Model Relation for Tickets to have a Ticket Type */
+    Ticket.belongsTo(TicketType, {
+        foreignKey: 'type',
         constraints: false,
+    });    
+
+    TicketType.hasMany(Ticket, {
+        foreignKey: 'type',
+        constraints: false,
+        onUpdate: "CASCADE"
     });
 
 
-export { Admin, Card, CastMember, Category, Movie, MovieCategory, Person, Promotion, Ticket, Transaction, User };
+export { Admin, Card, CastMember, Category, Movie, MovieCategory, Person, Promotion, Ticket, TicketType, Transaction, User };
