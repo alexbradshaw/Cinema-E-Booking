@@ -19,6 +19,7 @@
   .movies-list {
     display: flex;
     border: 1px solid black;
+    margin-bottom: 150px;
   }
 
   .movies-list > * {

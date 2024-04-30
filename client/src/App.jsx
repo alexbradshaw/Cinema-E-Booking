@@ -21,10 +21,25 @@ const reducer = (state, action) => {
       localStorage.removeItem("auth");
       localStorage.removeItem("admin");
       return initialState;
+    case 'checkPerms':
+      let perms = JSON.parse(localStorage.getItem('permissions'))
+      if (state.admin.permissions != perms) {
+        let newPerms = {
+          isAdmin: state.admin.isAdmin,
+          permissions: perms
+        }
+        return { ...state, admin: newPerms };
+      }
+      return state;
     case 'SET_ADMIN':
-      localStorage.setItem('admin', action.payload.isAdmin);
-      localStorage.setItem('permissions', JSON.stringify(action.payload.permissions));
-      return { ...state, admin: action.payload };
+      const admin = {
+        isAdmin: action.payload.isAdmin,
+        permissions: action.payload.permissions ? action.payload.permissions : {}
+      }
+      localStorage.setItem('admin', admin.isAdmin);
+      localStorage.setItem('permissions', JSON.stringify(admin.permissions));
+
+      return { ...state, admin: admin };
     case 'SET_AUTH':
       return { ...state, auth: action.payload };
     default:

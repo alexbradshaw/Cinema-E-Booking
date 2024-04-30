@@ -13,3 +13,7 @@ export const formatMovieLength = (length) => {
 
     return `${hours}:${minutes}`
 }
+
+export const formatPrice = (number) => {
+  return JSON.parse(number).toFixed(2);
+}
