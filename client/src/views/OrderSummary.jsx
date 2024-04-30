@@ -5,22 +5,20 @@ const OrderSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { movie, showtime, seats, seatAges } = location.state || {};
-  const ticketPrice = 10; // Assume each ticket costs $10 for simplicity
+  const ticketPrice = 10;
 
-  // Calculate the total cost
   const totalCost = seats.length * ticketPrice;
 
-  // Ensure that there are booking details before rendering
   if (!movie || !showtime || seats.length === 0) {
     return <p>No booking details found.</p>;
   }
 
   const handleConfirmOrder = () => {
-    navigate('/checkout', { state: { movie, showtime, seats, seatAges, totalCost } });
+    navigate('/login', { state: { movie, showtime, seats, seatAges, totalCost, pendingOrder: true } });
   };
 
   const handleCancelOrder = () => {
-    navigate('/booking'); // Or any other path you wish to redirect to
+    navigate('/booking');
   };
 
   return (

@@ -60,7 +60,7 @@ const Booking = () => {
     };
 
     return (
-        <div>
+        <div className='booking'>
             <h1>Booking</h1>
             <form onSubmit={handleSubmit}>
                 <div>
