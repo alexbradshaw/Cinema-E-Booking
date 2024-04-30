@@ -29,12 +29,14 @@ import RegisterConfirmation from './views/RegisterConfirmation.jsx';
 import ChangePassword from './views/ChangePassword.jsx';
 import ManageMovie from './views/ManageMovie.jsx';
 
-const authMiddleware = (isAdmin, permission) => {
+const authMiddleware = (isAdmin, permission, requireAuth = true) => {
   let permissions = {};
-  if (localStorage.getItem('permissions') != undefined) {
+  if (localStorage.getItem('permissions') !== undefined) {
     permissions = JSON.parse(localStorage.getItem('permissions'));
   }
-  if (!localStorage.getItem('auth')) {
+
+  // Check for auth only if requireAuth is true
+  if (requireAuth && !localStorage.getItem('auth')) {
     return redirect('/login');
   } else if (isAdmin && !localStorage.getItem('admin')) {
     return redirect('/');
@@ -54,7 +56,7 @@ const routes = [
     { path: 'verify/:token', element: <RegisterConfirmation /> },
     { path: 'resetPassword', element: <Reset />},
     { path: 'reset/:token', element: <ChangePassword />},
-    { path: 'booking', element: <Booking /> },
+    { path: 'booking', element: <Booking />, loader: () => authMiddleware(false, null, false) },
 
   /* Auth Protected Routes */
     { path: 'admin', element: <Admin />, loader: () => authMiddleware(true) },
@@ -66,9 +68,10 @@ const routes = [
     { path: 'admin/users/:id', element: <ManageUser />, loader: () => authMiddleware(true, 'manage_accounts') },
     { path: 'booking', element: <Booking />, loader: () => authMiddleware(false) },
     { path: 'editProfile', element: <EditProfile />, loader: () => authMiddleware(false) },
-    { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false) },
-    { path: 'orderSummary', element: <OrderSummary />, loader: () => authMiddleware(false) },
-    { path: 'orderConfirmation', element: <OrderConfirmation />, loader: () => authMiddleware(false) },
+    { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false, null, false) }, // No auth required until certain action
+    { path: 'orderSummary', element: <OrderSummary />, loader: () => authMiddleware(false, null, false) }, 
+    { path: 'orderConfirmation', element: <OrderConfirmation />, loader: () => authMiddleware(false, null, false) }, 
+  
 ]
 
 const router = createBrowserRouter([
