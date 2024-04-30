@@ -13,107 +13,127 @@ const Booking = () => {
     const navigate = useNavigate();
     const { isPending, data } = useQuery({ queryKey: ['slimMovies'], queryFn: getAllMoviesSlim });
 
-    const showtimes = ['12:00 PM', '3:00 PM', '6:00 PM'];
-    const seats = Array.from({ length: 60 }, (_, i) => `Seat ${i + 1}`);
+  const showtimes = ['12:00 PM', '3:00 PM', '6:00 PM'];
 
-    const handleMovieChange = (event) => {
-        setSelectedMovie(event.target.value);
-        setSelectedShowtime('');
-        setSelectedSeats([]);
-        setTicketCount(1);
-        setTicketAges([]);
-    };
+  const handleMovieChange = (event) => {
+    setSelectedMovie(event.target.value);
+    // Reset showtime and selected seats when movie changes
+    setSelectedShowtime('');
+    setSelectedSeats([]);
+  };
 
-    const handleShowtimeChange = (event) => {
-        setSelectedShowtime(event.target.value);
-        setSelectedSeats([]);
-    };
+  const handleShowtimeChange = (event) => {
+    setSelectedShowtime(event.target.value);
+    // Reset selected seats when showtime changes
+    setSelectedSeats([]);
+  };
 
-    const handleSeatClick = (seat) => {
-        setSelectedSeats((prevSeats) => {
-            const isSelected = prevSeats.includes(seat);
-            if (isSelected) {
-                return prevSeats.filter((prevSeat) => prevSeat !== seat);
-            } else if (prevSeats.length < ticketCount) {
-                return [...prevSeats, seat];
-            }
-            return prevSeats;
-        });
-    };
+  const handleSeatClick = (seat) => {
+    // Toggle selected seats
+    setSelectedSeats((prevSeats) => {
+      if (prevSeats.includes(seat)) {
+        return prevSeats.filter((prevSeat) => prevSeat !== seat);
+      } else {
+        return [...prevSeats, seat];
+      }
+    });
+  };
 
-    const handleTicketCountChange = (event) => {
-        const count = parseInt(event.target.value, 10);
-        setTicketCount(count);
-        setTicketAges(Array(count).fill(''));  // Reset ages when ticket count changes
-        setSelectedSeats([]);  // Reset selected seats if ticket count changes
-    };
+  const handleAgeChange = (seat, event) => {
+    const age = event.target.value;
+    setSeatAges((prevAges) => ({ ...prevAges, [seat]: age }));
+  };
 
-    const handleAgeChange = (index, event) => {
-        const ages = [...ticketAges];
-        ages[index] = event.target.value;
-        setTicketAges(ages);
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!selectedMovie || !selectedShowtime || selectedSeats.length === 0) {
+      alert('Please select movie, showtime, and at least one seat.');
+      return;
+    }
+    navigate('/orderSummary', { state: { movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats, seatAges: seatAges } });
+  };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        navigate('/orderSummary', { state: { movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats, seatAges: ticketAges } });
-    };
+  const renderSeats = () => {
+    const rows = ['A', 'B', 'C', 'D', 'E', 'walkway', 'F', 'G', 'H', 'I', 'J']; // Added 'walkway' between E and F
+    const cols = 20;
 
-    return (
-        <div className='booking'>
-            <h1>Booking</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="movie">Select a Movie:</label>
-                    <select id="movie" value={selectedMovie} onChange={handleMovieChange} required>
-                        <option value="" disabled>Select a movie</option>
-                        {isPending ? <option disabled>Loading...</option> : data.map((movie) => <option key={movie.id} value={movie.title}>{movie.title}</option>)}
-                    </select>
-                </div>
-                {selectedMovie && (
-                    <div>
-                        <label htmlFor="showtime">Select a Showtime:</label>
-                        <select id="showtime" value={selectedShowtime} onChange={handleShowtimeChange} required>
-                            <option value="" disabled>Select a showtime</option>
-                            {showtimes.map((time) => <option key={time} value={time}>{time}</option>)}
-                        </select>
-                    </div>
-                )}
-                {selectedShowtime && (
-                    <>
-                        <div>
-                            <label htmlFor="tickets">Number of Tickets:</label>
-                            <input type="number" id="tickets" min="1" max="10" value={ticketCount} onChange={handleTicketCountChange} required />
-                        </div>
-                        <div>
-                            {Array.from({ length: ticketCount }, (_, index) => (
-                                <div key={index}>
-                                    <label>Ticket {index + 1} Age:</label>
-                                    <input type="number" min="0" value={ticketAges[index] || ''} onChange={(e) => handleAgeChange(index, e)} required />
-                                </div>
-                            ))}
-                        </div>
-                        <div>
-                            <label>Select Seats:</label>
-                            <div className="seat-grid">
-                                {seats.map((seat) => (
-                                    <button
-                                        key={seat}
-                                        className={`seat ${selectedSeats.includes(seat) ? 'selected' : ''}`}
-                                        onClick={() => handleSeatClick(seat)}
-                                        type="button"
-                                    >
-                                        {seat}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </>
-                )}
-                <button type="submit">Book Tickets</button>
-            </form>
+    const seats = [];
+    for (let row of rows) {
+      if (row === 'walkway') {
+        seats.push(<div key={row} className="walkway" />);
+      } else {
+        const rowSeats = [];
+        for (let i = 1; i <= cols; i++) {
+          const seat = `${row}${i}`;
+          const isSelected = selectedSeats.includes(seat);
+          rowSeats.push(
+            <div
+              key={seat}
+              className={`seat ${isSelected ? 'selected' : ''}`}
+              onClick={() => handleSeatClick(seat)}
+            >
+              {i} {/* Only display the number for the seat */}
+            </div>
+          );
+        }
+        seats.push(
+          <div key={row} className="seatRow">
+            <div className="rowLetter">{row}</div>
+            {rowSeats}
+          </div>
+        );
+      }
+    }
+    return seats;
+  };
+
+  return (
+    <div className="bookingContainer">
+      <h1>Booking</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="movie">Select a Movie:</label>
+          <select id="movie" value={selectedMovie} onChange={handleMovieChange} required>
+            <option value="" disabled>Select a movie</option>
+            {isPending ? <option value="" disabled>Loading..</option> : data.map((movie) => <option key={movie.id} value={movie.title}>{movie.title}</option>)}
+          </select>
         </div>
-    );
+        {selectedMovie && (
+          <div>
+            <label htmlFor="showtime">Select a Showtime:</label>
+            <select id="showtime" value={selectedShowtime} onChange={handleShowtimeChange} required>
+              <option value="" disabled>Select a showtime</option>
+              {showtimes.map((time) => <option key={time} value={time}>{time}</option>)}
+            </select>
+          </div>
+        )}
+        {selectedShowtime && (
+          <button className="purchaseButton" type="submit">Purchase Tickets</button>
+        )}
+      </form>
+      <div className="theater">
+        <div className="screen">Screen</div>
+        <div className="seating-chart">
+          {renderSeats()}
+        </div>
+        <div className="backOfTheater">
+          Back of Theater
+        </div>
+        <div className="key">
+          <div className="keyItem">
+            <input type="checkbox" disabled checked /> Available
+          </div>
+          <div className="keyItem">
+            <input type="checkbox" disabled checked /> Selected
+          </div>
+          <div className="keyItem">
+            <input type="checkbox" disabled checked /> Unavailable
+          </div>
+        </div>
+      </div>
+      <button type="button" className="purchaseButton" onClick={handleDeselectAll}>Deselect All</button>
+    </div>
+  );
 };
 
 export default Booking;
