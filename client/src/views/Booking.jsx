@@ -14,68 +14,92 @@ const Booking = () => {
 
   const { isPending, data } = useQuery({ queryKey: ['slimMovies'], queryFn: getAllMoviesSlim })
 
-  // Sample data, replace with actual movie and showtime data
   const showtimes = ['12:00 PM', '3:00 PM', '6:00 PM'];
 
   const handleMovieChange = (event) => {
     setSelectedMovie(event.target.value);
-    // Reset showtime and selected seats when movie changes
     setSelectedShowtime('');
     setSelectedSeats([]);
+    setSeatAges({});
   };
 
   const handleShowtimeChange = (event) => {
     setSelectedShowtime(event.target.value);
-    // Reset selected seats when showtime changes
     setSelectedSeats([]);
+    setSeatAges({});
+  };
+
+  const handleDeselectAll = () => {
+    setSelectedSeats([]);
+    setSeatAges({});
   };
 
   const handleSeatClick = (seat) => {
-    // Toggle selected seats
     setSelectedSeats((prevSeats) => {
       if (prevSeats.includes(seat)) {
-        return prevSeats.filter((prevSeat) => prevSeat !== seat);
+        const updatedSeats = prevSeats.filter((prevSeat) => prevSeat !== seat);
+        const updatedSeatAges = { ...seatAges };
+        delete updatedSeatAges[seat];
+        setSeatAges(updatedSeatAges);
+        return updatedSeats;
       } else {
         return [...prevSeats, seat];
       }
     });
   };
 
-  const handleAgeChange = (seat, event) => {
-    const age = event.target.value;
-    setSeatAges((prevAges) => ({ ...prevAges, [seat]: age }));
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Process the booking details (selectedMovie, selectedShowtime, selectedSeats, seatAges)
-    // You can handle the form submission logic here, e.g., sending data to the server
-    console.log('Booking submitted:', {
-      movie: selectedMovie,
-      showtime: selectedShowtime,
-      seats: selectedSeats,
-      seatAges: seatAges,
-    });
-
+    if (!selectedMovie || !selectedShowtime || selectedSeats.length === 0) {
+      alert('Please select movie, showtime, and at least one seat.');
+      return;
+    }
     navigate('/orderSummary', { state: { movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats, seatAges: seatAges } });
+  };
 
+  const renderSeats = () => {
+    const rows = ['A', 'B', 'C', 'D', 'E', 'walkway', 'F', 'G', 'H', 'I', 'J']; // Added 'walkway' between E and F
+    const cols = 20;
+
+    const seats = [];
+    for (let row of rows) {
+      if (row === 'walkway') {
+        seats.push(<div key={row} className="walkway" />);
+      } else {
+        const rowSeats = [];
+        for (let i = 1; i <= cols; i++) {
+          const seat = `${row}${i}`;
+          const isSelected = selectedSeats.includes(seat);
+          rowSeats.push(
+            <div
+              key={seat}
+              className={`seat ${isSelected ? 'selected' : ''}`}
+              onClick={() => handleSeatClick(seat)}
+            >
+              {i} {/* Only display the number for the seat */}
+            </div>
+          );
+        }
+        seats.push(
+          <div key={row} className="seatRow">
+            <div className="rowLetter">{row}</div>
+            {rowSeats}
+          </div>
+        );
+      }
+    }
+    return seats;
   };
 
   return (
-    <div>
+    <div className="bookingContainer">
       <h1>Booking</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="movie">Select a Movie:</label>
           <select id="movie" value={selectedMovie} onChange={handleMovieChange} required>
             <option value="" disabled>Select a movie</option>
-            {
-              isPending 
-                ? 
-                  <option value="" disabled>Loading..</option> 
-                : 
-                  data.map((movie) => <option key={movie.id} value={movie.title}> {movie.title}</option>)
-            }
+            {isPending ? <option value="" disabled>Loading..</option> : data.map((movie) => <option key={movie.id} value={movie.title}>{movie.title}</option>)}
           </select>
         </div>
         {selectedMovie && (
@@ -83,38 +107,35 @@ const Booking = () => {
             <label htmlFor="showtime">Select a Showtime:</label>
             <select id="showtime" value={selectedShowtime} onChange={handleShowtimeChange} required>
               <option value="" disabled>Select a showtime</option>
-              {showtimes.map((time) => (
-                <option key={time} value={time}>{time}</option>
-              ))}
+              {showtimes.map((time) => <option key={time} value={time}>{time}</option>)}
             </select>
           </div>
         )}
         {selectedShowtime && (
-          <div>
-            <label>Select Seats:</label>
-            <div>
-              {['A1', 'A2', 'A3', 'B1', 'B2', 'B3'].map((seat) => (
-                <label key={seat}>
-                  <input
-                    type="checkbox"
-                    checked={selectedSeats.includes(seat)}
-                    onChange={() => handleSeatClick(seat)}
-                  />
-                  {seat}
-                  <input
-                    type="number"
-                    placeholder="Age"
-                    value={seatAges[seat] || ''}
-                    onChange={(event) => handleAgeChange(seat, event)}
-                    min="0"
-                  />
-                </label>
-              ))}
-            </div>
-          </div>
+          <button className="purchaseButton" type="submit">Purchase Tickets</button>
         )}
-        <button type="submit">Book Tickets</button>
       </form>
+      <div className="theater">
+        <div className="screen">Screen</div>
+        <div className="seating-chart">
+          {renderSeats()}
+        </div>
+        <div className="backOfTheater">
+          Back of Theater
+        </div>
+        <div className="key">
+          <div className="keyItem">
+            <input type="checkbox" disabled checked /> Available
+          </div>
+          <div className="keyItem">
+            <input type="checkbox" disabled checked /> Selected
+          </div>
+          <div className="keyItem">
+            <input type="checkbox" disabled checked /> Unavailable
+          </div>
+        </div>
+      </div>
+      <button type="button" className="purchaseButton" onClick={handleDeselectAll}>Deselect All</button>
     </div>
   );
 };
