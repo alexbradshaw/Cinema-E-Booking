@@ -34,6 +34,14 @@ User.init(
       allowNull: false,
       unique: true,
     },
+    fname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -52,6 +60,7 @@ User.init(
     profile_pic: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: '/placeholder.png'
     },
     address: {
       type: DataTypes.TEXT,
@@ -77,15 +86,6 @@ User.init(
         model: Admin,
         key: 'admin_id'
       }
-    },
-    card_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: Card,
-        key: 'card_id',
-      },
-      onDelete: 'SET NULL'
     },
   },
   {
