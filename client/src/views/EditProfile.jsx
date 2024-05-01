@@ -25,7 +25,7 @@ const EditProfile = () => {
     const [card_id, setId] = useState(cardInfo ? cardInfo.card_id : 0);
     const [card_number, setCardNumber] = useState('');
     const [last_four, setFour] = useState(cardInfo ? cardInfo.last_four : '');
-    const [cardholder_name, setCardName] = useState(cardInfo ? cardInfo.cardholder_name : fname);
+    const [cardholder_name, setCardName] = useState(cardInfo ? cardInfo.cardholder_name : fname + lname);
     const [expiry_date, setDate] = useState(cardInfo ? cardInfo.expiry_date : new Date().toISOString().split('T')[0]);
     const [cvv, setCVV] = useState(cardInfo ? cardInfo.cvv : 0);
     const [address, setAddy] = useState(cardInfo ? cardInfo.address : '');
