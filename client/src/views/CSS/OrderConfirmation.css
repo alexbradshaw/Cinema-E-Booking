@@ -1,0 +1,65 @@
+/* OrderConfirmation.css */
+.confirmation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.confirmation-title {
+    text-align: center;
+    color: #0275d8;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.confirmation-details {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.confirmation-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.confirmation-details li {
+    background: #f8f9fa;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border-left: 5px solid #0275d8;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.exit-button {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.exit-button:hover {
+    background-color: #c82333;
+}

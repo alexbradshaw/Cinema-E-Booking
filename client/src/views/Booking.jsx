@@ -4,6 +4,7 @@ import { formatTime } from '../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import "./CSS/Booking.css";
 import { useQuery } from '@tanstack/react-query';
+import movieScreenImage from '../../public/seeds/screen.svg';
 
 const Booking = () => {
   const [selectedMovie, setSelectedMovie] = useState('');
@@ -121,7 +122,7 @@ const Booking = () => {
         <div className='selectionContainer'>
           <div className='formSelects'>
             <div>
-              <label htmlFor="movie">Select a Movie:</label>
+              <label htmlFor="movie">Select a Movie: &nbsp;</label>
               <select id="movie" value={selectedMovie} onChange={handleMovieChange} required>
                 <option value="" disabled>Select a movie</option>
                 {movies.isPending ? <option value="" disabled>Loading..</option> : movies.data.map((movie) => <option key={movie.id} value={movie.title}>{movie.title}</option>)}
@@ -163,6 +164,12 @@ const Booking = () => {
           </>
         )}
       </form>
+      <div className="theater">
+        <img src={movieScreenImage} alt="Movie Screen" />
+        <div className="seating-chart">
+          {renderSeats()}
+        </div>
+      </div>
       <button type="button" className="purchaseButton" onClick={handleDeselectAll}>Deselect All</button>
       <button className="purchaseButton" type="submit" form='bookingForm'>Book Tickets</button>
     </div>
