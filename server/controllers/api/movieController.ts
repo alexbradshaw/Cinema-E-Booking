@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-import { Category, Movie, Person } from '../../models/index.js'
+import { Category, Movie, Person, Seat, Showing, Theatre } from '../../models/index.js'
 import { Request, Response } from 'express';
 
     export const findMovies = async (req: Request, res: Response) => {
@@ -57,6 +57,31 @@ import { Request, Response } from 'express';
       }
 
       res.json(movies)
+    }
+
+    export const findShowtimesAndSeats = async (req: Request, res: Response) => {
+      const shows = await Showing.findAll({
+        include: [
+          {
+            model: Movie,
+            attributes: ['title']
+          },
+          {
+            model: Theatre,
+            attributes: ['isLarge']
+          },
+          {
+            model: Seat,
+            attributes: ['row', 'number', 'ticket_id']
+          }
+        ]
+      })
+
+      if (!shows) {
+        return res.status(404).json("No showings were found");
+      }
+
+      res.json(shows);
     }
 
     export const searchMovies = async (req: Request, res: Response) => {
