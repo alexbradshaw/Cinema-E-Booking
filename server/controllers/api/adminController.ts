@@ -176,7 +176,7 @@ export const editAdminPermissions = async (req: Request, res: Response) => {
       req.body,
       {
         where: {
-          admin_id: req.params.id
+          user_id: req.params.id
         }
       }
     );

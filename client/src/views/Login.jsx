@@ -1,26 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import Link for navigation
+import { useLocation, useNavigate } from 'react-router-dom'; // Import Link for navigation
 import { login } from '../utils/API'; // Adjust the path based on your file structure
 import { AuthContext } from '../App';
 import "./CSS/Login.css"; // import for CSS
 import { useMutation } from '@tanstack/react-query';
 
-const Login = () => {
+const Login = (props) => {
   const [userOrEmail, setUserOrEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Added for "Show Password" feature
-  const [showErrorPopup, setShowErrorPopup] = useState(false); // Added for showing the error popup
-  const [rememberMe, setRememberMe] = useState(false); // State for "Remember Me"
+  const [showPassword, setShowPassword] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false); 
+  const [rememberMe, setRememberMe] = useState(false); 
   const navigate = useNavigate();
   const { auth, dispatch } = useContext(AuthContext);
+
+  const location = useLocation();
 
   const loginMutation = useMutation({ 
     mutationFn: login, 
     onSuccess: async () => {
       await dispatch({ type: 'SET_AUTH', payload: true });
-      navigate('/');
+      if (location.state) {
+        navigate('/orderConfirmation', {state: location.state})
+      } else {
+        navigate('/');
+      }
     },
-    onError: () => {
+    onError: (error) => {
       setShowErrorPopup(true);
     }
   })

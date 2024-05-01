@@ -184,7 +184,7 @@ const ManageTickets = () => {
                                         </div>
                                         <div className='ticket-form-buttons'>
                                             <button type='submit' className="add-ticket-button">Submit</button>
-                                            <button onClick={() => setAdd(!showAdd)} className="delete-button">Cancel</button>
+                                            <button onClick={() => setAdd(!showAdd)} className="delete-button ticket-cancel">Cancel</button>
                                         </div>
                                     </div>
                                 </form>

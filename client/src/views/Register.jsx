@@ -36,7 +36,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className='registerPage'>
       { 
         !submitted ? 
         <>

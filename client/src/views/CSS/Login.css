@@ -101,7 +101,7 @@
   padding-left: 50px;
 }
 
-input[type='submit'] {
+#login-container input[type='submit'] {
   border: none;
   background: cornflowerblue;
   color: white;
@@ -112,7 +112,7 @@ input[type='submit'] {
   cursor: pointer;
 }
   
-input[type='button'] {
+#login-container input[type='button'] {
   border: none;
   background: cornflowerblue;
   color: white;
@@ -123,7 +123,7 @@ input[type='button'] {
   cursor: pointer;
 }
 
-label {
+#login-container label {
   padding-bottom: 10px;
 }
 

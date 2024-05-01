@@ -30,14 +30,13 @@ import ChangePassword from './views/ChangePassword.jsx';
 import ManageMovie from './views/ManageMovie.jsx';
 import ManageTickets from './views/ManageTickets.jsx';
 
-const authMiddleware = (isAdmin, permission, requireAuth = true) => {
+const authMiddleware = (isAdmin, permission) => {
   let permissions = {};
   if (localStorage.getItem('permissions') !== undefined) {
     permissions = JSON.parse(localStorage.getItem('permissions'));
   }
 
-  // Check for auth only if requireAuth is true
-  if (requireAuth && !localStorage.getItem('auth')) {
+  if (!localStorage.getItem('auth')) {
     return redirect('/login');
   } else if (isAdmin && !localStorage.getItem('admin')) {
     return redirect('/');
@@ -57,9 +56,15 @@ const routes = [
     { path: 'verify/:token', element: <RegisterConfirmation /> },
     { path: 'resetPassword', element: <Reset />},
     { path: 'reset/:token', element: <ChangePassword />},
-    { path: 'booking', element: <Booking />, loader: () => authMiddleware(false, null, false) },
+    { path: 'booking', element: <Booking /> },
+    { path: 'orderSummary', element: <OrderSummary /> }, 
 
   /* Auth Protected Routes */
+    { path: 'orderConfirmation', element: <OrderConfirmation />, loader: () => authMiddleware(false) }, 
+    { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false) },
+    { path: 'editProfile', element: <EditProfile />, loader: () => authMiddleware(false) },
+
+  /* Admin Protected Routes */
     { path: 'admin', element: <Admin />, loader: () => authMiddleware(true) },
     { path: 'admin/promotions', element: <ManagePromotions />, loader: () => authMiddleware(true, 'manage_promotions') },
     { path: 'admin/tickets', element: <ManageTickets />, loader: () => authMiddleware(true, 'manage_movies') },
@@ -68,11 +73,6 @@ const routes = [
     { path: 'admin/movies/addMovie', element: <AddMovie />, loader: () => authMiddleware(true, 'manage_movies') },
     { path: 'admin/users', element: <ManageUsers />, loader: () => authMiddleware(true, 'manage_accounts') },
     { path: 'admin/users/:id', element: <ManageUser />, loader: () => authMiddleware(true, 'manage_accounts') },
-    { path: 'booking', element: <Booking />, loader: () => authMiddleware(false) },
-    { path: 'editProfile', element: <EditProfile />, loader: () => authMiddleware(false) },
-    { path: 'checkout', element: <Checkout />, loader: () => authMiddleware(false, null, false) }, // No auth required until certain action
-    { path: 'orderSummary', element: <OrderSummary />, loader: () => authMiddleware(false, null, false) }, 
-    { path: 'orderConfirmation', element: <OrderConfirmation />, loader: () => authMiddleware(false, null, false) }, 
   
 ]
 

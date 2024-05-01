@@ -67,8 +67,19 @@
   flex-wrap: wrap;
 }
 
-.user > div:first-child {
-  margin-top: 20px;
+.user-page-header {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.user-container {
+  width: 900px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px 0px 50px;
+  margin-top: 40px;
+  margin-bottom: 150px;
+  border: 3px solid black;
 }
 
 .user-header {
@@ -83,6 +94,10 @@
   display: grid;
   grid-template-columns: 1fr;
   place-items: center;
+}
+
+.user-header div {
+  font-size: 1.3rem;
 }
 
 .user-column {
@@ -101,9 +116,15 @@
 }
 
 .user-column form {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  width: 600px;
+}
+
+.form-options {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: 250px 250px;
+  justify-items: center;
+  margin: auto;
 }
 
 .user-form-submit {
@@ -111,6 +132,19 @@
   margin-top: 50px;
   display: flex;
   justify-content: center;
+}
+
+.user-form-submit input {
+  border: none;
+  background: cornflowerblue;
+  color: white;
+  padding: 12px 24px;
+  margin: 8px;
+  font-size: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 300px;
+  height: 50px;
 }
 
 .default-button {
@@ -125,7 +159,7 @@
 }
 
 .user-options {
-  width: 900px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,29 +174,30 @@
 }
 
 .profile-pic {
-  width: 300px;
-  height: 300px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   margin-bottom: 70px;
 }
 
 .profile-pic > img {
   width: 300px;
+  height: 300px;
+  border: 3px solid black;
+  border-radius: 10px;
   object-fit: cover;
   object-position: center;
 }
 
 .permission {
-  width: 350px;
+  width: 200px;
   display: flex;
   justify-content: center;
 }
 
 .permission > div {
-  width: 250px;
+  width: 200px;
   display: flex;
   justify-content: flex-start;
 }
@@ -174,6 +209,7 @@
 
 .permission label {
   padding-bottom: 0px;
+  font-size: 1.3rem;
 }
 
 .add-user-button {

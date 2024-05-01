@@ -10,7 +10,7 @@
     gap: 10px;
   }
   
-  label {
+  .editProfileContainer label {
     font-weight: bold;
   }
   
@@ -50,7 +50,7 @@
     background-color: #c82333;
   }
 
-  h2 {
+  .editProfileContainer h2 {
     text-align: center;
   }
   

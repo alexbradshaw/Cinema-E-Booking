@@ -98,7 +98,7 @@
   padding-right: 35px;
 }
 
-input[type='submit'] {
+.registerPage input[type='submit'] {
   border: none;
   background: cornflowerblue;
   color: white;
@@ -109,7 +109,7 @@ input[type='submit'] {
   cursor: pointer;
 }
   
-input[type='button'] {
+.registerPage input[type='button'] {
   border: none;
   background: cornflowerblue;
   color: white;
@@ -120,7 +120,7 @@ input[type='button'] {
   cursor: pointer;
 }
 
-label {
+.registerPage label {
   padding-bottom: 10px;
 }
 
