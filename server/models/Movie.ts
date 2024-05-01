@@ -28,6 +28,7 @@ Movie.init(
     vote_average: { 
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: Math.floor(Math.random() * (500 - 100) + 100) / 100
     },
     poster_url: {
       type: DataTypes.STRING,

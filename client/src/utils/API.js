@@ -195,7 +195,7 @@ export const checkAdmin = async (navigate) => {
         Change Admin Permissions of a User by ID
     */
         export const editAdminPermissions = async ({ id, permissions }) => {
-            const response = await fetch(`/api/admin/permissions/${id}`, {
+            const response = await fetch(`/api/admin/permission/${id}`, {
                 headers: {
                     'Authorization' : `Bearer ${retrieveAuthToken()}`,
                     'Content-Type': 'application/json'
@@ -212,16 +212,16 @@ export const checkAdmin = async (navigate) => {
         }
 
     /*
-        Change Admin Permissions of a User by ID
+        Change Promotion by ID
     */
-        export const editPromotion = async ({ id, permissions }) => {
-            const response = await fetch(`/api/admin/permissions/${id}`, {
+        export const editPromotion = async ({ id, discount_value, condition, expiration }) => {
+            const response = await fetch(`/api/admin/promotion/${id}`, {
                 headers: {
                     'Authorization' : `Bearer ${retrieveAuthToken()}`,
                     'Content-Type': 'application/json'
                 },
                 method: 'PUT',
-                body: JSON.stringify({ ...permissions })
+                body: JSON.stringify({ discount_value, condition, expiration })
             });
             
             await errorCheck(response);
@@ -235,7 +235,7 @@ export const checkAdmin = async (navigate) => {
         Change Ticket Type Information by ID
     */
         export const editTicket = async ({ id, name, price }) => {
-            const response = await fetch(`/api/admin/tickets/${id}`, {
+            const response = await fetch(`/api/admin/ticket/${id}`, {
                 headers: {
                     'Authorization' : `Bearer ${retrieveAuthToken()}`,
                     'Content-Type': 'application/json'

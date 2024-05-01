@@ -67,9 +67,12 @@ export const addPromotion = async (req: Request, res: Response) => {
       return res.status(403).json("Your account is not authorized to add a promotion!" );
     }
     
+    const newTitle = `$${req.body.discount_value} Off Purchase of $${req.body.condition}`
+
     const newPromotion = await Promotion.create({
       ...req.body,
-      "user_id": req.session.userId
+      "user_id": req.session.userId,
+      "title":  newTitle
     }); 
 
     res.status(201).json(newPromotion);
@@ -195,8 +198,10 @@ export const editPromotion = async (req: Request, res: Response) => {
       return res.status(403).json("Your account is not authorized to edit a promotion!");
     }
     
+    const newTitle = `$${req.body.discount_value} Off Purchase of $${req.body.condition}`
+
     const updated = await Promotion.update(
-      { ...req.body },
+      { ...req.body, title: newTitle },
       {
         where: {
           id: req.params.id
