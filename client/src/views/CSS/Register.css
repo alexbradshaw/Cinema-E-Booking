@@ -1,3 +1,10 @@
+.registerPage {
+  display: flex; /* Set the container as flex */
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+}
+
 .error-popup {
     position: fixed; /* Or absolute, depending on your layout */
     top: 20%; /* Adjust as needed */
@@ -123,5 +130,3 @@
 .registerPage label {
   padding-bottom: 10px;
 }
-
-
