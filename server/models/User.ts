@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import sequelize from "../config/connection.js";
 
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Transaction } from 'sequelize';
 import { Admin, Card } from './index.js';
 
 class User extends Model {
@@ -16,6 +16,7 @@ class User extends Model {
 
     declare admin?: Admin;
     declare card?: Card;
+    declare transaction?: Transaction[];
 
     async checkPassword(password: string) {
         return bcrypt.compareSync(password, this.password);

@@ -7,7 +7,7 @@ import { formatTime } from '../utils/utils';
 const OrderSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { movie, showtime, seats } = location.state || {};
+  const { movieId, movie, showtime, seats } = location.state || {};
   const [ticketTypes, setTicketTypes] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState({});
   const [totalCost, setTotalCost] = useState(0);
@@ -48,7 +48,7 @@ const OrderSummary = () => {
   };
 
   const handleConfirmOrder = () => {
-    navigate('/checkout', { state: { movie, showtime, seats, selectedTypes, totalCost } });
+    navigate('/checkout', { state: { movieId, movie, showtime, seats, selectedTypes, totalCost } });
   };
 
   const handleCancelOrder = () => {

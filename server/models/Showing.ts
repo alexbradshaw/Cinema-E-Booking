@@ -13,6 +13,8 @@ const generateRows = async (size: number, showing_id: number) => {
 class Showing extends Model {
     declare id: number;
     declare theatre_id: number;
+    declare theatre: Theatre;
+    declare movie: Movie;
 }
 
 Showing.init(

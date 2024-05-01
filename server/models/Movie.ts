@@ -4,6 +4,7 @@ import { Person } from './index.js';
 
 class Movie extends Model {
     declare id: number;
+    declare title: string;
 }
 
 Movie.init(

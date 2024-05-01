@@ -601,6 +601,26 @@ export const checkAdmin = async (navigate) => {
 /* Movie Routes */
 
     /*
+        Adds a new booking to a user
+    */
+        export const bookTickets = async (bookingDetails) => {
+            const response = await fetch('/api/movies/booking', {
+                method: 'POST', 
+                headers: {
+                    'Authorization' : `Bearer ${retrieveAuthToken()}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookingDetails)
+            });
+    
+            await errorCheck(response);
+    
+            const newBooking = await response.json();
+
+            return newBooking;
+        }
+
+    /*
         Returns an array of every movie in db with associated info (actors, directors, etc)
     */
         export const getAllMovies = async () => {

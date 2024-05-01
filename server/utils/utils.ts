@@ -1,5 +1,5 @@
 import mail from 'nodemailer';
-import { User } from '../models/index.js';
+import { Movie, Ticket, Transaction, User } from '../models/index.js';
 
 const transporter = mail.createTransport({
     host: 'smtp-relay.brevo.com', 
@@ -21,6 +21,16 @@ export const sendConfirmEmail = async (target: string, user: User) => {
         subject: "Confirm Email - Cinema E-Booking", 
         text: "Thank your for signing up for our Cinema Booking Website!", 
         html: `<div><a href='${prefix}/verify/${token}'>Click here to verify your account.</a></div>`, 
+    });
+}
+
+export const sendBookingEmail = async (email: string | undefined, transaction: Transaction | null, movie: Movie | null) => {
+    await transporter.sendMail({
+        from: '"Cinema E-Booking" <thisismyspamemail2014@gmail.com>', 
+        to: email, 
+        subject: `Purchase Confirmation - ${movie?.title} - Cinema E-Booking`, 
+        text: `This is a confirmation email for your booking today, ${new Date().getMonth() + '/' + new Date().getDate() + '/' + new Date().getFullYear()},  totaling: ${transaction?.total}`, 
+        html: `<div><a href='${process.env.PRODUCTION ? process.env.APP_URL : 'localhost:3000'}'>Visit Our Website </a></div>`, 
     });
 }
 

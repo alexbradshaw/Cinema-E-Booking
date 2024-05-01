@@ -1,7 +1,9 @@
 import { Router } from 'express';
-import { findMovies, findMoviesSlim, findShowtimesAndSeats, searchMovies } from '../../controllers/index.js';
+import { confirmBooking, findMovies, findMoviesSlim, findShowtimesAndSeats, searchMovies } from '../../controllers/index.js';
+import { checkAuth } from '../../utils/auth.js';
 
-const movies = Router();
+export const movies = Router();
+export const moviesWithAuth = Router();
 
 // ? Key ?
 
@@ -9,10 +11,13 @@ const movies = Router();
 // ! Means auth protected route ! 
 // !! Means admin protected route !! 
 
+    moviesWithAuth.use(checkAuth);
+
     // GET
     movies.get('/', findMovies);                       // * GET route to find all movies * 
     movies.get('/slim', findMoviesSlim);               // * GET route to find all movies * 
     movies.get('/showtimes', findShowtimesAndSeats);   // * GET route to find a list of showtimes * 
     movies.get('/:title', searchMovies);               // * GET route to find a list of movies matching a title * 
 
-export default movies;
+    // POST
+    moviesWithAuth.post('/booking', confirmBooking);   // ! POST route to add a new booking !

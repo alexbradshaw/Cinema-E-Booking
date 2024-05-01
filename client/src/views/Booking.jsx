@@ -62,7 +62,18 @@ const Booking = () => {
       alert('Please select movie, showtime, and at least one seat.');
       return;
     }
-    navigate('/orderSummary', { state: { movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats } });
+
+    const movieId = data.filter((show) => {
+      if (show.movie.title == selectedMovie && show.time == selectedShowtime) {
+        return true;
+      }
+    })[0].id;
+
+    if (!localStorage.getItem('auth')) {
+      navigate('/login', { state: { movieId: movieId, movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats } });
+    } else {
+      navigate('/orderSummary', { state: { movieId: movieId, movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats } });
+    }
   };
 
   const setTimes = (times) => {

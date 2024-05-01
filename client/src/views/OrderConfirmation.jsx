@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAllTicketTypes } from '../utils/API'; // Import to fetch ticket type details
 import './CSS/OrderConfirmation.css'; // Ensure this path is correct
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { formatTime } from '../utils/utils';
 
 const OrderConfirmation = () => {
@@ -10,7 +10,7 @@ const OrderConfirmation = () => {
 
     // Extracting booking details passed from Checkout
     const { movie, showtime, seats, selectedTypes, discountedTotal } = location.state || {};
-    const [ticketTypes, setTicketTypes] = React.useState([]);
+    const [ticketTypes, setTicketTypes] = useState([]);
 
     useEffect(() => {
         // Fetch ticket types once on mount

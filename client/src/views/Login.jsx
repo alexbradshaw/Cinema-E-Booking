@@ -21,7 +21,7 @@ const Login = (props) => {
     onSuccess: async () => {
       await dispatch({ type: 'SET_AUTH', payload: true });
       if (location.state) {
-        navigate('/orderConfirmation', {state: location.state})
+        navigate('/orderSummary', {state: location.state})
       } else {
         navigate('/');
       }

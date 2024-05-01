@@ -5,7 +5,11 @@ import TicketType from './TicketType.js';
 
 class Ticket extends Model {
     declare id: number;
+    declare transaction_id: number;
+    declare movie_id: number;
     declare ticket_seat_id: number;
+    declare ticketType: TicketType;
+    declare seat: Seat;
 }
 
 Ticket.init(
@@ -51,7 +55,8 @@ Ticket.init(
         }
       },
       afterCreate: async (newTicket: Ticket) => {
-        await Seat.update({ ticket_id: newTicket.id }, { where: { id: newTicket.ticket_seat_id }});
+        const what = await Seat.update({ ticket_id: newTicket.id }, { where: { id: newTicket.ticket_seat_id }});
+        console.log('what: ', what);
       },
     },
     sequelize,

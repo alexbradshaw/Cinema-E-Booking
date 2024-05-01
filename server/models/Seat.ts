@@ -6,6 +6,7 @@ import { Showing } from './index.js';
 class Seat extends Model {
     declare id: number;
     declare ticket_id: number | null;
+    declare showing: Showing;
 }
 
 Seat.init(

@@ -1,9 +1,13 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from "../config/connection.js";
-import { Promotion } from './index.js';
+import { Promotion, Ticket } from './index.js';
 
 class Transaction extends Model {
     declare id: number;
+    declare user_id: number;
+    declare total: number;
+    declare promotion?: Promotion;
+    declare tickets: Ticket[];
 }
 
 Transaction.init(

@@ -1,6 +1,42 @@
 import { Op } from 'sequelize';
-import { Category, Movie, Person, Seat, Showing, Theatre } from '../../models/index.js'
+import { Category, Movie, Person, Seat, Showing, Theatre, Ticket, Transaction } from '../../models/index.js'
 import { Request, Response } from 'express';
+import { sendBookingEmail } from '../../utils/utils.js';
+
+    export const confirmBooking = async (req: Request, res: Response) => {
+      const newTransaction = await Transaction.create({ 
+        total: req.body.total, 
+        promotion_id: req.body.promotion_id ? req.body.promotion_id : null,
+        user_id: req.session.userId
+      })
+
+      const seats: string[] = Object.keys(req.body.ticketsAndSeats);
+      const types: string[] = Object.values(req.body.ticketsAndSeats);
+
+      for (let i = 0; i < seats.length; i++) {
+        const seatSplit = seats[i].split('');
+        console.log('\n\n\n', seatSplit);
+        
+        const seat = await Seat.findOne({ where: { row: seatSplit[0], number: seatSplit[1] }});
+        
+        console.log(seat, '\n\n\n');
+
+        await Ticket.create({ 
+          ticket_seat_id: seat?.id, 
+          type: types[i], 
+          movie_id: req.body.movie_id, 
+          transaction_id: newTransaction.id 
+        });
+      }
+
+      sendBookingEmail(req.session.email, newTransaction, req.body.movie);
+
+      if (!newTransaction) {
+        return res.status(500).json("There was an issue processing your request, please try again later.");
+      }
+
+      res.json(newTransaction);
+    }
 
     export const findMovies = async (req: Request, res: Response) => {
       const movies = await Movie.findAll({

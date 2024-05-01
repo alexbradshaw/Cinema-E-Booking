@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './CSS/Checkout.css';  // Ensure the path here is correct
-import { getAllTicketTypes, getAllPromotions } from '../utils/API';
+import { getAllTicketTypes, getAllPromotions, bookTickets } from '../utils/API';
 import { formatTime } from '../utils/utils';
+import { useMutation } from '@tanstack/react-query';
 
 const Checkout = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { movie, showtime, seats, selectedTypes, totalCost } = location.state || {};
+    const { movieId, movie, showtime, seats, selectedTypes, totalCost } = location.state || {};
     const [ticketTypes, setTicketTypes] = useState([]);
     const [promotions, setPromotions] = useState([]);
     const [selectedPromotion, setSelectedPromotion] = useState(null);
@@ -58,18 +59,34 @@ const Checkout = () => {
         }
     }, [selectedPromotion, promotions, totalCost]);
 
+    const bookingMutation = useMutation({ 
+        mutationFn: bookTickets, 
+        onSuccess: async () => {
+          navigate('/orderConfirmation', { state: { movieId, movie, showtime, seats, selectedTypes, discountedTotal }});
+        },
+        onError: (error) => {
+          console.error(error)
+        }
+    });
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPaymentInfo({ ...paymentInfo, [name]: value });
     };
 
-    const handleCompletePurchase = () => {
-        console.log('Purchase Completed!');
-        navigate('/orderConfirmation', { state: { movie, showtime, seats, selectedTypes, discountedTotal } });
+    const handleCompletePurchase = async () => {
+        await bookingMutation.mutateAsync({ 
+            total: discountedTotal, 
+            promotion_id: 1, 
+            movie_id: movieId, 
+            movie: movie,
+            ticketsAndSeats: selectedTypes, 
+            showing: showtime 
+        })
     };
 
     const handleCancel = () => {
-        navigate('/orderSummary', { state: { movie, showtime, seats, selectedTypes, totalCost } });
+        navigate('/orderSummary', { state: { movieId, movie, showtime, seats, selectedTypes, totalCost } });
     };
 
     if (!movie || !showtime || !seats || !totalCost) {
