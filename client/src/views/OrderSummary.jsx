@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "./CSS/OrderSummary.css";
-import { getAllTicketTypes } from '../utils/API'; // Import the API call
+import { getAllTicketTypes } from '../utils/API';
 
 const OrderSummary = () => {
   const location = useLocation();
@@ -16,7 +16,9 @@ const OrderSummary = () => {
       try {
         const types = await getAllTicketTypes();
         setTicketTypes(types);
-        setSelectedTypes(seats.reduce((acc, seat) => ({ ...acc, [seat]: types[0]?.id }), {}));
+        const initialTypes = seats.reduce((acc, seat) => ({ ...acc, [seat]: types[0]?.id }), {});
+        setSelectedTypes(initialTypes);
+        console.log("Initial types set:", initialTypes);
       } catch (error) {
         console.error('Failed to fetch ticket types:', error);
       }
@@ -26,20 +28,25 @@ const OrderSummary = () => {
   }, [seats]);
 
   useEffect(() => {
-    // Calculate total cost whenever selectedTypes changes
     const calculateTotal = () => {
       const cost = seats.reduce((total, seat) => {
-        const type = ticketTypes.find(t => t.id === selectedTypes[seat]);
+        const typeId = selectedTypes[seat];
+        const type = ticketTypes.find(t => t.id === parseInt(typeId));
         return total + (type ? type.price : 0);
       }, 0);
       setTotalCost(cost);
+      console.log("Calculated cost:", cost);
     };
 
-    calculateTotal();
-  }, [selectedTypes, seats, ticketTypes]);
+    if (ticketTypes.length > 0) calculateTotal();
+  }, [selectedTypes, ticketTypes, seats]);
 
   const handleTypeChange = (seat, typeId) => {
-    setSelectedTypes({ ...selectedTypes, [seat]: typeId });
+    setSelectedTypes(prev => ({
+      ...prev,
+      [seat]: typeId
+    }));
+    console.log("Type changed for seat", seat, "to type ID", typeId);
   };
 
   const handleConfirmOrder = () => {
