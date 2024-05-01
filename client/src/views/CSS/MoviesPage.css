@@ -1,7 +1,56 @@
-.bookbutton { 
-    height: 20px;
-    width: 200px;
-    padding: '10px 20px';
-    borderRadius: '5px';
-    fontSize: '16px';
+.title {
+    text-transform: uppercase;
+    font-size: 64px;
+    font-family: 'Roboto', sans-serif;
+  }  
+
+.detailsText {
+    font-size: 24px;
+    line-height: 1.75;
+    font-family: 'Roboto', sans-serif;
+}
+
+.director {
+    color: #202020;
+}
+
+/* Movie Page Container */
+.moviePageContainer {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+/* Poster Container */
+.posterContainer {
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+/* Poster Image */
+.poster {
+    max-width: 550px;
+}
+
+/* Movie Details Container */
+.movieDetails {
+    flex: 1;
+    text-align: left;
+    margin-left: 100px;
+}
+
+/* Book Now Button */
+.bookButton {
+    padding: 12px 24px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.bookButton:hover {
+    background-color: #858585;
 }
