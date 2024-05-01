@@ -2,6 +2,7 @@ import { addCard, deleteCard, getLoggedInUser, updateCard, updateUser } from '..
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import './CSS/EditProfile.css';
+import { formatTime } from '../utils/utils';
 
 const EditProfile = () => {
   const { isPending, data, isError, error } = useQuery({ queryKey: ['users'], queryFn: getLoggedInUser })
@@ -11,7 +12,7 @@ const EditProfile = () => {
   }
 
   const ProfileBody = (props) => {
-    const { data: { user: { username: name, fname, lname, email, profile_pic: pic, promotion_enrollment: enrolled, promotions, transactions }, card: cardInfo } } = props
+    const { data: { user: { username: name, fname, lname, email, profile_pic: pic, promotion_enrollment: enrolled, transactions }, card: cardInfo } } = props
       
     const [username, setUsername] = useState(name);
     const [profile_pic, setProfilePic] = useState(pic);
@@ -43,8 +44,6 @@ const EditProfile = () => {
         console.error('Error updating profile:', error);
       }
     })
-
-    console.log(transactions);
 
     const submitCard = useMutation({ 
       mutationFn: addCard,
@@ -187,6 +186,34 @@ const EditProfile = () => {
           <br />
           <button type="submit" className='save-changes'>{status.profile ? "Saved!" : "Save Changes"}</button>
         </form>
+
+        <div>
+          <label htmlFor="transactions">Transactions:</label>
+          <div className="transactionsTab"> 
+            {transactions.map((transaction, index) => (
+              <div key={index} className="transactionItem">
+                <div className='transactionsHeader'>
+                  <p>{new Date(transaction.date).toLocaleDateString()}</p>
+                  <p>Total: ${transaction.total}</p>
+                </div>
+                <ul>
+                  {transaction.tickets.map((ticket, ticketIndex) => {
+                    const { seat: { row, number, showing: { time, theatre: { id: theatreId }, movie: { title }}}, ticketType: { name, price }} = ticket;
+                    return (
+                      <div className='ticket'>
+                        <li key={ticketIndex}><h5>{title} at {formatTime(time)}</h5></li>
+                        <div>
+                          <h5>Theater: {theatreId}</h5><h5>Seat: {row + number}</h5><h5>{name} (${price})</h5>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <form onSubmit={card ? handleCardUpdate : handleCardSubmit} className="editProfileForm">
           {
             card ?
@@ -274,23 +301,6 @@ const EditProfile = () => {
             <></>
           }
         </form>
-        <div>
-          <label htmlFor="transactions">Transactions:</label>
-          <div className="transactionsTab"> 
-            {transactions.map((transaction, index) => (
-              <div key={index} className="transactionItem">
-                <p>Date: {new Date(transaction.date).toLocaleDateString()}</p>
-                <p>Total: ${transaction.total}</p>
-                <p>Movies:</p>
-                <ul>
-                  {transaction.tickets.map((ticket, ticketIndex) => (
-                    <li key={ticketIndex}>{ticket.movie.title} - {ticket.ticketType.name} (${ticket.ticketType.price})</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     );
   }
