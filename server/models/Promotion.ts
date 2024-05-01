@@ -14,11 +14,11 @@ Promotion.init(
       allowNull: true,
     },
     discount_value: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     condition: {
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     created_at: {

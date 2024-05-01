@@ -1,30 +1,14 @@
 [
     {
-        "title": "Promotion1",
-        "discount_value": 10,
-        "condition": "Minimum purchase of $50",
-        "transaction_id": 1,
+        "title": "$10 Off Purchase of 20",
+        "discount_value": 10.00,
+        "condition": 20.00,
         "user_id": 1
     },
     {
-        "title": "Promotion2",
-        "discount_value": 20,
-        "condition": "Minimum purchase of $100",
-        "transaction_id": 2,
+        "title": "$20 Off Purchase of 100",
+        "discount_value": 20.00,
+        "condition": 100.00,
         "user_id": 2
-    },
-    {
-        "title": "Promotion3",
-        "discount_value": 30,
-        "condition": "Minimum purchase of $150",
-        "transaction_id": 3,
-        "user_id": 3
-    },
-    {
-        "title": "Promotion4",
-        "discount_value": 40,
-        "condition": "Minimum purchase of $200",
-        "transaction_id": 4,
-        "user_id": 4
     }
 ]

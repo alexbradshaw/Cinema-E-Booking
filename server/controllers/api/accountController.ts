@@ -51,6 +51,10 @@ export const getAuthedUser = async (req: Request, res: Response) => {
                         model: Transaction,
                         include: [
                             {
+                                model: Promotion,
+                                attributes: ['id', 'title', 'discount_value']
+                            },
+                            {
                                 model: Ticket,
                                 attributes: { exclude: ['id', 'type', 'movie_id', 'transaction_id']},
                                 order: ['ticket_seat_id', 'ASC'],
@@ -81,12 +85,8 @@ export const getAuthedUser = async (req: Request, res: Response) => {
                                     }
                                 ]
                             },
-                            {
-                                model: Promotion,
-                                attributes: ['id', 'title', 'discount_value']
-                            },
                         ],
-                        attributes: ['id', 'date', 'total']
+                        attributes: ['id', 'date', 'total', 'promotion_id']
                     }
                 ],
                 order: [[Transaction, 'date', 'DESC']],

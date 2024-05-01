@@ -180,13 +180,13 @@ import Ticket from './Ticket.js';
     });
 
 /* Setting up Model Relation for a Promotion to belong to a Transaction */
-    Transaction.hasOne(Promotion, {
+    Transaction.belongsTo(Promotion, {
         foreignKey: 'promotion_id',
         constraints: false,
         onDelete: 'SET NULL'
     });
 
-    Promotion.belongsTo(Transaction, {
+    Promotion.hasMany(Transaction, {
         foreignKey: 'promotion_id',
         constraints: false,
     });
