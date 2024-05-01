@@ -64,7 +64,7 @@ import { Request, Response } from 'express';
         include: [
           {
             model: Movie,
-            attributes: ['title']
+            attributes: ['title', 'length']
           },
           {
             model: Theatre,

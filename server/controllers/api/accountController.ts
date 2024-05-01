@@ -73,7 +73,7 @@ export const getAuthedUser = async (req: Request, res: Response) => {
                                                     },
                                                     {
                                                         model: Movie,
-                                                        attributes: ['title']
+                                                        attributes: ['title', 'length']
                                                     },
                                                 ]
                                             }
