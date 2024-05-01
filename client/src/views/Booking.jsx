@@ -3,6 +3,7 @@ import { getAllMoviesSlim } from '../utils/API';
 import { useNavigate } from 'react-router-dom';
 import "./CSS/Booking.css";
 import { useQuery } from '@tanstack/react-query';
+import movieScreenImage from '../../public/seeds/screen.svg';
 
 const Booking = () => {
   const [selectedMovie, setSelectedMovie] = useState('');
@@ -117,6 +118,7 @@ const Booking = () => {
       </form>
       <div className="theater">
         <div className="screen">Movie Screen</div>
+        <img src={movieScreenImage} alt="Movie Screen" />
         <div className="seating-chart">
           {renderSeats()}
         </div>
