@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './CSS/Checkout.css';  // Ensure the path here is correct
+import { getAllTicketTypes } from '../utils/API';
 
 const Checkout = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { movie, showtime, seats, seatAges, totalCost } = location.state || {};
-
+    const { movie, showtime, seats, selectedTypes, totalCost } = location.state || {};
+    const [ticketTypes, setTicketTypes] = useState([]);
     const [paymentInfo, setPaymentInfo] = useState({
         cardNumber: '',
         expiryDate: '',
         cvv: '',
         nameOnCard: '',
     });
+
+    useEffect(() => {
+        // Fetch ticket types similar to OrderSummary
+        const fetchTicketTypes = async () => {
+            try {
+                const types = await getAllTicketTypes();
+                setTicketTypes(types);
+            } catch (error) {
+                console.error('Failed to fetch ticket types:', error);
+            }
+        };
+
+        fetchTicketTypes();
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -21,11 +36,11 @@ const Checkout = () => {
 
     const handleCompletePurchase = () => {
         console.log('Purchase Completed!');
-        navigate('/orderConfirmation', { state: { movie, showtime, seats, seatAges, totalCost } });
+        navigate('/orderConfirmation', { state: { movie, showtime, seats, selectedTypes, totalCost } });
     };
 
     const handleCancel = () => {
-        navigate('/orderSummary', { state: { movie, showtime, seats, seatAges, totalCost } });
+        navigate('/orderSummary', { state: { movie, showtime, seats, selectedTypes, totalCost } });
     };
 
     if (!movie || !showtime || !seats || !totalCost) {
@@ -41,6 +56,20 @@ const Checkout = () => {
                 </div>
                 <div className="detail-item">
                     <strong>Showtime:</strong> {showtime}
+                </div>
+                <div className="detail-item">
+                    <strong>Tickets:</strong>
+                    <ul>
+                        {seats.map((seat) => {
+                            const typeId = selectedTypes[seat];
+                            const type = ticketTypes.find(t => t.id === parseInt(typeId));
+                            return (
+                                <li key={seat}>
+                                    {seat}: {type ? `${type.name} - $${type.price.toFixed(2)}` : 'Type not found'}
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </div>
                 <div className="detail-item">
                     <strong>Total Cost:</strong> ${totalCost.toFixed(2)}
