@@ -8,7 +8,7 @@ const Booking = () => {
   const [selectedMovie, setSelectedMovie] = useState('');
   const [selectedShowtime, setSelectedShowtime] = useState('');
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [seatAges, setSeatAges] = useState({});
+  //const [seatAges, setSeatAges] = useState({});
 
   const navigate = useNavigate();
 
@@ -20,22 +20,22 @@ const Booking = () => {
     setSelectedMovie(event.target.value);
     setSelectedShowtime('');
     setSelectedSeats([]);
-    setSeatAges({});
+    //setSeatAges({});
   };
 
   const handleShowtimeChange = (event) => {
     setSelectedShowtime(event.target.value);
     setSelectedSeats([]);
-    setSeatAges({});
+    //setSeatAges({});
   };
 
   const handleSeatClick = (seat) => {
     setSelectedSeats((prevSeats) => {
       if (prevSeats.includes(seat)) {
         const updatedSeats = prevSeats.filter((prevSeat) => prevSeat !== seat);
-        const updatedSeatAges = { ...seatAges };
-        delete updatedSeatAges[seat];
-        setSeatAges(updatedSeatAges);
+        //const updatedSeatAges = { ...seatAges };
+        //delete updatedSeatAges[seat];
+        //setSeatAges(updatedSeatAges);
         return updatedSeats;
       } else {
         return [...prevSeats, seat];
@@ -54,7 +54,7 @@ const Booking = () => {
       alert('Please select movie, showtime, and at least one seat.');
       return;
     }
-    navigate('/orderSummary', { state: { movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats, seatAges: seatAges } });
+    navigate('/orderSummary', { state: { movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats } });
   };
 
   const renderSeats = () => {

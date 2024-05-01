@@ -1,51 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import "./CSS/OrderSummary.css"; // Make sure the CSS path is correct
+import "./CSS/OrderSummary.css";
+import { getAllTicketTypes } from '../utils/API'; // Import the API call
 
 const OrderSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { movie, showtime, seats, seatAges } = location.state || {};
+  const { movie, showtime, seats } = location.state || {};
+  const [ticketTypes, setTicketTypes] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState({});
+  const [totalCost, setTotalCost] = useState(0);
 
-  // Function to determine ticket price based on age
-  const getTicketPrice = (age) => {
-    if (age <= 12) return 10;
-    else if (age >= 60) return 15;
-    else return 20;
+  useEffect(() => {
+    const fetchTicketTypes = async () => {
+      try {
+        const types = await getAllTicketTypes();
+        setTicketTypes(types);
+        setSelectedTypes(seats.reduce((acc, seat) => ({ ...acc, [seat]: types[0]?.id }), {}));
+      } catch (error) {
+        console.error('Failed to fetch ticket types:', error);
+      }
+    };
+
+    fetchTicketTypes();
+  }, [seats]);
+
+  useEffect(() => {
+    // Calculate total cost whenever selectedTypes changes
+    const calculateTotal = () => {
+      const cost = seats.reduce((total, seat) => {
+        const type = ticketTypes.find(t => t.id === selectedTypes[seat]);
+        return total + (type ? type.price : 0);
+      }, 0);
+      setTotalCost(cost);
+    };
+
+    calculateTotal();
+  }, [selectedTypes, seats, ticketTypes]);
+
+  const handleTypeChange = (seat, typeId) => {
+    setSelectedTypes({ ...selectedTypes, [seat]: typeId });
   };
 
-  // Calculate the total cost based on ages
-  const totalCost = seats.reduce((total, seat, index) => {
-    const age = seatAges[seat];
-    return total + getTicketPrice(age);
-  }, 0);
+  const handleConfirmOrder = () => {
+    navigate('/checkout', { state: { movie, showtime, seats, selectedTypes, totalCost } });
+  };
+
+  const handleCancelOrder = () => {
+    navigate('/booking');
+  };
 
   if (!movie || !showtime || seats.length === 0) {
     return <p>No booking details found.</p>;
   }
 
-  const handleConfirmOrder = () => {
-    navigate('/checkout', { state: { movie, showtime, seats, seatAges, totalCost } });
-  };
-
-  const handleCancelOrder = () => {
-    navigate('/booking'); // Navigate back to the booking page
-  };
-
   return (
     <div className="order-summary-container">
       <h1>Order Summary</h1>
-      <div className="summary-section">
-        <p><strong>Selected Movie:</strong> {movie}</p>
-        <p><strong>Selected Showtime:</strong> {showtime}</p>
-        <p><strong>Seats and Prices:</strong></p>
-        <ul>
-          {seats.map((seat, index) => (
-            <li key={seat}>{seat}: Age {seatAges[seat]} - Price: ${getTicketPrice(seatAges[seat])}</li>
-          ))}
-        </ul>
-        <p><strong>Total Cost:</strong> ${totalCost}</p>
-      </div>
+      <p><strong>Selected Movie:</strong> {movie}</p>
+      <p><strong>Selected Showtime:</strong> {showtime}</p>
+      <ul>
+        {seats.map((seat) => (
+          <li key={seat}>
+            {seat}:
+            <select value={selectedTypes[seat]} onChange={(e) => handleTypeChange(seat, e.target.value)}>
+              {ticketTypes.map(type => (
+                <option key={type.id} value={type.id}>{type.name} - ${type.price}</option>
+              ))}
+            </select>
+          </li>
+        ))}
+      </ul>
+      <p><strong>Total Cost:</strong> ${totalCost.toFixed(2)}</p>
       <div className="actions">
         <button className="confirm-btn" onClick={handleConfirmOrder}>Confirm Order</button>
         <button className="cancel-btn" onClick={handleCancelOrder}>Cancel</button>
