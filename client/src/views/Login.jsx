@@ -48,7 +48,7 @@ const Login = (props) => {
 
   return (
     <div id="login-container">
-        <h1> Login </h1>
+        <h1 className="login"> Login </h1>
         
         {showErrorPopup && ( // Conditional rendering for the error popup
         <div className="error-popup">
