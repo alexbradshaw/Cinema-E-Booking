@@ -28,9 +28,8 @@ export const sendBookingEmail = async (email: string | undefined, transaction: T
     await transporter.sendMail({
         from: '"Cinema E-Booking" <thisismyspamemail2014@gmail.com>', 
         to: email, 
-        subject: `Purchase Confirmation - ${movie?.title} - Cinema E-Booking`, 
-        text: `This is a confirmation email for your booking today, ${new Date().getMonth() + '/' + new Date().getDate() + '/' + new Date().getFullYear()},  totaling: ${transaction?.total}`, 
-        html: `<div><a href='${process.env.PRODUCTION ? process.env.APP_URL : 'localhost:3000'}'>Visit Our Website </a></div>`, 
+        subject: `Purchase Confirmation - ${movie} - Cinema E-Booking`, 
+        html: `<div><h3>This is a confirmation email for your booking today, ${new Date().getMonth() + '/' + new Date().getDate() + '/' + new Date().getFullYear()},  totaling: $${transaction?.total.toFixed(2)}</h3><a href='${process.env.PRODUCTION ? process.env.APP_URL : 'localhost:3000'}'>Visit Our Website</a></div>`, 
     });
 }
 
