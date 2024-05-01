@@ -1,130 +1,94 @@
 #login-container {
-    padding: 20px; 
+  display: flex; /* Set the container as flex */
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  padding: 20px; 
 }
 
-.error-popup {
-    position: fixed; /* Or absolute, depending on your layout */
-    top: 20%; /* Adjust as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%; /* Or fixed width */
-    max-width: 400px; /* Ensures it doesn't get too wide on larger screens */
-    background-color: #f8d7da; /* Light red; for the error background */
-    color: #721c24; /* Dark red; for the text */
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    z-index: 1000; /* Ensure it's above other content */
-  }
-  
-  .error-popup p {
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-  }
-  
-  .error-popup button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #dc3545; /* Bootstrap danger color for consistency */
-    color: white;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  .error-popup button:hover {
-    background-color: #c82333; /* Darker shade for hover effect */
-  }
-
-
 .mainContainer {
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40vh;
+flex-direction: column;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 40vh;
 }
 
 .buttonContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-right: 35px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding-right: 35px;
 }
 
 .showButton { 
-  border: none;
-  background: black;
-  color: white;
-  padding: 12px 24px;
-  margin: 8px;
-  font-size: 12px;
-  border-radius: 8px;
-  cursor: pointer;
+border: none;
+background: black;
+color: white;
+padding: 12px 24px;
+margin: 8px;
+font-size: 12px;
+border-radius: 8px;
+cursor: pointer;
 }
 
 .showButtonContainer { 
-  
+
 }
 
 .inputContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: center;
 }
 
 .inputContainer > .errorLabel {
-  color: red;
-  font-size: 12px;
+color: red;
+font-size: 12px;
 }
 
 .inputBox {
-  height: 48px;
-  width: 400px;
-  font-size: large;
-  border-radius: 8px;
-  border: 1px solid grey;
-  padding-left: 8px;
+height: 48px;
+width: 400px;
+font-size: large;
+border-radius: 8px;
+border: 1px solid grey;
+padding-left: 8px;
 }
 
 .rememberInputBox {
-  height: 22px;
-  width: 25px;
+height: 22px;
+width: 25px;
 }
 
 .form-bottom-message { 
-  padding-left: 50px;
+padding-left: 50px;
 }
 
 #login-container input[type='submit'] {
-  border: none;
-  background: cornflowerblue;
-  color: white;
-  padding: 12px 24px;
-  margin: 8px;
-  font-size: 24px;
-  border-radius: 8px;
-  cursor: pointer;
+border: none;
+background: cornflowerblue;
+color: white;
+padding: 12px 24px;
+margin: 8px;
+font-size: 24px;
+border-radius: 8px;
+cursor: pointer;
 }
-  
+
 #login-container input[type='button'] {
-  border: none;
-  background: cornflowerblue;
-  color: white;
-  padding: 12px 24px;
-  margin: 8px;
-  font-size: 24px;
-  border-radius: 8px;
-  cursor: pointer;
+border: none;
+background: cornflowerblue;
+color: white;
+padding: 12px 24px;
+margin: 8px;
+font-size: 24px;
+border-radius: 8px;
+cursor: pointer;
 }
 
 #login-container label {
-  padding-bottom: 10px;
+padding-bottom: 10px;
 }
-
-
