@@ -94,9 +94,3 @@
 .purchaseButton:hover {
   background-color: #0056b3; /* Darker blue color on hover */
 }
-
-.deselectButton {
-  margin-top: 20px;
-  cursor: pointer;
-  color: blue;
-}
