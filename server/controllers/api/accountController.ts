@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-import { Card, Movie, Promotion, Ticket, TicketType, Transaction, User } from '../../models/index.js'
+import { Card, Movie, Promotion, Seat, Showing, Theatre, Ticket, TicketType, Transaction, User } from '../../models/index.js'
 import { Request, Response } from 'express';
 import { sendUpdateEmail } from '../../utils/utils.js';
 
@@ -45,34 +45,51 @@ export const getAuthedUser = async (req: Request, res: Response) => {
         const user = await User.findOne(
             { 
                 where: { id: req.session.userId },
-                attributes: { exclude: ['password'] },
+                attributes: { exclude: ['id', 'password', 'token', 'token_identifier', 'admin_id'] },
                 include: [
-                    {
-                        model: Promotion,
-                        attributes: ['id', 'title', 'discount_value']
-                    },
                     {
                         model: Transaction,
                         include: [
                             {
-                                order: ['id', 'ASC'],
                                 model: Ticket,
-                                attributes: ['seat_number'],
+                                attributes: { exclude: ['id', 'type', 'movie_id', 'transaction_id']},
+                                order: ['ticket_seat_id', 'ASC'],
                                 include: [
                                     {
-                                        model: Movie,
-                                        attributes: ['title']
+                                        model: Seat,
+                                        attributes: ['row', 'number'],
+                                        include: [
+                                            {
+                                                model: Showing,
+                                                attributes: ['time'],
+                                                include: [
+                                                    {
+                                                        model: Theatre,
+                                                        attributes: ['id']
+                                                    },
+                                                    {
+                                                        model: Movie,
+                                                        attributes: ['title']
+                                                    },
+                                                ]
+                                            }
+                                        ]
                                     },
                                     {
                                         model: TicketType,
                                         attributes: ['name', 'price']
                                     }
                                 ]
-                            }
+                            },
+                            {
+                                model: Promotion,
+                                attributes: ['id', 'title', 'discount_value']
+                            },
                         ],
                         attributes: ['id', 'date', 'total']
                     }
-                ]
+                ],
+                order: [[Transaction, 'date', 'DESC']],
             }
         );
 
@@ -82,8 +99,8 @@ export const getAuthedUser = async (req: Request, res: Response) => {
             return req.session.destroy(() => {
                 res.append('terminated', 'true');
                 res.status(401).json('Account is not active, please contact support.')
-            }
-        );
+              }
+            );
         }
 
         res.json({ user, card });
