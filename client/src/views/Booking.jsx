@@ -157,19 +157,19 @@ const Booking = () => {
               <div className="seating-chart">
                 {renderSeats()}
               </div>
-              <div className="key">
-                <div className="keyItem">
-                  <input type="checkbox" disabled checked /> Available
-                </div>
-                <div className="keyItem">
-                  <input type="checkbox" disabled checked /> Selected
-                </div>
-                <div className="keyItem">
-                  <input type="checkbox" disabled checked /> Unavailable
-                </div>
-              </div>
               <div className="backOfTheater">
                 Back of Theater
+              </div>
+              <div className="key">
+                <div className="keyItem">
+                  <div className="keyBox availableBox"/> Available
+                </div>
+                <div className="keyItem">
+                  <div className="keyBox selectedBox"/> Selected
+                </div>
+                <div className="keyItem">
+                  <div className="keyBox unavailableBox"/> Unavailable
+                </div>
               </div>
             </div>
           </>
