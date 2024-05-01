@@ -1,17 +1,22 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from "../config/connection.js";
-import { Movie, Transaction } from './index.js';
+import { Movie, Seat, Transaction } from './index.js';
 import TicketType from './TicketType.js';
 
 class Ticket extends Model {
     declare id: number;
+    declare ticket_seat_id: number;
 }
 
 Ticket.init(
   {
-    seat_number: {
+    ticket_seat_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: Seat,
+        key: 'id'
+      }
     },
     type: {
       type: DataTypes.INTEGER,
@@ -39,6 +44,16 @@ Ticket.init(
     },
   },
   {
+    hooks: {
+      afterBulkCreate: async (newTickets: Ticket[]) => {
+        for (let i = 0; i < newTickets.length; i++) {
+          await Seat.update({ ticket_id: newTickets[i].id }, { where: { id: newTickets[i].ticket_seat_id }});
+        }
+      },
+      afterCreate: async (newTicket: Ticket) => {
+        await Seat.update({ ticket_id: newTicket.id }, { where: { id: newTicket.ticket_seat_id }});
+      },
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,

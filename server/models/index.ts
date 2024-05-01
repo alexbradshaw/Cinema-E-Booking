@@ -7,9 +7,12 @@ import Category from './Category.js';
 import CastMember from './CastMember.js';
 import MovieCategory from './MovieCategory.js';
 import Promotion from './Promotion.js';
-import Transaction from './Transaction.js';
-import Ticket from './Ticket.js';
+import Theatre from './Theatre.js';
+import Showing from './Showing.js';
 import TicketType from './TicketType.js';
+import Transaction from './Transaction.js';
+import Seat from './Seat.js';
+import Ticket from './Ticket.js';
 
 /* Setting up Model Relation to Allow Search by Categories */
     /* Associating Movies and Categories together */
@@ -137,5 +140,55 @@ import TicketType from './TicketType.js';
         onUpdate: "CASCADE"
     });
 
+/* Setting up Model Relation for Showings to belong to a Theatre */
+    Showing.belongsTo(Theatre, {
+        foreignKey: 'theatre_id',
+    });    
 
-export { Admin, Card, CastMember, Category, Movie, MovieCategory, Person, Promotion, Ticket, TicketType, Transaction, User };
+    Theatre.hasMany(Showing, {
+        foreignKey: 'theatre_id',
+    });
+
+/* Setting up Model Relation for Showings to belong to a Movie */
+    Showing.belongsTo(Movie, {
+        foreignKey: 'movie_id',
+    });    
+
+    Movie.hasMany(Showing, {
+        foreignKey: 'movie_id',
+    });
+
+/* Setting up Model Relation for Seats to belong to a Showing */
+    Seat.belongsTo(Showing, {
+        foreignKey: 'showing_id',
+    });    
+
+    Showing.hasMany(Seat, {
+        foreignKey: 'showing_id',
+    });
+
+/* Setting up Model Relation for Seats to belong to a Ticket */
+    Ticket.hasOne(Seat, {
+        foreignKey: 'ticket_id',
+        constraints: false,
+        onDelete: 'SET NULL'
+    });
+
+    Seat.belongsTo(Ticket, {
+        foreignKey: 'ticket_id',
+        constraints: false,
+    });
+
+/* Setting up Model Relation for a Promotion to belong to a Transaction */
+    Transaction.hasOne(Promotion, {
+        foreignKey: 'promotion_id',
+        constraints: false,
+        onDelete: 'SET NULL'
+    });
+
+    Promotion.belongsTo(Transaction, {
+        foreignKey: 'promotion_id',
+        constraints: false,
+    });
+
+export { Admin, Card, CastMember, Category, Movie, MovieCategory, Person, Promotion, Seat, Showing, Theatre, Ticket, TicketType, Transaction, User };
