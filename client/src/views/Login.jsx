@@ -20,13 +20,13 @@ const Login = (props) => {
     mutationFn: login, 
     onSuccess: async () => {
       await dispatch({ type: 'SET_AUTH', payload: true });
-      if (location.state.pendingOrder) {
+      if (location.state) {
         navigate('/orderConfirmation', {state: location.state})
       } else {
         navigate('/');
       }
     },
-    onError: () => {
+    onError: (error) => {
       setShowErrorPopup(true);
     }
   })
