@@ -19,7 +19,6 @@ const OrderSummary = () => {
         setTicketTypes(types);
         const initialTypes = seats.reduce((acc, seat) => ({ ...acc, [seat]: types[0]?.id }), {});
         setSelectedTypes(initialTypes);
-        console.log("Initial types set:", initialTypes);
       } catch (error) {
         console.error('Failed to fetch ticket types:', error);
       }
@@ -36,7 +35,6 @@ const OrderSummary = () => {
         return total + (type ? type.price : 0);
       }, 0);
       setTotalCost(cost);
-      console.log("Calculated cost:", cost);
     };
 
     if (ticketTypes.length > 0) calculateTotal();
@@ -47,7 +45,6 @@ const OrderSummary = () => {
       ...prev,
       [seat]: typeId
     }));
-    console.log("Type changed for seat", seat, "to type ID", typeId);
   };
 
   const handleConfirmOrder = () => {
@@ -81,7 +78,7 @@ const OrderSummary = () => {
       </ul>
       <p><strong>Total Cost:</strong> ${totalCost.toFixed(2)}</p>
       <div className="actions">
-        <button className="confirm-btn" onClick={handleConfirmOrder}>Confirm Order</button>
+        <button className="confirm-btn" onClick={handleConfirmOrder}>Proceed to Checkout</button>
         <button className="cancel-btn" onClick={handleCancelOrder}>Cancel</button>
       </div>
     </div>

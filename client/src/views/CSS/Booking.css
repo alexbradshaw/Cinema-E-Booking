@@ -110,3 +110,14 @@
   justify-content: center;
   margin: 15px 0px;
 }
+
+.backOfTheater {
+  text-align: center;
+}
+
+.bookingButtons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}

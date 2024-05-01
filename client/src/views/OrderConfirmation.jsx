@@ -1,7 +1,8 @@
-import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAllTicketTypes } from '../utils/API'; // Import to fetch ticket type details
 import './CSS/OrderConfirmation.css'; // Ensure this path is correct
+import { useEffect } from 'react';
+import { formatTime } from '../utils/utils';
 
 const OrderConfirmation = () => {
     const location = useLocation();
@@ -11,7 +12,7 @@ const OrderConfirmation = () => {
     const { movie, showtime, seats, selectedTypes, discountedTotal } = location.state || {};
     const [ticketTypes, setTicketTypes] = React.useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Fetch ticket types once on mount
         const fetchTicketTypes = async () => {
             try {
@@ -46,7 +47,7 @@ const OrderConfirmation = () => {
             <p className="confirmation-details">Thank you for your booking. Here are your confirmation details:</p>
             <ul>
                 <li><strong>Movie:</strong> {movie}</li>
-                <li><strong>Showtime:</strong> {showtime}</li>
+                <li><strong>Showtime:</strong> {formatTime(showtime)}</li>
                 {seats.map(seat => (
                     <li key={seat}>
                         <strong>Seat {seat}:</strong> {getTicketTypeName(selectedTypes[seat])}

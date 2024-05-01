@@ -142,7 +142,7 @@ const Booking = () => {
         {selectedShowtime && (
           <>
             <div className="theater">
-              <div className="screen">Movie Screen</div>
+            <img src={movieScreenImage} alt="Movie Screen" />
               <div className="seating-chart">
                 {renderSeats()}
               </div>
@@ -164,14 +164,10 @@ const Booking = () => {
           </>
         )}
       </form>
-      <div className="theater">
-        <img src={movieScreenImage} alt="Movie Screen" />
-        <div className="seating-chart">
-          {renderSeats()}
-        </div>
+      <div className='bookingButtons'>
+        <button type="button" className="purchaseButton" onClick={handleDeselectAll}>Deselect All</button>
+        <button className="purchaseButton" type="submit" form='bookingForm'>Book Tickets</button>
       </div>
-      <button type="button" className="purchaseButton" onClick={handleDeselectAll}>Deselect All</button>
-      <button className="purchaseButton" type="submit" form='bookingForm'>Book Tickets</button>
     </div>
   );
 };
