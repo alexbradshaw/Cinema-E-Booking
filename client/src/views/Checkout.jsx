@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './CSS/Checkout.css';  // Ensure the path here is correct
-import { getAllTicketTypes } from '../utils/API';
+import { getAllTicketTypes, getAllPromotions } from '../utils/API';
 
 const Checkout = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { movie, showtime, seats, selectedTypes, totalCost } = location.state || {};
     const [ticketTypes, setTicketTypes] = useState([]);
+    const [promotions, setPromotions] = useState([]);
+    const [selectedPromotion, setSelectedPromotion] = useState(null);
+    const [discountedTotal, setDiscountedTotal] = useState(totalCost);
     const [paymentInfo, setPaymentInfo] = useState({
         cardNumber: '',
         expiryDate: '',
@@ -26,8 +29,29 @@ const Checkout = () => {
             }
         };
 
+        const fetchPromotions = async () => {
+            try {
+                const promotionsData = await getAllPromotions();
+                setPromotions(promotionsData);
+            } catch (error) {
+                console.error("Error fetching promotions:", error);
+            }
+        };
+
         fetchTicketTypes();
+        fetchPromotions();
     }, []);
+
+    useEffect(() => {
+        // Calculate discounted total when a promotion is selected
+        if (selectedPromotion) {
+            const promotion = promotions.find(p => p.id === parseInt(selectedPromotion));
+            const discountValue = promotion ? promotion.discount_value : 0;
+            setDiscountedTotal(totalCost - discountValue);
+        } else {
+            setDiscountedTotal(totalCost);
+        }
+    }, [selectedPromotion, promotions, totalCost]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -36,7 +60,7 @@ const Checkout = () => {
 
     const handleCompletePurchase = () => {
         console.log('Purchase Completed!');
-        navigate('/orderConfirmation', { state: { movie, showtime, seats, selectedTypes, totalCost } });
+        navigate('/orderConfirmation', { state: { movie, showtime, seats, selectedTypes, discountedTotal } });
     };
 
     const handleCancel = () => {
@@ -46,6 +70,10 @@ const Checkout = () => {
     if (!movie || !showtime || !seats || !totalCost) {
         return <p>Order details not found. Please go back to booking.</p>;
     }
+
+    const handlePromotionChange = (e) => {
+        setSelectedPromotion(e.target.value);
+    };
 
     return (
         <div className="checkout-container">
@@ -72,7 +100,16 @@ const Checkout = () => {
                     </ul>
                 </div>
                 <div className="detail-item">
-                    <strong>Total Cost:</strong> ${totalCost.toFixed(2)}
+                    <strong>Promotion:</strong>
+                    <select value={selectedPromotion} onChange={handlePromotionChange}>
+                        <option value="">Select Promotion</option>
+                        {promotions.map(promo => (
+                            <option key={promo.id} value={promo.id}>{promo.title} - ${promo.discount_value}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="detail-item">
+                    <strong>Total Cost:</strong> ${discountedTotal.toFixed(2)}
                 </div>
             </div>
             <h2>Payment Information</h2>
