@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "./CSS/OrderSummary.css";
 import { getAllTicketTypes } from '../utils/API';
+import { formatTime } from '../utils/utils';
 
 const OrderSummary = () => {
   const location = useLocation();
@@ -65,7 +66,7 @@ const OrderSummary = () => {
     <div className="order-summary-container">
       <h1>Order Summary</h1>
       <p><strong>Selected Movie:</strong> {movie}</p>
-      <p><strong>Selected Showtime:</strong> {showtime}</p>
+      <p><strong>Selected Showtime:</strong> {formatTime(showtime)}</p>
       <ul>
         {seats.map((seat) => (
           <li key={seat}>

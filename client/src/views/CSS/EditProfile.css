@@ -56,17 +56,30 @@
   
   .twoColumn {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1.4fr 1fr;
     column-gap: 100px;
   }
 
   .transactionsTab {
+    max-height: 600px;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-top: 20px;
+    overflow-y: scroll;
+  }
+
+  .transactionsHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .transactionsHeader p {
+    width: fit-content;
   }
   
   .transactionItem {
@@ -82,8 +95,34 @@
   .transactionItem ul {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
   }
-  
-  .transactionItem li {
-    margin-bottom: 5px;
+
+  .ticket {
+    min-width: 250px;
+    border: 2px dashed black;
+    border-radius: 10px;
+    padding: 15px 6px;
+    margin: 10px 0px;
+  }
+
+  .ticket div {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 5px 0px;
+  }
+
+  .ticket li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+  }
+
+  .ticket h5 {
+    margin: 0px;
   }

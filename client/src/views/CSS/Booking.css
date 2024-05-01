@@ -26,7 +26,9 @@
 .seatRow {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
+  width: 100%;
 }
 
 .rowLetter {
@@ -47,6 +49,11 @@
 
 .selected {
   background-color: #2ecc71; /* Color for selected seats */
+}
+
+.unavailable {
+  background-color: red; 
+  cursor: default;
 }
 
 .walkway {
@@ -93,4 +100,26 @@
 
 .purchaseButton:hover {
   background-color: #0056b3; /* Darker blue color on hover */
+}
+
+.bookingForm {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.formSelects {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 15px;
+}
+
+.selectionContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 15px 0px;
 }
