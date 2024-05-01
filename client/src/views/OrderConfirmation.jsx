@@ -9,26 +9,13 @@ const OrderConfirmation = () => {
     const navigate = useNavigate();
 
     // Extracting booking details passed from Checkout
-    const { movie, showtime, seats, selectedTypes, discountedTotal } = location.state || {};
-    const [ticketTypes, setTicketTypes] = useState([]);
-
-    useEffect(() => {
-        // Fetch ticket types once on mount
-        const fetchTicketTypes = async () => {
-            try {
-                const types = await getAllTicketTypes();
-                setTicketTypes(types);
-            } catch (error) {
-                console.error('Failed to fetch ticket types:', error);
-            }
-        };
-        fetchTicketTypes();
-    }, []);
+    const { movie, showtime, seats, selectedTypes, ticketTypes, discountedTotal } = location.state || {};
 
     // Function to get ticket type name by ID
-    const getTicketTypeName = (typeId) => {
-        const type = ticketTypes.find(type => type.id === parseInt(typeId));
-        return type ? type.name : 'Unknown Type';
+    const getTicketTypeName = (typeParam) => {
+        console.log(typeParam);
+        const type = selectedTypes.find(type => type.name == typeParam);
+        return type ? ticketTypes[type.value].name : 'Unknown Type';
     };
 
     // Handle exit button click
@@ -50,7 +37,7 @@ const OrderConfirmation = () => {
                 <li><strong>Showtime:</strong> {formatTime(showtime)}</li>
                 {seats.map(seat => (
                     <li key={seat}>
-                        <strong>Seat {seat}:</strong> {getTicketTypeName(selectedTypes[seat])}
+                        <strong>Seat {seat}:</strong> {getTicketTypeName(seat)}
                     </li>
                 ))}
                 <li><strong>Total Cost:</strong> ${discountedTotal.toFixed(2)}</li>

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAuthedUser, getUserByNameOrID, signup, login, logout, addCard, resetPassword, authCheck, updateUser, updateCard, changePassword, verifyAccount, deleteCard } from '../../controllers/index.js';
+import { getAuthedUser, getUserByNameOrID, signup, login, logout, addCard, resetPassword, authCheck, updateUser, updateCard, changePassword, verifyAccount, deleteCard, getAuthedCard } from '../../controllers/index.js';
 import { checkAuth } from '../../utils/auth.js';
 
 export const account = Router();
@@ -14,8 +14,9 @@ export const accountWithAuth = Router();
     accountWithAuth.use(checkAuth);
 
     // GET
-    account.get('/:usernameOrID', getUserByNameOrID);         // * GET to get a user based on username or id * 
+    account.get('/search/:usernameOrID', getUserByNameOrID);         // * GET to get a user based on username or id * 
     accountWithAuth.get('/', getAuthedUser);                  // ! GET route to get the logged in user ! 
+    accountWithAuth.get('/card', getAuthedCard);              // ! GET route to get the logged in user ! 
 
     // POST
     account.post('/signup', signup);                          // * POST route to sign up * 

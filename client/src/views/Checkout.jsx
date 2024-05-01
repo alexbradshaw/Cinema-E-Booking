@@ -1,48 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './CSS/Checkout.css';  // Ensure the path here is correct
-import { getAllTicketTypes, getAllPromotions, bookTickets } from '../utils/API';
+import { getAllTicketTypes, getAllPromotions, bookTickets, getUserCard } from '../utils/API';
 import { formatTime } from '../utils/utils';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+const CreditCard = ({ card }) => {
+    return (
+        <div className="input-group">
+            <input name="cardNumber" placeholder="Card Number" value={card.last_four} />
+            <input name="expiryDate" placeholder="Expiry Date" value={card.expiry_date} />
+            <input name="cvv" type="password" placeholder="CVV" value={card.cvv} />
+            <input name="nameOnCard" placeholder="Name on Card" value={card.cardholder_name} />
+        </div>
+    );
+}
 
 const Checkout = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { movieId, movie, showtime, seats, selectedTypes, totalCost } = location.state || {};
-    const [ticketTypes, setTicketTypes] = useState([]);
-    const [promotions, setPromotions] = useState([]);
-    const [selectedPromotion, setSelectedPromotion] = useState(null);
+    const { movieId, movie, showtime, seats, selectedTypes, ticketTypes, totalCost } = location.state || {};
+    const [selectedPromotion, setSelectedPromotion] = useState(0);
     const [discountedTotal, setDiscountedTotal] = useState(totalCost);
-    const [paymentInfo, setPaymentInfo] = useState({
-        cardNumber: '',
-        expiryDate: '',
-        cvv: '',
-        nameOnCard: '',
-    });
 
-    useEffect(() => {
-        // Fetch ticket types similar to OrderSummary
-        const fetchTicketTypes = async () => {
-            try {
-                const types = await getAllTicketTypes();
-                setTicketTypes(types);
-            } catch (error) {
-                console.error('Failed to fetch ticket types:', error);
-            }
-        };
-
-        const fetchPromotions = async () => {
-            try {
-                const promotionsData = await getAllPromotions();
-                setPromotions(promotionsData);
-            } catch (error) {
-                console.error("Error fetching promotions:", error);
-            }
-        };
-
-        fetchTicketTypes();
-        fetchPromotions();
-    }, []);
+    const { isPending, data: promotions } = useQuery({ queryKey: ['promotions'], queryFn: getAllPromotions })
+    const { isPending: cardPending, data: card } = useQuery({ queryKey: ['card'], queryFn: getUserCard })
 
     useEffect(() => {
         // Calculate discounted total when a promotion is selected
@@ -62,22 +44,17 @@ const Checkout = () => {
     const bookingMutation = useMutation({ 
         mutationFn: bookTickets, 
         onSuccess: async () => {
-          navigate('/orderConfirmation', { state: { movieId, movie, showtime, seats, selectedTypes, discountedTotal }});
+          navigate('/orderConfirmation', { state: { movieId, movie, showtime, seats, selectedTypes, ticketTypes, discountedTotal }});
         },
         onError: (error) => {
           console.error(error)
         }
     });
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setPaymentInfo({ ...paymentInfo, [name]: value });
-    };
-
     const handleCompletePurchase = async () => {
         await bookingMutation.mutateAsync({ 
             total: discountedTotal, 
-            promotion_id: 1, 
+            promotion_id: selectedPromotion, 
             movie_id: movieId, 
             movie: movie,
             ticketsAndSeats: selectedTypes, 
@@ -86,7 +63,7 @@ const Checkout = () => {
     };
 
     const handleCancel = () => {
-        navigate('/orderSummary', { state: { movieId, movie, showtime, seats, selectedTypes, totalCost } });
+        navigate('/orderSummary', { state: { movieId, movie, showtime, seats, selectedTypes, ticketTypes, totalCost } });
     };
 
     if (!movie || !showtime || !seats || !totalCost) {
@@ -110,12 +87,10 @@ const Checkout = () => {
                 <div className="detail-item">
                     <strong>Tickets:</strong>
                     <ul>
-                        {seats.map((seat) => {
-                            const typeId = selectedTypes[seat];
-                            const type = ticketTypes.find(t => t.id === parseInt(typeId));
+                        {selectedTypes.map((seat) => {
                             return (
-                                <li key={seat}>
-                                    {seat}: {type ? `${type.name} - $${type.price.toFixed(2)}` : 'Type not found'}
+                                <li key={seat.name}>
+                                    {seat.name}: {`${ticketTypes[seat.value - 1].name} - $${ticketTypes[seat.value - 1].price.toFixed(2)}`}
                                 </li>
                             );
                         })}
@@ -124,10 +99,16 @@ const Checkout = () => {
                 <div className="detail-item">
                     <strong>Promotion:</strong>
                     <select value={selectedPromotion} onChange={handlePromotionChange}>
-                        <option value="">Select Promotion</option>
-                        {promotions.map(promo => (
-                            <option disabled={totalCost < promo.condition} key={promo.id} value={promo.id}>{promo.title} - ${promo.discount_value}</option>
-                        ))}
+                        <option value="0">Select Promotion</option>
+                        {
+                            isPending || promotions == undefined
+                                ?
+                                    <></>
+                                    :
+                                    promotions.map(promo => (
+                                        <option disabled={totalCost < promo.condition} key={promo.id} value={promo.id}>{promo.title} - ${promo.discount_value}</option>
+                                    ))
+                        }
                     </select>
                 </div>
                 <div className="detail-item">
@@ -135,12 +116,7 @@ const Checkout = () => {
                 </div>
             </div>
             <h2>Payment Information</h2>
-            <div className="input-group">
-                <input name="cardNumber" placeholder="Card Number" value={paymentInfo.cardNumber} onChange={handleInputChange} />
-                <input name="expiryDate" placeholder="Expiry Date" value={paymentInfo.expiryDate} onChange={handleInputChange} />
-                <input name="cvv" type="password" placeholder="CVV" value={paymentInfo.cvv} onChange={handleInputChange} />
-                <input name="nameOnCard" placeholder="Name on Card" value={paymentInfo.nameOnCard} onChange={handleInputChange} />
-            </div>
+                    {cardPending || card == undefined ? <CreditCard card={{last_four: '', cvv: '', cardholder_name: '', expiry_date: new Date()}} /> : <CreditCard card={card} />}
             <div className="actions">
                 <button className="button confirm-btn" onClick={handleCompletePurchase}>Complete Purchase</button>
                 <button className="button cancel-btn" onClick={handleCancel}>Cancel</button>

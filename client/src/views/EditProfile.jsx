@@ -206,17 +206,23 @@ const EditProfile = () => {
                         <></>
                 }
                 <ul>
-                  {transaction.tickets.map((ticket, ticketIndex) => {
-                    const { seat: { row, number, showing: { time, theatre: { id: theatreId }, movie: { title }}}, ticketType: { name, price }} = ticket;
-                    return (
-                      <div className='ticket'>
-                        <li key={ticketIndex}><h5>{title} at {formatTime(time)}</h5></li>
-                        <div>
-                          <h5>Theater: {theatreId}</h5><h5>Seat: {row + number}</h5><h5>{name} (${price})</h5>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  {
+                    transaction.tickets != undefined 
+                      ?
+                        transaction.tickets.map((ticket, ticketIndex) => {
+                          const { seat: { row, number, showing: { time, theatre: { id: theatreId }, movie: { title }}}, ticketType: { name, price }} = ticket;
+                          return (
+                            <div className='ticket'>
+                              <li key={ticketIndex}><h5>{title} at {formatTime(time)}</h5></li>
+                              <div>
+                                <h5>Theater: {theatreId}</h5><h5>Seat: {row + number}</h5><h5>{name} (${price})</h5>
+                              </div>
+                            </div>
+                          );
+                        })
+                        :
+                        <></>
+                  }
                 </ul>
               </div>
             ))}

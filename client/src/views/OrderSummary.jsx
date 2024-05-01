@@ -43,12 +43,18 @@ const OrderSummary = () => {
   const handleTypeChange = (seat, typeId) => {
     setSelectedTypes(prev => ({
       ...prev,
-      [seat]: typeId
+      [seat]: JSON.parse(typeId)
     }));
   };
 
   const handleConfirmOrder = () => {
-    navigate('/checkout', { state: { movieId, movie, showtime, seats, selectedTypes, totalCost } });
+    const finalTypes = []
+    const selected = Object.keys(selectedTypes);
+    const values = Object.values(selectedTypes);
+    for (let i = 0; i < selected.length; i++) {
+      finalTypes.push({ name: selected[i], value: values[i] })
+    }
+    navigate('/checkout', { state: { movieId, movie, showtime, seats, selectedTypes: finalTypes, ticketTypes, totalCost } });
   };
 
   const handleCancelOrder = () => {

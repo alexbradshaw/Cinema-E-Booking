@@ -38,6 +38,21 @@ export const deleteCard = async (req: Request, res: Response) => {
     }
 }
 
+export const getAuthedCard = async (req: Request, res: Response) => {
+    try {
+        const card = await Card.findOne({ where: { user_id: req.session.userId }});
+
+        if (!card) {
+            return res.status(404).json('No card found!');
+        }
+
+        res.json(card);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(e);
+    }
+}
+
 export const getAuthedUser = async (req: Request, res: Response) => {
     try {
         const card = await Card.findOne({ where: { user_id: req.session.userId }});

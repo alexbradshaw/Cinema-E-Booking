@@ -4,26 +4,20 @@ import { Request, Response } from 'express';
 import { sendBookingEmail } from '../../utils/utils.js';
 
     export const confirmBooking = async (req: Request, res: Response) => {
+      console.log(req.body);
       const newTransaction = await Transaction.create({ 
         total: req.body.total, 
         promotion_id: req.body.promotion_id ? req.body.promotion_id : null,
         user_id: req.session.userId
       })
 
-      const seats: string[] = Object.keys(req.body.ticketsAndSeats);
-      const types: string[] = Object.values(req.body.ticketsAndSeats);
-
-      for (let i = 0; i < seats.length; i++) {
-        const seatSplit = seats[i].split('');
-        console.log('\n\n\n', seatSplit);
-        
+      for (let i = 0; i < req.body.ticketsAndSeats.length; i++) {
+        const seatSplit = req.body.ticketsAndSeats[i].name.split('');
         const seat = await Seat.findOne({ where: { row: seatSplit[0], number: seatSplit[1] }});
-        
-        console.log(seat, '\n\n\n');
-
+  
         await Ticket.create({ 
           ticket_seat_id: seat?.id, 
-          type: types[i], 
+          type: req.body.ticketsAndSeats[i].value, 
           movie_id: req.body.movie_id, 
           transaction_id: newTransaction.id 
         });

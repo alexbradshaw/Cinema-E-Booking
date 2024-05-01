@@ -4,7 +4,7 @@ const errorCheck = async (res) => {
 
     if (await JSON.parse(await res.headers.get('terminated'))) {
         localStorage.clear();
-        location.assign('/login');
+        // location.assign('/login');
     }
 
     if (!res.ok) {
@@ -360,6 +360,23 @@ export const checkAdmin = async (navigate) => {
 
             return user;
         }
+
+    /*
+       Returns a user object with associated transactions, promotions, as well as admin permissions for the current authenticated user
+    */
+       export const getUserCard = async () => {
+        const response = await fetch("/api/account/card", {
+            headers: {
+                'Authorization' : `Bearer ${retrieveAuthToken()}`,
+            }
+        });
+        
+        await errorCheck(response);
+        
+        const card = await response.json();
+
+        return card;
+    }
     
 
     /*
@@ -370,7 +387,7 @@ export const checkAdmin = async (navigate) => {
                 return;
             }
             
-            const response = await fetch(`/api/account/${usernameOrId}`);
+            const response = await fetch(`/api/account/search/${usernameOrId}`);
 
             await errorCheck(response);
             
