@@ -6,7 +6,8 @@
 
 .theater {
   position: relative;
-  width: 800px; /* Adjust as needed */
+  width: 800px;
+  margin-top: 20px;
 }
 
 .screen {
@@ -66,13 +67,6 @@
   display: flex;
   align-items: center;
   gap: 5px;
-}
-
-.backOfTheater {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 20px;
 }
 
 .purchaseButton {

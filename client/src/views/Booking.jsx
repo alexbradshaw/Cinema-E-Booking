@@ -97,7 +97,7 @@ const Booking = () => {
       <h1>Booking</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="movie">Select a Movie:</label>
+          <label htmlFor="movie">Select a Movie: &nbsp;</label>
           <select id="movie" value={selectedMovie} onChange={handleMovieChange} required>
             <option value="" disabled>Select a movie</option>
             {isPending ? <option value="" disabled>Loading..</option> : data.map((movie) => <option key={movie.id} value={movie.title}>{movie.title}</option>)}
@@ -117,7 +117,6 @@ const Booking = () => {
         )}
       </form>
       <div className="theater">
-        <div className="screen">Movie Screen</div>
         <img src={movieScreenImage} alt="Movie Screen" />
         <div className="seating-chart">
           {renderSeats()}
@@ -132,9 +131,6 @@ const Booking = () => {
           <div className="keyItem">
             <input type="checkbox" disabled checked /> Unavailable
           </div>
-        </div>
-        <div className="backOfTheater">
-          Back of Theater
         </div>
       </div>
       <button type="button" className="purchaseButton" onClick={handleDeselectAll}>Deselect All</button>
