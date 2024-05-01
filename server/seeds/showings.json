@@ -1,0 +1,152 @@
+[
+    {
+        "time": "09:00",
+        "movie_id": 1,
+        "theatre_id": 1
+    },
+    {
+        "time": "12:00",
+        "movie_id": 1,
+        "theatre_id": 1
+    },
+    {
+        "time": "3:00",
+        "movie_id": 1,
+        "theatre_id": 8
+    },
+    {
+        "time": "09:00",
+        "movie_id": 2,
+        "theatre_id": 9
+    },
+    {
+        "time": "12:00",
+        "movie_id": 2,
+        "theatre_id": 2
+    },
+    {
+        "time": "3:00",
+        "movie_id": 2,
+        "theatre_id": 2
+    },
+    {
+        "time": "09:00",
+        "movie_id": 3,
+        "theatre_id": 3
+    },
+    {
+        "time": "12:00",
+        "movie_id": 3,
+        "theatre_id": 10
+    },
+    {
+        "time": "3:00",
+        "movie_id": 3,
+        "theatre_id": 3
+    },
+    {
+        "time": "09:00",
+        "movie_id": 4,
+        "theatre_id": 4
+    },
+    {
+        "time": "12:00",
+        "movie_id": 4,
+        "theatre_id": 4
+    },
+    {
+        "time": "3:00",
+        "movie_id": 4,
+        "theatre_id": 4
+    },
+    {
+        "time": "09:00",
+        "movie_id": 5,
+        "theatre_id": 5
+    },
+    {
+        "time": "12:00",
+        "movie_id": 5,
+        "theatre_id": 5
+    },
+    {
+        "time": "3:00",
+        "movie_id": 5,
+        "theatre_id": 5
+    },
+    {
+        "time": "09:00",
+        "movie_id": 6,
+        "theatre_id": 6
+    },
+    {
+        "time": "12:00",
+        "movie_id": 6,
+        "theatre_id": 6
+    },
+    {
+        "time": "3:00",
+        "movie_id": 6,
+        "theatre_id": 6
+    },
+    {
+        "time": "09:00",
+        "movie_id": 7,
+        "theatre_id": 7
+    },
+    {
+        "time": "12:00",
+        "movie_id": 7,
+        "theatre_id": 7
+    },
+    {
+        "time": "3:00",
+        "movie_id": 7,
+        "theatre_id": 7
+    },
+    {
+        "time": "09:00",
+        "movie_id": 8,
+        "theatre_id": 8
+    },
+    {
+        "time": "12:00",
+        "movie_id": 8,
+        "theatre_id": 8
+    },
+    {
+        "time": "3:00",
+        "movie_id": 8,
+        "theatre_id": 1
+    },
+    {
+        "time": "09:00",
+        "movie_id": 9,
+        "theatre_id": 2
+    },
+    {
+        "time": "12:00",
+        "movie_id": 9,
+        "theatre_id": 9
+    },
+    {
+        "time": "3:00",
+        "movie_id": 9,
+        "theatre_id": 9
+    },
+    {
+        "time": "09:00",
+        "movie_id": 10,
+        "theatre_id": 10
+    },
+    {
+        "time": "12:00",
+        "movie_id": 10,
+        "theatre_id": 3
+    },
+    {
+        "time": "3:00",
+        "movie_id": 10,
+        "theatre_id": 10
+    }
+]
