@@ -1,12 +1,12 @@
 [
     {
-        "title": "$10 Off Purchase of 20",
+        "title": "$10 Off Purchase of $20",
         "discount_value": 10.00,
         "condition": 20.00,
         "user_id": 1
     },
     {
-        "title": "$20 Off Purchase of 100",
+        "title": "$20 Off Purchase of $100",
         "discount_value": 20.00,
         "condition": 100.00,
         "user_id": 2

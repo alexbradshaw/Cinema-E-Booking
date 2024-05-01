@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 import { sendBookingEmail } from '../../utils/utils.js';
 
     export const confirmBooking = async (req: Request, res: Response) => {
-      console.log(req.body);
       const newTransaction = await Transaction.create({ 
         total: req.body.total, 
         promotion_id: req.body.promotion_id ? req.body.promotion_id : null,

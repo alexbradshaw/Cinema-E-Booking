@@ -3,6 +3,11 @@ export const formatDate = (date) => {
     return `${newDate.getUTCMonth() + 1}/${newDate.getUTCDate()}/${newDate.getFullYear()}`
 }
 
+export const formatDateForInput = (date) => {
+  const newDate = new Date(date)
+  return `${newDate.getFullYear()}-${newDate.getUTCMonth() + 1 < 10 ? '0' : ''}${newDate.getUTCMonth() + 1}-${newDate.getUTCDate() < 10 ? '0' : ''}${newDate.getUTCDate()}`
+}
+
 export const formatMovieLength = (length) => {
     const hours = Math.floor(length / 60);
     const minutes = length % 60;

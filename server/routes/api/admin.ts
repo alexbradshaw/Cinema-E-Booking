@@ -27,9 +27,9 @@ const admin = Router();
 
     // PUT 
     admin.put('/standing/:id', editAccountStanding);       // !! PUT route to update account standing !! 
-    admin.put('/permissions/:id', editAdminPermissions);   // !! PUT route to update admin permissions !! 
+    admin.put('/permission/:id', editAdminPermissions);   // !! PUT route to update admin permissions !! 
     admin.put('/promotion/:id', editPromotion);            // !! PUT route to update promotion information !! 
-    admin.put('/tickets/:id', editTicket);                 // !! PUT route to update ticket type info !! 
+    admin.put('/ticket/:id', editTicket);                 // !! PUT route to update ticket type info !! 
 
     // DELETE
     admin.delete('/promotion/:id', deletePromotion);       // !! DELETE route for a single promotion !! 

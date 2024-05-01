@@ -5,6 +5,9 @@ import { User } from './index.js';
 
 class Promotion extends Model {
     declare id: number;
+    declare title: string;
+    declare discount_value: number;
+    declare condition: number;
 }
 
 Promotion.init(
@@ -45,11 +48,6 @@ Promotion.init(
     },
   },
   {
-    hooks: {
-      beforeCreate: async (newPromotion: Promotion) => {
-          
-      },
-    },
     sequelize,
     timestamps: false,
     freezeTableName: true,

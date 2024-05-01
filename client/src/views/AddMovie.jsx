@@ -20,7 +20,6 @@ const AddMovie = () => {
     director_id: '',
     producer_id: '',
     member_id: '',
-    seats: '',
   });
 
   const handleChange = (e) => {
