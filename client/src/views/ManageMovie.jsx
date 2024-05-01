@@ -37,7 +37,7 @@ const ManageMovie = () => {
                 </div>
                 <div>
                     <h3>Status</h3>
-                    <div>{new Date(starts_showing) > Date.now() ? <span style={{'color': 'green'}}>Showing</span> : <span style={{'color': 'red'}}>Coming Soon</span> }</div>
+                    <div>{new Date(starts_showing) < Date.now() ? <span style={{'color': 'green'}}>Showing</span> : <span style={{'color': 'red'}}>Coming Soon</span> }</div>
                 </div>
                 <div>
                     <h3>Length</h3>

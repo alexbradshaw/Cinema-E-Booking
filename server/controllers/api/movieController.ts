@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 
     export const findMovies = async (req: Request, res: Response) => {
       const movies = await Movie.findAll({
+          order:['starts_showing'],
           attributes: {
             exclude: ['director_id', 'producer_id'],
           },
