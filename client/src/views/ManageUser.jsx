@@ -11,7 +11,7 @@ const ManageUser = () => {
     const { id, active, admin, username, promotion_enrollment, profile_pic } = user;
     const { admin: { permissions: { manage_admins } } } = useContext(AuthContext);
     
-    const { isPending, data: fields } = useQuery({ queryKey: ['adminFields'], queryFn: getAdminFields })
+    const { data: fields } = useQuery({ queryKey: ['adminFields'], queryFn: getAdminFields })
 
     const [success, setSuccess] = useState(false);
     const [adminForm, setAdminForm] = useState(false);
@@ -59,14 +59,14 @@ const ManageUser = () => {
     const [form, setForm] = useState(generatePermissions(admin));
 
     useEffect(()=> {
-        if (!admin && !isPending) {
+        if (!admin && fields != undefined) {
             const objArr = {};
             for (let i = 0; i < fields.length; i++) {
                 Object.assign(objArr, JSON.parse(`{"${fields[i]}": false}`))
             }
             setForm(generatePermissions(objArr));
         }
-    }, [])
+    }, [fields])
 
     const onUpdate = ({ target: { name } }) => {
         let updated = form;
@@ -96,27 +96,29 @@ const ManageUser = () => {
         return (
             admin ? 
                 <form onSubmit={formHandler} id={id}>
-                    {
-                        form
-                            .map(
-                                ({ name, permission, value }, index) => {
-                                    return (
-                                        <div key={permission + ' input'} className='permission'>
-                                            <div>
-                                                <input type="checkbox" checked={value} value={form[index].value} name={index} id={permission} onChange={onUpdate}/>
+                    <div className='form-options'>
+                        {
+                            form
+                                .map(
+                                    ({ name, permission, value }, index) => {
+                                        return (
+                                            <div key={permission + ' input'} className='permission'>
                                                 <div>
-                                                    <label htmlFor={permission}>{name}</label>
+                                                    <input type="checkbox" checked={value} value={form[index].value} name={index} id={permission} onChange={onUpdate}/>
+                                                    <div>
+                                                        <label htmlFor={permission}>{name}</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
-                                }
-                            )
-                    }
-                        <div className='user-form-submit'>
-                            <input type='submit' value={success ? 'Changes Submitted': 'Update Admin'} />
-                            <ActiveConditional />
-                        </div>
+                                        );
+                                    }
+                                )
+                        }
+                    </div>
+                    <div className='user-form-submit'>
+                        <input type='submit' value={success ? 'Changes Submitted': 'Update Admin'} />
+                        <ActiveConditional />
+                    </div>
                 </form>
                 : 
                 <NewAdminConditional/>
@@ -163,32 +165,34 @@ const ManageUser = () => {
             adminForm ?
                 <div className='new-admin'>
                     <form onSubmit={newAdmin}>
-                    {
-                        form
-                            .map(
-                                ({ name, permission, value }, index) => {
-                                    return (
-                                        <div key={permission + ' input'} className='permission'>
-                                            <div>
-                                                <input type="checkbox" checked={value} value={form[index].value} name={index} id={permission} onChange={onUpdate}/>
+                    <div className='form-options'>
+                        {
+                            form
+                                .map(
+                                    ({ name, permission, value }, index) => {
+                                        return (
+                                            <div key={permission + ' input'} className='permission'>
                                                 <div>
-                                                    <label htmlFor={permission}>{name}</label>
+                                                    <input type="checkbox" checked={value} value={form[index].value} name={index} id={permission} onChange={onUpdate}/>
+                                                    <div>
+                                                        <label htmlFor={permission}>{name}</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
-                                }
-                            )
+                                        );
+                                    }
+                                )
                         }
-                        <div className='user-form-submit'>
-                            <input type='submit' value={success ? 'New Admin Submitted': 'Create Admin'} />
-                            <button onClick={()=> setAdminForm(!adminForm)} className='delete-button default-button' style={{"width":"fit-content"}}>Cancel</button>
-                        </div>
+                    </div>
+                    <div className='user-form-submit'>
+                        <input type='submit' value={success ? 'New Admin Submitted': 'Create Admin'} />
+                        <button onClick={()=> setAdminForm(!adminForm)} className='delete-button default-button' style={{"width":"200px"}}>Cancel</button>
+                    </div>
                     </form>
                 </div>
                 :
                 <div className='new-admin'>
-                    <button onClick={()=> setAdminForm(!adminForm)} className="success-button default-button">Upgrade to Admin</button>
+                    <button onClick={()=> setAdminForm(!adminForm)} className="add-user-button default-button">Upgrade to Admin</button>
                     <ActiveConditional />
                 </div>
         );
@@ -196,44 +200,46 @@ const ManageUser = () => {
 
     return (
         <div key={id} className="user">
-            <div>
-                <h2>Manage User</h2>
+            <div className='user-page-header'>
+                    <h2>Manage User</h2>
+                </div>
+            <div className='user-container'>
                 <div className='back-link'>
                     <Link to={'..'} relative="path">Back</Link>
                 </div>
-            </div>
-            <div className='user-header'>
-                <div>
-                    <h3>ID</h3>
-                    <div>{id}</div>
-                </div>
-                <div>
-                    <h3>Username</h3>
-                    <div>{username}</div>
-                </div>
-                <div>
-                    <h3>Promotions</h3>
-                    <div>{promotion_enrollment ? <span style={{'color': 'green'}}>True</span> : <span style={{'color': 'red'}}>False</span> }</div>
-                </div>
-                <div>
-                    <h3>Account Status</h3>
-                    {active ? <span style={{'color': 'green'}}>Active</span> : <span style={{'color': 'red'}}>Disabled</span>}
-                </div>
-            </div>
-            <div className='user-column'>
-                <div className='user-options'>
+                <div className='user-header'>
                     <div>
-                        <div className='profile-pic'>
-                            <img src={profile_pic} alt={`picture for username: ${username}`} />
+                        <h3>ID</h3>
+                        <div>{id}</div>
+                    </div>
+                    <div>
+                        <h3>Username</h3>
+                        <div>{username}</div>
+                    </div>
+                    <div>
+                        <h3>Promotions</h3>
+                        <div>{promotion_enrollment ? <span style={{'color': 'green'}}>True</span> : <span style={{'color': 'red'}}>False</span> }</div>
+                    </div>
+                    <div>
+                        <h3>Account Status</h3>
+                        {active ? <span style={{'color': 'green'}}>Active</span> : <span style={{'color': 'red'}}>Disabled</span>}
+                    </div>
+                </div>
+                <div className='user-column'>
+                    <div className='user-options'>
+                        <div>
+                            <div className='profile-pic'>
+                                <img src={profile_pic} alt={`picture for username: ${username}`} />
+                            </div>
+                            {
+                                manage_admins ? 
+                                    <AdminPermsConditional />
+                                    :
+                                    <div className='user-form-submit'>
+                                        <ActiveConditional />
+                                    </div>
+                            }
                         </div>
-                        {
-                            manage_admins ? 
-                                <AdminPermsConditional />
-                                :
-                                <div className='user-form-submit'>
-                                    <ActiveConditional />
-                                </div>
-                        }
                     </div>
                 </div>
             </div>

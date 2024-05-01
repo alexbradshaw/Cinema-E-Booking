@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../models/index.js';
+import { Admin, User } from '../models/index.js';
 import { NextFunction, Request, Response } from 'express';
 
 const secret = process.env.SECRET || "Secret";
@@ -35,11 +35,12 @@ export const verifyUtilToken = (token: string, expirationMultiplier: number) => 
     }
 }
 
-export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
+export const checkAdmin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         req.admin = {
             status: req.session.isAdmin ? true : false
         }
+        await checkForUpdate(req);
         next();
     } catch (e) {
         res.append('terminated', 'true');
@@ -47,6 +48,18 @@ export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+const checkForUpdate = async (req: Request) => {
+    const admin = await Admin.findOne({
+        where: {
+            user_id: req.session.userId
+        }
+    })
+
+    if (admin) {
+        req.session.isAdmin = true;
+        req.session.permissions = admin.dataValues;
+    }
+}
 
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
     try {
