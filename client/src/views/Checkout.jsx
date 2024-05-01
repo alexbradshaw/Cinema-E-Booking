@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './CSS/Checkout.css';  // Ensure the path here is correct
 import { getAllTicketTypes, getAllPromotions } from '../utils/API';
+import { formatTime } from '../utils/utils';
 
 const Checkout = () => {
     const navigate = useNavigate();
@@ -46,8 +47,12 @@ const Checkout = () => {
         // Calculate discounted total when a promotion is selected
         if (selectedPromotion) {
             const promotion = promotions.find(p => p.id === parseInt(selectedPromotion));
-            const discountValue = promotion ? promotion.discount_value : 0;
-            setDiscountedTotal(totalCost - discountValue);
+            if (promotion.condition < totalCost) {
+                const discountValue = promotion ? promotion.discount_value : 0;
+                setDiscountedTotal(totalCost - discountValue);
+            } else {
+                setDiscountedTotal(totalCost);
+            }
         } else {
             setDiscountedTotal(totalCost);
         }
@@ -83,7 +88,7 @@ const Checkout = () => {
                     <strong>Movie:</strong> {movie}
                 </div>
                 <div className="detail-item">
-                    <strong>Showtime:</strong> {showtime}
+                    <strong>Showtime:</strong> {formatTime(showtime)}
                 </div>
                 <div className="detail-item">
                     <strong>Tickets:</strong>
@@ -104,7 +109,7 @@ const Checkout = () => {
                     <select value={selectedPromotion} onChange={handlePromotionChange}>
                         <option value="">Select Promotion</option>
                         {promotions.map(promo => (
-                            <option key={promo.id} value={promo.id}>{promo.title} - ${promo.discount_value}</option>
+                            <option disabled={totalCost < promo.condition} key={promo.id} value={promo.id}>{promo.title} - ${promo.discount_value}</option>
                         ))}
                     </select>
                 </div>

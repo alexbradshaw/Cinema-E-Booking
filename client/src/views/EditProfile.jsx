@@ -2,7 +2,7 @@ import { addCard, deleteCard, getLoggedInUser, updateCard, updateUser } from '..
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import './CSS/EditProfile.css';
-import { formatTime } from '../utils/utils';
+import { formatPrice, formatTime } from '../utils/utils';
 
 const EditProfile = () => {
   const { isPending, data, isError, error } = useQuery({ queryKey: ['users'], queryFn: getLoggedInUser })
@@ -196,6 +196,15 @@ const EditProfile = () => {
                   <p>{new Date(transaction.date).toLocaleDateString()}</p>
                   <p>Total: ${transaction.total}</p>
                 </div>
+                {
+                  transaction.promotion
+                        ?
+                        <h5 className='promotionHeader'>
+                          {'$' + formatPrice(transaction.promotion.discount_value) +  ' off promotion Applied!'}
+                        </h5>
+                        :
+                        <></>
+                }
                 <ul>
                   {transaction.tickets.map((ticket, ticketIndex) => {
                     const { seat: { row, number, showing: { time, theatre: { id: theatreId }, movie: { title }}}, ticketType: { name, price }} = ticket;
