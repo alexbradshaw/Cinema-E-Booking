@@ -18,6 +18,7 @@ const EditProfile = () => {
     const [firstName, setFname] = useState(fname);
     const [lastName, setLname] = useState(lname);
     const [promotion_enrollment, setEnrollment] = useState(enrolled);
+
     const [status, setStatus] = useState({ profile: false, card: false });
   
     const [card, setCardView] = useState(cardInfo ? true : false);
@@ -42,6 +43,8 @@ const EditProfile = () => {
         console.error('Error updating profile:', error);
       }
     })
+
+    console.log(transactions);
 
     const submitCard = useMutation({ 
       mutationFn: addCard,
@@ -272,12 +275,22 @@ const EditProfile = () => {
           }
         </form>
         <div>
-          <label htmlFor="purchases">Purchases:</label>
-          <div className="purchasesTab"> 
-          
+          <label htmlFor="transactions">Transactions:</label>
+          <div className="transactionsTab"> 
+            {transactions.map((transaction, index) => (
+              <div key={index} className="transactionItem">
+                <p>Date: {new Date(transaction.date).toLocaleDateString()}</p>
+                <p>Total: ${transaction.total}</p>
+                <p>Movies:</p>
+                <ul>
+                  {transaction.tickets.map((ticket, ticketIndex) => (
+                    <li key={ticketIndex}>{ticket.movie.title} - {ticket.ticketType.name} (${ticket.ticketType.price})</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
-
       </div>
     );
   }
