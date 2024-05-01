@@ -627,6 +627,19 @@ export const checkAdmin = async (navigate) => {
         }
 
     /*
+        Returns an array of every movie in db without associated info (actors, directors, etc)
+    */
+        export const getShowtimes = async () => {
+            const response = await fetch('/api/movies/showtimes');
+
+            await errorCheck(response);
+            
+            const showtimes = await response.json();
+
+            return showtimes; 
+        }
+
+    /*
         Returns an array of movie objects matching query
     */
         export const searchMovies = async (movie) => {

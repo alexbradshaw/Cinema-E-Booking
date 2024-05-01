@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { getAllMoviesSlim } from '../utils/API';
+import React, { useEffect, useState } from 'react';
+import { getAllMoviesSlim, getShowtimes } from '../utils/API';
+import { formatTime } from '../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import "./CSS/Booking.css";
 import { useQuery } from '@tanstack/react-query';
@@ -8,13 +9,15 @@ const Booking = () => {
   const [selectedMovie, setSelectedMovie] = useState('');
   const [selectedShowtime, setSelectedShowtime] = useState('');
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [showtimes, setShowTimes] = useState([]);
   //const [seatAges, setSeatAges] = useState({});
 
   const navigate = useNavigate();
 
-  const { isPending, data } = useQuery({ queryKey: ['slimMovies'], queryFn: getAllMoviesSlim })
+  const { isSuccess, data } = useQuery({ queryKey: ['showtimes'], queryFn: getShowtimes })
+  const movies = useQuery({ queryKey: ['slimMovies'], queryFn: getAllMoviesSlim })
 
-  const showtimes = ['12:00 PM', '3:00 PM', '6:00 PM'];
+  useEffect(()=>{setTimes(data)}, [isSuccess]);
 
   const handleMovieChange = (event) => {
     setSelectedMovie(event.target.value);
@@ -29,16 +32,20 @@ const Booking = () => {
     //setSeatAges({});
   };
 
-  const handleSeatClick = (seat) => {
+  const handleSeatClick = (seat, ticket_id) => {
     setSelectedSeats((prevSeats) => {
-      if (prevSeats.includes(seat)) {
-        const updatedSeats = prevSeats.filter((prevSeat) => prevSeat !== seat);
-        //const updatedSeatAges = { ...seatAges };
-        //delete updatedSeatAges[seat];
-        //setSeatAges(updatedSeatAges);
-        return updatedSeats;
+      if (!ticket_id) {
+        if (prevSeats.includes(seat)) {
+          const updatedSeats = prevSeats.filter((prevSeat) => prevSeat !== seat);
+          //const updatedSeatAges = { ...seatAges };
+          //delete updatedSeatAges[seat];
+          //setSeatAges(updatedSeatAges);
+          return updatedSeats;
+        } else {
+          return [...prevSeats, seat];
+        } 
       } else {
-        return [...prevSeats, seat];
+        return prevSeats
       }
     });
   };
@@ -57,85 +64,107 @@ const Booking = () => {
     navigate('/orderSummary', { state: { movie: selectedMovie, showtime: selectedShowtime, seats: selectedSeats } });
   };
 
+  const setTimes = (times) => {
+    if (!times) return;
+
+    const time = []
+    
+    for (let i = 0; i < 3; i++) {
+      time.push(times[i].time);
+    }
+    
+    setShowTimes(time);
+  }
+
   const renderSeats = () => {
-    const rows = ['A', 'B', 'C', 'D', 'E', 'walkway', 'F', 'G', 'H', 'I', 'J']; // Added 'walkway' between E and F
-    const cols = 20;
+    const size = data.filter((show) => {
+      if (show.movie.title == selectedMovie && show.time == selectedShowtime) {
+        return true;
+      }
+    })[0].id;
+
+    const rows = data[size - 1].seats;
+
+    const cols = 10
 
     const seats = [];
-    for (let row of rows) {
-      if (row === 'walkway') {
-        seats.push(<div key={row} className="walkway" />);
-      } else {
-        const rowSeats = [];
-        for (let i = 1; i <= cols; i++) {
-          const seat = `${row}${i}`;
+
+    for (let a = 0; a < rows.length; a += 10) {
+      const rowSeats = [];
+        for (let i = 0; i < cols; i++) {
+          const seat = `${rows[a + i].row}${rows[a + i].number}`;
           const isSelected = selectedSeats.includes(seat);
           rowSeats.push(
             <div
               key={seat}
-              className={`seat ${isSelected ? 'selected' : ''}`}
-              onClick={() => handleSeatClick(seat)}
+              className={`seat ${rows[a + i].ticket_id ? 'unavailable' : isSelected ? 'selected' : ''}`}
+              onClick={() => handleSeatClick(seat, rows[a + i].ticket_id)}
             >
               {i} {/* Only display the number for the seat */}
             </div>
           );
         }
         seats.push(
-          <div key={row} className="seatRow">
-            <div className="rowLetter">{row}</div>
+          <div key={rows[a].row} className="seatRow">
+            <div className="rowLetter">{rows[a].row}</div>
             {rowSeats}
           </div>
         );
       }
-    }
     return seats;
   };
 
   return (
     <div className="bookingContainer">
       <h1>Booking</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="movie">Select a Movie:</label>
-          <select id="movie" value={selectedMovie} onChange={handleMovieChange} required>
-            <option value="" disabled>Select a movie</option>
-            {isPending ? <option value="" disabled>Loading..</option> : data.map((movie) => <option key={movie.id} value={movie.title}>{movie.title}</option>)}
-          </select>
-        </div>
-        {selectedMovie && (
-          <div>
-            <label htmlFor="showtime">Select a Showtime:</label>
-            <select id="showtime" value={selectedShowtime} onChange={handleShowtimeChange} required>
-              <option value="" disabled>Select a showtime</option>
-              {showtimes.map((time) => <option key={time} value={time}>{time}</option>)}
-            </select>
+      <form onSubmit={handleSubmit} className='bookingForm' id='bookingForm'>
+        <div className='selectionContainer'>
+          <div className='formSelects'>
+            <div>
+              <label htmlFor="movie">Select a Movie:</label>
+              <select id="movie" value={selectedMovie} onChange={handleMovieChange} required>
+                <option value="" disabled>Select a movie</option>
+                {movies.isPending ? <option value="" disabled>Loading..</option> : movies.data.map((movie) => <option key={movie.id} value={movie.title}>{movie.title}</option>)}
+              </select>
+            </div>
+            {selectedMovie && (
+              <div>
+                <label htmlFor="showtime">Select a Showtime:</label>
+                <select id="showtime" value={selectedShowtime} onChange={handleShowtimeChange} required>
+                  <option value="" disabled>Select a showtime</option>
+                  {showtimes.map((time) => <option key={time} value={time}>{formatTime(time)}</option>)}
+                </select>
+              </div>
+            )}
           </div>
-        )}
+        </div>
         {selectedShowtime && (
-          <button className="purchaseButton" type="submit">Book Tickets</button>
+          <>
+            <div className="theater">
+              <div className="screen">Movie Screen</div>
+              <div className="seating-chart">
+                {renderSeats()}
+              </div>
+              <div className="key">
+                <div className="keyItem">
+                  <input type="checkbox" disabled checked /> Available
+                </div>
+                <div className="keyItem">
+                  <input type="checkbox" disabled checked /> Selected
+                </div>
+                <div className="keyItem">
+                  <input type="checkbox" disabled checked /> Unavailable
+                </div>
+              </div>
+              <div className="backOfTheater">
+                Back of Theater
+              </div>
+            </div>
+          </>
         )}
       </form>
-      <div className="theater">
-        <div className="screen">Movie Screen</div>
-        <div className="seating-chart">
-          {renderSeats()}
-        </div>
-        <div className="key">
-          <div className="keyItem">
-            <input type="checkbox" disabled checked /> Available
-          </div>
-          <div className="keyItem">
-            <input type="checkbox" disabled checked /> Selected
-          </div>
-          <div className="keyItem">
-            <input type="checkbox" disabled checked /> Unavailable
-          </div>
-        </div>
-        <div className="backOfTheater">
-          Back of Theater
-        </div>
-      </div>
       <button type="button" className="purchaseButton" onClick={handleDeselectAll}>Deselect All</button>
+      <button className="purchaseButton" type="submit" form='bookingForm'>Book Tickets</button>
     </div>
   );
 };

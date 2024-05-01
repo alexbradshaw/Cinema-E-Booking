@@ -17,3 +17,11 @@ export const formatMovieLength = (length) => {
 export const formatPrice = (number) => {
   return JSON.parse(number).toFixed(2);
 }
+
+export const formatTime = (time) => {
+  const parsedTime = /^[\d]{1,2}:[\d]{2}/.exec(time);
+  if (/^[\d]{1,2}/.exec(time) == '09') {
+    return `9:00am`
+  }
+  return `${parsedTime}pm`
+}
