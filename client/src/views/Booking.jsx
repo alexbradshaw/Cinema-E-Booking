@@ -121,17 +121,6 @@ const Booking = () => {
         <div className="seating-chart">
           {renderSeats()}
         </div>
-        <div className="key">
-          <div className="keyItem">
-            <input type="checkbox" disabled checked /> Available
-          </div>
-          <div className="keyItem">
-            <input type="checkbox" disabled checked /> Selected
-          </div>
-          <div className="keyItem">
-            <input type="checkbox" disabled checked /> Unavailable
-          </div>
-        </div>
       </div>
       <button type="button" className="purchaseButton" onClick={handleDeselectAll}>Deselect All</button>
     </div>
