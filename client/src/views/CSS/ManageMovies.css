@@ -7,13 +7,17 @@
   }
 
   .back-link {
-    position: relative;
-    left: 300px;
-    bottom: 47px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 40px;
   }
 
   .back-link a {
     color: black;
+    position: relative;
+    right: 50px;
+    top: 10px;
   }
 
   .movies-list {
